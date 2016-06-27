@@ -34,9 +34,11 @@ public final class PokkitPluginManager implements PluginManager {
 
     private final cn.nukkit.plugin.PluginManager nukkit;
     private final PokkitPluginLoader pluginLoader;
+    private final BukkitEventManager eventManager;
 
     public PokkitPluginManager(cn.nukkit.plugin.PluginManager nukkit) {
         this.nukkit = Objects.requireNonNull(nukkit);
+        this.eventManager = new BukkitEventManager();
 
         // Register plugin loader, then retrieve it back
         if (!this.nukkit.registerInterface(PokkitPluginLoader.class)) {
@@ -52,8 +54,7 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public void callEvent(Event event) throws IllegalStateException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        eventManager.callEvent(event);
     }
 
     @Override
@@ -212,21 +213,18 @@ public final class PokkitPluginManager implements PluginManager {
     @Override
     public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority,
             EventExecutor executor, Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        eventManager.registerEvent(event, listener, priority, executor, plugin);
     }
 
     @Override
     public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority,
             EventExecutor executor, Plugin plugin, boolean ignoreCancelled) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        eventManager.registerEvent(event, listener, priority, executor, plugin, ignoreCancelled);
     }
 
     @Override
     public void registerEvents(Listener listener, Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        eventManager.registerEvents(listener, plugin);
     }
 
     @Override
@@ -237,25 +235,22 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public void removePermission(Permission perm) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        nukkit.removePermission(PokkitPermission.toNukkit(perm));
     }
 
     @Override
     public void removePermission(String name) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.removePermission(name);
     }
 
     @Override
     public void subscribeToDefaultPerms(boolean op, Permissible permissible) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.subscribeToDefaultPerms(op, PokkitPermissible.toNukkit(permissible));
     }
 
     @Override
     public void subscribeToPermission(String permission, Permissible permissible) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.subscribeToPermission(permission, PokkitPermissible.toNukkit(permissible));
     }
 
     private cn.nukkit.plugin.Plugin toNukkitPlugin(Plugin plugin) {
@@ -265,8 +260,7 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public void unsubscribeFromDefaultPerms(boolean op, Permissible permissible) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.unsubscribeFromDefaultPerms(op, PokkitPermissible.toNukkit(permissible));
     }
 
     @Override
