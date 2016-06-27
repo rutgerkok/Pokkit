@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import nl.rutgerkok.pokkit.plugin.PokkitPermission;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
 import org.bukkit.Achievement;
@@ -58,9 +59,23 @@ import org.bukkit.util.Vector;
 
 public class PokkitPlayer implements Player {
 
+    public static Player toBukkit(cn.nukkit.Player nukkit) {
+        if (nukkit == null) {
+            return null;
+        }
+        return new PokkitPlayer(nukkit);
+    }
+
+    public static cn.nukkit.Player toNukkit(Player player) {
+        if (player == null) {
+            return null;
+        }
+        return ((PokkitPlayer) player).nukkit;
+    }
+
     private final cn.nukkit.Player nukkit;
 
-    public PokkitPlayer(cn.nukkit.Player player) {
+    private PokkitPlayer(cn.nukkit.Player player) {
         this.nukkit = Objects.requireNonNull(player);
     }
 
@@ -762,7 +777,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean hasPermission(Permission permission) {
-        return nukkit.hasPermission(permission.getName());
+        return nukkit.hasPermission(PokkitPermission.toNukkit(permission));
     }
 
     @Override
@@ -918,7 +933,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean isPermissionSet(Permission permission) {
-        return nukkit.isPermissionSet(permission.getName());
+        return nukkit.isPermissionSet(PokkitPermission.toNukkit(permission));
     }
 
     @Override
@@ -1079,8 +1094,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void recalculatePermissions() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.recalculatePermissions();
     }
 
     @Override

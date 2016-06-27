@@ -30,6 +30,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -48,7 +49,7 @@ import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
-import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.SimpleServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -64,9 +65,10 @@ public final class PokkitServer implements Server {
     }
     private final cn.nukkit.Server nukkitServer;
     private final PokkitScheduler scheduler;
-    private final SimplePluginManager pluginManager;
+    private final PokkitPluginManager pluginManager;
     private final File pluginFolder;
     private final SimpleCommandMap commandMap;
+    private final SimpleServicesManager servicesManager;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -76,7 +78,8 @@ public final class PokkitServer implements Server {
 
         this.scheduler = new PokkitScheduler(nukkitServer.getScheduler());
         this.commandMap = new SimpleCommandMap(this);
-        this.pluginManager = PokkitPluginManager.create(this, commandMap, pluginFolder);
+        this.pluginManager = new PokkitPluginManager(nukkitServer.getPluginManager());
+        this.servicesManager = new SimpleServicesManager();
     }
 
     @Override
@@ -84,7 +87,7 @@ public final class PokkitServer implements Server {
         return nukkitServer.getOnlinePlayers()
                 .values()
                 .stream()
-                .map(this::toBukkitPlayer)
+                .map(PokkitPlayer::toBukkit)
                 .toArray(Player[]::new);
     }
 
@@ -358,7 +361,7 @@ public final class PokkitServer implements Server {
         return nukkitServer.getOnlinePlayers()
                 .values()
                 .stream()
-                .map(this::toBukkitPlayer)
+                .map(PokkitPlayer::toBukkit)
                 .collect(Collectors.toList());
     }
 
@@ -370,12 +373,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public Player getPlayer(String name) {
-        return toBukkitPlayer(nukkitServer.getPlayer(name));
+        return PokkitPlayer.toBukkit(nukkitServer.getPlayer(name));
     }
 
     @Override
     public Player getPlayer(UUID uuid) {
-        return toBukkitPlayer(nukkitServer.getOnlinePlayers().get(uuid));
+        return PokkitPlayer.toBukkit(nukkitServer.getOnlinePlayers().get(uuid));
     }
 
     @Override
@@ -385,9 +388,12 @@ public final class PokkitServer implements Server {
     }
 
     @Override
-    public PluginCommand getPluginCommand(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+    public PluginCommand getPluginCommand(String name) {
+        Command command = commandMap.getCommand(name);
+        if (command instanceof PluginCommand) {
+            return (PluginCommand) command;
+        }
+        return null;
     }
 
     @Override
@@ -437,8 +443,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public ServicesManager getServicesManager() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        return servicesManager;
     }
 
     @Override
@@ -558,7 +563,11 @@ public final class PokkitServer implements Server {
      * Loads the Bukkit plugins. Must be called only once.
      */
     public void loadPlugins() {
-        PokkitPluginManager.loadPlugins(pluginManager, pluginFolder);
+        Plugin[] plugins = this.pluginManager.loadPlugins(pluginFolder);
+        getLogger().info("Loaded " + Arrays.toString(plugins));
+        for (Plugin plugin : plugins) {
+            this.pluginManager.enablePlugin(plugin);
+        }
     }
 
     @Override
@@ -576,7 +585,7 @@ public final class PokkitServer implements Server {
     @Override
     public List<Player> matchPlayer(String partialName) {
         return Arrays.stream(nukkitServer.matchPlayer(partialName))
-                .map(this::toBukkitPlayer)
+                .map(PokkitPlayer::toBukkit)
                 .collect(Collectors.toList());
     }
 
@@ -646,10 +655,6 @@ public final class PokkitServer implements Server {
     public Spigot spigot() {
         throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
 
-    }
-
-    private Player toBukkitPlayer(cn.nukkit.Player player) {
-        return player == null ? null : new PokkitPlayer(player);
     }
 
     @Override
