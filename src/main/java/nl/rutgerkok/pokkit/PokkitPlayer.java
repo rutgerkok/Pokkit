@@ -30,6 +30,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.entity.Entity;
@@ -57,7 +58,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
-public class PokkitPlayer implements Player {
+import net.md_5.bungee.api.chat.BaseComponent;
+
+@DelegateDeserialization(PokkitOfflinePlayer.class)
+public class PokkitPlayer extends Player.Spigot implements Player {
 
     public static Player toBukkit(cn.nukkit.Player nukkit) {
         if (nukkit == null) {
@@ -308,6 +312,11 @@ public class PokkitPlayer implements Player {
     }
 
     @Override
+    public boolean getCollidesWithEntities() {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public Location getCompassTarget() {
         throw Pokkit.unsupported();
 
@@ -432,6 +441,11 @@ public class PokkitPlayer implements Player {
     }
 
     @Override
+    public Set<Player> getHiddenPlayers() {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public PlayerInventory getInventory() {
         throw Pokkit.unsupported();
 
@@ -513,6 +527,11 @@ public class PokkitPlayer implements Player {
     public Set<String> getListeningPluginChannels() {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public String getLocale() {
+        throw Pokkit.unsupported();
     }
 
     @Override
@@ -618,6 +637,11 @@ public class PokkitPlayer implements Player {
     }
 
     @Override
+    public InetSocketAddress getRawAddress() {
+        return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
+    }
+
+    @Override
     public int getRemainingAir() {
         throw Pokkit.unsupported();
 
@@ -707,7 +731,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public UUID getUniqueId() {
-        return nukkit.getUniqueId();
+        return PlayerUniqueId.nameToId(getName());
     }
 
     @Override
@@ -1063,6 +1087,12 @@ public class PokkitPlayer implements Player {
     }
 
     @Override
+    public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
+            float offsetZ, float speed, int particleCount, int radius) {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
         throw Pokkit.unsupported();
 
@@ -1152,6 +1182,11 @@ public class PokkitPlayer implements Player {
     }
 
     @Override
+    public void respawn() {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public void saveData() {
         throw Pokkit.unsupported();
 
@@ -1179,6 +1214,18 @@ public class PokkitPlayer implements Player {
     public void sendMap(MapView arg0) {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public void sendMessage(BaseComponent component) {
+        sendMessage(component.toLegacyText());
+    }
+
+    @Override
+    public void sendMessage(BaseComponent... components) {
+        for (BaseComponent component : components) {
+            sendMessage(component);
+        }
     }
 
     @Override
@@ -1261,6 +1308,11 @@ public class PokkitPlayer implements Player {
     public void setCollidable(boolean arg0) {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public void setCollidesWithEntities(boolean collides) {
+        throw Pokkit.unsupported();
     }
 
     @Override
@@ -1676,8 +1728,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public Spigot spigot() {
-        throw Pokkit.unsupported();
-
+        return this;
     }
 
     @Override

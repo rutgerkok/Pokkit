@@ -333,15 +333,13 @@ public final class PokkitServer implements Server {
     }
 
     @Override
-    public OfflinePlayer getOfflinePlayer(String arg0) {
-        throw Pokkit.unsupported();
-
+    public OfflinePlayer getOfflinePlayer(String name) {
+        return PokkitOfflinePlayer.toBukkit(nukkitServer.getOfflinePlayer(name));
     }
 
     @Override
-    public OfflinePlayer getOfflinePlayer(UUID arg0) {
-        throw Pokkit.unsupported();
-
+    public OfflinePlayer getOfflinePlayer(UUID uuid) {
+        return getOfflinePlayer(PlayerUniqueId.idToName(uuid));
     }
 
     @Override
