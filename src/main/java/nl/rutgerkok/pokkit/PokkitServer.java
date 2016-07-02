@@ -559,7 +559,6 @@ public final class PokkitServer implements Server {
      */
     public void loadPlugins() {
         Plugin[] plugins = this.pluginManager.loadPlugins(pluginFolder);
-        getLogger().info("Loaded " + Arrays.toString(plugins));
         for (Plugin plugin : plugins) {
             this.pluginManager.enablePlugin(plugin);
         }
