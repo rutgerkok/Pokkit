@@ -4,5 +4,5 @@ version: "${project.version}"
 api: ["1.0.0"]
 
 author: Rutger Kok
-load: STARTUP
+load: POSTWORLD
 description: ${project.description}

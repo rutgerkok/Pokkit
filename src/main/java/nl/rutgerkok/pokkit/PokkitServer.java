@@ -559,12 +559,11 @@ public final class PokkitServer implements Server {
 
     /**
      * Loads the Bukkit plugins. Must be called only once.
+     * 
+     * @return The plugins that were loaded.
      */
-    public void loadPlugins() {
-        Plugin[] plugins = this.pluginManager.loadPlugins(pluginFolder);
-        for (Plugin plugin : plugins) {
-            this.pluginManager.enablePlugin(plugin);
-        }
+    public Plugin[] loadPlugins() {
+        return this.pluginManager.loadPlugins(pluginFolder);
     }
 
     @Override

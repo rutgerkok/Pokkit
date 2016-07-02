@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginLoadOrder;
 
 import cn.nukkit.plugin.PluginBase;
 
@@ -30,8 +32,24 @@ public final class Pokkit extends PluginBase {
         throw new UnsupportedOperationException("This method is not supported yet by " + NAME + " " + VERSION);
     }
 
+    private Plugin[] plugins = null;
+
+    private void enablePlugins(PluginLoadOrder pluginLoadOrder) {
+        for (Plugin plugin : plugins) {
+            if (plugin.getDescription().getLoad() == pluginLoadOrder) {
+                Bukkit.getServer().getPluginManager().enablePlugin(plugin);
+            }
+        }
+    }
+
     @Override
     public void onEnable() {
+        enablePlugins(PluginLoadOrder.POSTWORLD);
+        plugins = null; // field is no longer needed
+    }
+
+    @Override
+    public void onLoad() {
         File pluginFolder = new File(this.getDataFolder(), "bukkitPlugins");
         if (!pluginFolder.exists()) {
             pluginFolder.mkdirs();
@@ -41,7 +59,7 @@ public final class Pokkit extends PluginBase {
         PokkitServer server = new PokkitServer(this.getServer(), logger, pluginFolder);
         Bukkit.setServer(server);
 
-        server.loadPlugins();
-
+        plugins = server.loadPlugins();
+        enablePlugins(PluginLoadOrder.STARTUP);
     }
 }
