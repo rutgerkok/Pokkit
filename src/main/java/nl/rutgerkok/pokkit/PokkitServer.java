@@ -14,6 +14,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.command.PokkitCommandMap;
+import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
 
@@ -30,12 +32,10 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
@@ -66,8 +66,8 @@ public final class PokkitServer implements Server {
     private final cn.nukkit.Server nukkitServer;
     private final PokkitScheduler scheduler;
     private final PokkitPluginManager pluginManager;
+    private final PokkitCommandMap commandMap;
     private final File pluginFolder;
-    private final SimpleCommandMap commandMap;
     private final SimpleServicesManager servicesManager;
     private Logger logger;
 
@@ -77,9 +77,9 @@ public final class PokkitServer implements Server {
         this.logger = Objects.requireNonNull(logger, "logger");
 
         this.scheduler = new PokkitScheduler(nukkitServer.getScheduler());
-        this.commandMap = new SimpleCommandMap(this);
         this.pluginManager = new PokkitPluginManager(nukkitServer.getPluginManager());
         this.servicesManager = new SimpleServicesManager();
+        this.commandMap = new PokkitCommandMap(nukkitServer::getPluginCommand);
     }
 
     @Override
@@ -176,9 +176,8 @@ public final class PokkitServer implements Server {
     }
 
     @Override
-    public boolean dispatchCommand(CommandSender arg0, String arg1) throws CommandException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+    public boolean dispatchCommand(CommandSender sender, String command) throws CommandException {
+        return nukkitServer.dispatchCommand(PokkitCommandSender.toNukkit(sender), command);
     }
 
     @Override
@@ -389,11 +388,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public PluginCommand getPluginCommand(String name) {
-        Command command = commandMap.getCommand(name);
-        if (command instanceof PluginCommand) {
-            return (PluginCommand) command;
-        }
-        return null;
+        return commandMap.getPluginCommand(name);
     }
 
     @Override

@@ -7,10 +7,10 @@ import java.util.Objects;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.command.PokkitCommand;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cn.nukkit.Server;
@@ -26,6 +26,7 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
     public static JavaPlugin toBukkit(PokkitPlugin plugin) {
         return plugin.bukkit;
     }
+
     private final JavaPlugin bukkit;
     private final PluginDescription pluginDescription;
     private final PluginLoader loader;
@@ -37,6 +38,16 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
         this.loader = Objects.requireNonNull(pluginLoader);
 
         this.logger = new PluginLogger(this);
+    }
+
+    private PluginCommand getBukkitCommand(Command command) {
+        org.bukkit.command.PluginCommand bukkitCommand = Bukkit.getServer().getPluginCommand(command.getName());
+        if (bukkitCommand == null || !bukkitCommand.getPlugin().equals(bukkit)) {
+            // Not registered, or registered by other plugin
+            bukkitCommand = Bukkit.getServer()
+                    .getPluginCommand(pluginDescription.getName().toLowerCase() + ":" + command.getName());
+        }
+        return bukkitCommand;
     }
 
     @Override
@@ -93,7 +104,11 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return bukkit.onCommand(PokkitCommandSender.toBukkit(sender), PokkitCommand.toBukkit(command), label, args);
+       PluginCommand bukkitCommand = getBukkitCommand(command);
+       if (bukkitCommand == null) {
+           return false;
+       }
+        return bukkit.onCommand(PokkitCommandSender.toBukkit(sender), bukkitCommand, label, args);
     }
 
     @Override

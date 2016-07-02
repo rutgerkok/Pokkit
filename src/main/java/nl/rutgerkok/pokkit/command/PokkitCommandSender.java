@@ -10,6 +10,7 @@ import nl.rutgerkok.pokkit.plugin.PokkitPermission;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -23,6 +24,19 @@ public class PokkitCommandSender implements CommandSender {
             return PokkitPlayer.toBukkit((cn.nukkit.Player) nukkit);
         }
         return new PokkitCommandSender(nukkit);
+    }
+
+    public static cn.nukkit.command.CommandSender toNukkit(CommandSender sender) {
+        if (sender == null) {
+            return null;
+        }
+        if (sender instanceof PokkitCommandSender) {
+            return ((PokkitCommandSender) sender).nukkit;
+        }
+        if (sender instanceof Player) {
+            return PokkitPlayer.toNukkit((Player) sender);
+        }
+        throw new IllegalArgumentException("Don't know how to convert " + sender.getClass());
     }
 
     private final cn.nukkit.command.CommandSender nukkit;
