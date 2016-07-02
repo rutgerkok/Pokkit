@@ -11,6 +11,7 @@ import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cn.nukkit.Server;
@@ -21,15 +22,38 @@ import cn.nukkit.plugin.PluginLoader;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 
+/**
+ * A wrapper around a Bukkit plugin, for use with Nukkit.
+ *
+ */
 public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
+    /**
+     * Gets the underlying Bukkit plugin.
+     *
+     * @param plugin
+     *            The Nukkit wrapper.
+     * @return The Bukkit plugin.
+     */
     public static JavaPlugin toBukkit(PokkitPlugin plugin) {
         return plugin.bukkit;
+    }
+
+    /**
+     * Gets the Nukkit wrapper for the given Bukkit plugin.
+     *
+     * @param plugin
+     *            The Bukkit plugin.
+     * @return The Nukkit wrapper.
+     */
+    public static cn.nukkit.plugin.Plugin toNukkit(Plugin plugin) {
+        return PokkitServer.toNukkit(Bukkit.getServer()).getPluginManager().getPlugin(plugin.getName());
     }
 
     private final JavaPlugin bukkit;
     private final PluginDescription pluginDescription;
     private final PluginLoader loader;
+
     private final PluginLogger logger;
 
     PokkitPlugin(JavaPlugin bukkit, PluginDescription pluginDescription, PluginLoader pluginLoader) throws IOException {

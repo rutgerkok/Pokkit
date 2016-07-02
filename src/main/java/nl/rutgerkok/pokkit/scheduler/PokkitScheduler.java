@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -58,8 +59,7 @@ public final class PokkitScheduler implements BukkitScheduler {
 
     @Override
     public void cancelTasks(Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        nukkit.cancelTask(PokkitPlugin.toNukkit(plugin));
     }
 
     @Override
