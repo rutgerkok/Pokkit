@@ -233,7 +233,7 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 

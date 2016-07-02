@@ -51,27 +51,27 @@ public class PokkitCommandSender implements CommandSender {
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class PokkitCommandSender implements CommandSender {
 
     @Override
     public void removeAttachment(PermissionAttachment attachment) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override

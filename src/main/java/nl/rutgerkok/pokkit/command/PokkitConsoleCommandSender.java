@@ -18,22 +18,22 @@ final class PokkitConsoleCommandSender extends PokkitCommandSender implements Co
 
     @Override
     public void abandonConversation(Conversation conversation) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public void acceptConversationInput(String input) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public boolean beginConversation(Conversation conversation) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override

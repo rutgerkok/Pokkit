@@ -81,337 +81,337 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void _INVALID_damage(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void _INVALID_damage(int arg0, Entity arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int _INVALID_getHealth() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int _INVALID_getLastDamage() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int _INVALID_getMaxHealth() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void _INVALID_setHealth(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void _INVALID_setLastDamage(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void _INVALID_setMaxHealth(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void abandonConversation(Conversation arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void abandonConversation(Conversation arg0, ConversationAbandonedEvent arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void acceptConversationInput(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2, int arg3) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean addPotionEffects(Collection<PotionEffect> arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void awardAchievement(Achievement arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean beginConversation(Conversation arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean canSee(Player arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void chat(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void closeInventory() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void damage(double arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void damage(double arg0, Entity arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, EntityType arg1, int arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean eject() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Collection<PotionEffect> getActivePotionEffects() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InetSocketAddress getAddress() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getAllowFlight() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public AttributeInstance getAttribute(Attribute arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Location getBedSpawnLocation() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getCanPickupItems() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Location getCompassTarget() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public String getCustomName() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public String getDisplayName() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Inventory getEnderChest() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getEntityId() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public EntityEquipment getEquipment() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getExhaustion() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getExp() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getExpToLevel() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public double getEyeHeight() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public double getEyeHeight(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Location getEyeLocation() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getFallDistance() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getFireTicks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public long getFirstPlayed() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getFlySpeed() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getFoodLevel() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -427,91 +427,91 @@ public class PokkitPlayer implements Player {
 
     @Override
     public double getHealthScale() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public PlayerInventory getInventory() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public ItemStack getItemInHand() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public ItemStack getItemOnCursor() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Player getKiller() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public double getLastDamage() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public EntityDamageEvent getLastDamageCause() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public long getLastPlayed() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<Block> getLastTwoTargetBlocks(HashSet<Byte> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<Block> getLastTwoTargetBlocks(Set<Material> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Entity getLeashHolder() throws IllegalStateException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getLevel() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<Block> getLineOfSight(Set<Material> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Set<String> getListeningPluginChannels() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -532,7 +532,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public int getMaxFireTicks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -543,19 +543,19 @@ public class PokkitPlayer implements Player {
 
     @Override
     public int getMaximumAir() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getMaximumNoDamageTicks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<MetadataValue> getMetadata(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -566,25 +566,25 @@ public class PokkitPlayer implements Player {
 
     @Override
     public List<Entity> getNearbyEntities(double arg0, double arg1, double arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getNoDamageTicks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InventoryView getOpenInventory() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Entity getPassenger() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -595,49 +595,49 @@ public class PokkitPlayer implements Player {
 
     @Override
     public String getPlayerListName() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public long getPlayerTime() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public long getPlayerTimeOffset() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public WeatherType getPlayerWeather() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getRemainingAir() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getRemoveWhenFarAway() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getSaturation() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Scoreboard getScoreboard() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -648,55 +648,55 @@ public class PokkitPlayer implements Player {
 
     @Override
     public int getSleepTicks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Entity getSpectatorTarget() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getStatistic(Statistic arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Block getTargetBlock(Set<Material> arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getTicksLived() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getTotalExperience() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -712,19 +712,19 @@ public class PokkitPlayer implements Player {
 
     @Override
     public Entity getVehicle() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Vector getVelocity() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public float getWalkSpeed() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -735,43 +735,43 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void giveExp(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void giveExpLevels(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasAchievement(Achievement arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasAI() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasGravity() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasLineOfSight(Entity arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasMetadata(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -792,49 +792,49 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean hasPotionEffect(PotionEffectType arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void hidePlayer(Player arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, EntityType arg1, int arg2) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -855,13 +855,13 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean isConversing() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isCustomNameVisible() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -872,13 +872,13 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isFlying() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -894,25 +894,25 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean isHealthScaled() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isInsideVehicle() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isInvulnerable() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isLeashed() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -943,25 +943,25 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean isPlayerTimeRelative() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isSilent() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isSleeping() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isSleepingIgnored() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -992,103 +992,103 @@ public class PokkitPlayer implements Player {
 
     @Override
     public <T extends Projectile> T launchProjectile(Class<? extends T> arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T extends Projectile> T launchProjectile(Class<? extends T> arg0, Vector arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean leaveVehicle() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void loadData() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InventoryView openEnchanting(Location arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InventoryView openInventory(Inventory arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void openInventory(InventoryView arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InventoryView openMerchant(Villager arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public InventoryView openWorkbench(Location arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean performCommand(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playEffect(EntityEffect arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playEffect(Location arg0, Effect arg1, int arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playNote(Location arg0, byte arg1, byte arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playNote(Location arg0, Instrument arg1, Note arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playSound(Location arg0, Sound arg1, float arg2, float arg3) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void playSound(Location arg0, String arg1, float arg2, float arg3) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1099,85 +1099,85 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void removeAchievement(Achievement arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void removeAttachment(PermissionAttachment arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void removeMetadata(String arg0, Plugin arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void removePotionEffect(PotionEffectType arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void resetMaxHealth() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void resetPlayerTime() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void resetPlayerWeather() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void resetTitle() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void saveData() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendBlockChange(Location arg0, int arg1, byte arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendBlockChange(Location arg0, Material arg1, byte arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean sendChunkChange(Location arg0, int arg1, int arg2, int arg3, byte[] arg4) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendMap(MapView arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1195,37 +1195,37 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendRawMessage(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendSignChange(Location arg0, String[] arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendTitle(String arg0, String arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Map<String, Object> serialize() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setAI(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1241,175 +1241,175 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void setBedSpawnLocation(Location arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setBedSpawnLocation(Location arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setCanPickupItems(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setCollidable(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setCompassTarget(Location arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setCustomName(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setCustomNameVisible(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setDisplayName(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setExhaustion(float arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setExp(float arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setFallDistance(float arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setFireTicks(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setFlying(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setFlySpeed(float arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setFoodLevel(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setGameMode(GameMode arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setGliding(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setGlowing(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setGravity(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setHealth(double arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setHealthScale(double arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setHealthScaled(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setInvulnerable(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setItemInHand(ItemStack arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setItemOnCursor(ItemStack arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setLastDamage(double arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setLastDamageCause(EntityDamageEvent arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean setLeashHolder(Entity arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setLevel(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1420,25 +1420,25 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void setMaximumAir(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setMaximumNoDamageTicks(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setMetadata(String arg0, MetadataValue arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setNoDamageTicks(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1449,67 +1449,67 @@ public class PokkitPlayer implements Player {
 
     @Override
     public boolean setPassenger(Entity arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setPlayerListName(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setPlayerTime(long arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setPlayerWeather(WeatherType arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setRemainingAir(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setRemoveWhenFarAway(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setResourcePack(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setSaturation(float arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setScoreboard(Scoreboard arg0) throws IllegalArgumentException, IllegalStateException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setSilent(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setSleepingIgnored(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1520,7 +1520,7 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void setSpectatorTarget(Entity arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -1531,194 +1531,194 @@ public class PokkitPlayer implements Player {
 
     @Override
     public void setStatistic(Statistic arg0, EntityType arg1, int arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setTexturePack(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setTicksLived(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setTotalExperience(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setVelocity(Vector arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setWalkSpeed(float arg0) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setWhitelisted(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean setWindowProperty(Property arg0, int arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void showPlayer(Player arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5, double arg6,
             double arg7) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5, double arg6,
             double arg7, double arg8) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5,
             double arg6, double arg7, double arg8, T arg9) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5,
             double arg6, double arg7, T arg8) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, T arg5) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, Location arg1, int arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
             double arg6) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
             double arg6, T arg7) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
             T arg6) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, T arg3) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Spigot spigot() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void stopSound(Sound arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void stopSound(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean teleport(Entity arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean teleport(Entity entity, TeleportCause cause) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean teleport(Location arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean teleport(Location arg0, TeleportCause arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void updateInventory() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 

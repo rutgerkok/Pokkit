@@ -94,85 +94,85 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean addRecipe(Recipe arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void banIP(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int broadcast(String arg0, String arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int broadcastMessage(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void clearRecipes() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void configureDbConfig(ServerConfig arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public BossBar createBossBar(String arg0, BarColor arg1, BarStyle arg2, BarFlag... arg3) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public ChunkData createChunkData(World arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Inventory createInventory(InventoryHolder arg0, int arg1) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Inventory createInventory(InventoryHolder arg0, int arg1, String arg2) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Inventory createInventory(InventoryHolder arg0, InventoryType arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Inventory createInventory(InventoryHolder arg0, InventoryType arg1, String arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public MapView createMap(World arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public World createWorld(WorldCreator arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -183,43 +183,43 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean getAllowEnd() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getAllowFlight() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getAllowNether() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getAmbientSpawnLimit() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getAnimalSpawnLimit() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public BanList getBanList(Type arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Set<OfflinePlayer> getBannedPlayers() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -238,7 +238,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public long getConnectionThrottle() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -249,43 +249,43 @@ public final class PokkitServer implements Server {
 
     @Override
     public GameMode getDefaultGameMode() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean getGenerateStructures() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public HelpMap getHelpMap() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getIdleTimeout() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public String getIp() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Set<String> getIPBans() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public ItemFactory getItemFactory() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -301,7 +301,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public MapView getMap(short arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -312,13 +312,13 @@ public final class PokkitServer implements Server {
 
     @Override
     public Messenger getMessenger() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getMonsterSpawnLimit() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -334,19 +334,19 @@ public final class PokkitServer implements Server {
 
     @Override
     public OfflinePlayer getOfflinePlayer(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public OfflinePlayer getOfflinePlayer(UUID arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public OfflinePlayer[] getOfflinePlayers() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -368,7 +368,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Set<OfflinePlayer> getOperators() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -384,7 +384,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Player getPlayerExact(String name) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -400,13 +400,13 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getPort() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<Recipe> getRecipesFor(ItemStack arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -417,13 +417,13 @@ public final class PokkitServer implements Server {
 
     @Override
     public ScoreboardManager getScoreboardManager() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public CachedServerIcon getServerIcon() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -434,7 +434,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getServerName() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -455,19 +455,19 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getTicksPerAnimalSpawns() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public int getTicksPerMonsterSpawns() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public UnsafeValues getUnsafe() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -498,61 +498,61 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getWaterAnimalSpawnLimit() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public Set<OfflinePlayer> getWhitelistedPlayers() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public World getWorld(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public World getWorld(UUID arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public File getWorldContainer() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<World> getWorlds() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public String getWorldType() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean hasWhitelist() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isHardcore() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isPrimaryThread() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -568,13 +568,13 @@ public final class PokkitServer implements Server {
 
     @Override
     public CachedServerIcon loadServerIcon(BufferedImage arg0) throws IllegalArgumentException, Exception {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public CachedServerIcon loadServerIcon(File arg0) throws IllegalArgumentException, Exception {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -587,7 +587,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Iterator<Recipe> recipeIterator() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -603,42 +603,42 @@ public final class PokkitServer implements Server {
 
     @Override
     public void resetRecipes() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void savePlayers() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setDefaultGameMode(GameMode arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setIdleTimeout(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void setSpawnRadius(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 
     @Override
     public void setWhitelist(boolean arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
@@ -649,31 +649,31 @@ public final class PokkitServer implements Server {
 
     @Override
     public Spigot spigot() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public void unbanIP(String arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean unloadWorld(String arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean unloadWorld(World arg0, boolean arg1) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean useExactLoginLocation() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 

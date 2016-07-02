@@ -179,6 +179,6 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
     @Override
     public boolean saveResource(String filename, String outputName, boolean replace) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
     }
 }

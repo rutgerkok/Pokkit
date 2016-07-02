@@ -64,19 +64,19 @@ public final class PokkitScheduler implements BukkitScheduler {
 
     @Override
     public List<BukkitWorker> getActiveWorkers() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public List<BukkitTask> getPendingTasks() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
     @Override
     public boolean isCurrentlyRunning(int arg0) {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
+        throw Pokkit.unsupported();
 
     }
 
