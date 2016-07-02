@@ -11,8 +11,15 @@ import org.bukkit.permissions.PermissionDefault;
 public class PokkitPermission {
 
     public static Permission toBukkit(cn.nukkit.permission.Permission nukkit) {
-        PermissionDefault defaultValue = PermissionDefault.getByName(nukkit.getDefault());
+        PermissionDefault defaultValue = toBukkitPermissionDefault(nukkit.getDefault());
         return new Permission(nukkit.getName(), nukkit.getDescription(), defaultValue, nukkit.getChildren());
+    }
+
+    private static PermissionDefault toBukkitPermissionDefault(String nukkit) {
+        if (nukkit == null) {
+            return PermissionDefault.OP;
+        }
+        return PermissionDefault.getByName(nukkit);
     }
 
     public static cn.nukkit.permission.Permission toNukkit(Permission permission) {

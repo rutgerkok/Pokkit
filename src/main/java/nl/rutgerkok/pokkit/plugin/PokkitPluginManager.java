@@ -104,7 +104,11 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public Permission getPermission(String name) {
-        return PokkitPermission.toBukkit(nukkit.getPermission(name));
+        cn.nukkit.permission.Permission nukkitPermission = nukkit.getPermission(name);
+        if (nukkitPermission == null) {
+            return null;
+        }
+        return PokkitPermission.toBukkit(nukkitPermission);
     }
 
     @Override
