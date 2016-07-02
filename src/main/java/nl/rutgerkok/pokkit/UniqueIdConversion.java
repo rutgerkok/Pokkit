@@ -5,19 +5,41 @@ import java.util.Arrays;
 import java.util.UUID;
 
 /**
- * Conversion between {@link UUID} and player names.
+ * Conversion between {@link UUID} and original Nukkit data.
  *
  */
-final class PlayerUniqueId {
+public final class UniqueIdConversion {
 
     /**
-     * Converts an UUID back to the name.
+     * Converts the unique id to the level index.
+     *
+     * @param levelId
+     *            The unique id.
+     * @return The level index.
+     */
+    public static int levelIdToIndex(UUID levelId) {
+        return (int) levelId.getLeastSignificantBits();
+    }
+
+    /**
+     * Converst a level index to an unique id.
+     *
+     * @param levelIndex
+     *            The level index.
+     * @return The unique id.
+     */
+    public static UUID levelIndexToId(int levelIndex) {
+        return new UUID(0, levelIndex);
+    }
+
+    /**
+     * Converts an UUID back to the playername.
      *
      * @param uuid
      *            The UUID.
      * @return The name, always lowercase.
      */
-    static String idToName(UUID uuid) {
+    static String playerIdToName(UUID uuid) {
         long leastSigBits = uuid.getLeastSignificantBits();
         long mostSigBits = uuid.getMostSignificantBits();
 
@@ -34,7 +56,7 @@ final class PlayerUniqueId {
      *            The name, case insensitive.
      * @return The UUID.
      */
-    static UUID nameToId(String name) {
+    static UUID playerNameToId(String name) {
         byte[] bytes = name.toLowerCase().getBytes(StandardCharsets.UTF_8);
         byte[] trimmedTo16 = Arrays.copyOf(bytes, 16);
 

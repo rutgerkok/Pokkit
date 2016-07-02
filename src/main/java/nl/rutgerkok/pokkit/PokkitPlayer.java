@@ -731,7 +731,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public UUID getUniqueId() {
-        return PlayerUniqueId.nameToId(getName());
+        return UniqueIdConversion.playerNameToId(getName());
     }
 
     @Override

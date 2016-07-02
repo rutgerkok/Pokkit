@@ -18,6 +18,7 @@ import nl.rutgerkok.pokkit.command.PokkitCommandMap;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
 
 import org.bukkit.BanList;
 import org.bukkit.BanList.Type;
@@ -62,9 +63,10 @@ import com.google.common.collect.ImmutableMap;
 public final class PokkitServer implements Server {
 
     public static cn.nukkit.Server toNukkit(Server server) {
-        return ((PokkitServer)server).nukkitServer;
+        return ((PokkitServer) server).nukkit;
     }
-    private final cn.nukkit.Server nukkitServer;
+
+    private final cn.nukkit.Server nukkit;
     private final PokkitScheduler scheduler;
     private final PokkitPluginManager pluginManager;
     private final PokkitCommandMap commandMap;
@@ -73,7 +75,7 @@ public final class PokkitServer implements Server {
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
-        this.nukkitServer = Objects.requireNonNull(nukkitServer, "nukkitServer");
+        this.nukkit = Objects.requireNonNull(nukkitServer, "nukkitServer");
         this.pluginFolder = Objects.requireNonNull(pluginFolder, "pluginFolder");
         this.logger = Objects.requireNonNull(logger, "logger");
 
@@ -85,7 +87,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Player[] _INVALID_getOnlinePlayers() {
-        return nukkitServer.getOnlinePlayers()
+        return nukkit.getOnlinePlayers()
                 .values()
                 .stream()
                 .map(PokkitPlayer::toBukkit)
@@ -178,7 +180,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean dispatchCommand(CommandSender sender, String command) throws CommandException {
-        return nukkitServer.dispatchCommand(PokkitCommandSender.toNukkit(sender), command);
+        return nukkit.dispatchCommand(PokkitCommandSender.toNukkit(sender), command);
     }
 
     @Override
@@ -231,7 +233,7 @@ public final class PokkitServer implements Server {
     @Override
     public Map<String, String[]> getCommandAliases() {
         ImmutableMap.Builder<String, String[]> allAliases = ImmutableMap.builder();
-        nukkitServer.getCommandAliases().forEach(
+        nukkit.getCommandAliases().forEach(
                 (command, aliasList) -> allAliases.put(command, aliasList.toArray(new String[0])));
         return allAliases.build();
     }
@@ -244,7 +246,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public ConsoleCommandSender getConsoleSender() {
-        return (ConsoleCommandSender) PokkitCommandSender.toBukkit(nukkitServer.getConsoleSender());
+        return (ConsoleCommandSender) PokkitCommandSender.toBukkit(nukkit.getConsoleSender());
     }
 
     @Override
@@ -307,7 +309,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getMaxPlayers() {
-        return nukkitServer.getMaxPlayers();
+        return nukkit.getMaxPlayers();
     }
 
     @Override
@@ -324,22 +326,22 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getMotd() {
-        return nukkitServer.getMotd();
+        return nukkit.getMotd();
     }
 
     @Override
     public String getName() {
-        return nukkitServer.getName();
+        return nukkit.getName();
     }
 
     @Override
     public OfflinePlayer getOfflinePlayer(String name) {
-        return PokkitOfflinePlayer.toBukkit(nukkitServer.getOfflinePlayer(name));
+        return PokkitOfflinePlayer.toBukkit(nukkit.getOfflinePlayer(name));
     }
 
     @Override
     public OfflinePlayer getOfflinePlayer(UUID uuid) {
-        return getOfflinePlayer(PlayerUniqueId.idToName(uuid));
+        return getOfflinePlayer(UniqueIdConversion.playerIdToName(uuid));
     }
 
     @Override
@@ -357,7 +359,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Collection<? extends Player> getOnlinePlayers() {
-        return nukkitServer.getOnlinePlayers()
+        return nukkit.getOnlinePlayers()
                 .values()
                 .stream()
                 .map(PokkitPlayer::toBukkit)
@@ -372,12 +374,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public Player getPlayer(String name) {
-        return PokkitPlayer.toBukkit(nukkitServer.getPlayer(name));
+        return PokkitPlayer.toBukkit(nukkit.getPlayer(name));
     }
 
     @Override
     public Player getPlayer(UUID uuid) {
-        return PokkitPlayer.toBukkit(nukkitServer.getOnlinePlayers().get(uuid));
+        return PokkitPlayer.toBukkit(nukkit.getOnlinePlayers().get(uuid));
     }
 
     @Override
@@ -427,7 +429,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getServerId() {
-        return nukkitServer.getServerUniqueId().toString();
+        return nukkit.getServerUniqueId().toString();
     }
 
     @Override
@@ -448,7 +450,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getSpawnRadius() {
-        return nukkitServer.getSpawnRadius();
+        return nukkit.getSpawnRadius();
     }
 
     @Override
@@ -481,12 +483,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getVersion() {
-        return nukkitServer.getVersion();
+        return nukkit.getVersion();
     }
 
     @Override
     public int getViewDistance() {
-        return nukkitServer.getViewDistance();
+        return nukkit.getViewDistance();
     }
 
     @Override
@@ -507,15 +509,13 @@ public final class PokkitServer implements Server {
     }
 
     @Override
-    public World getWorld(String arg0) {
-        throw Pokkit.unsupported();
-
+    public World getWorld(String worldName) {
+        return PokkitWorld.toBukkit(nukkit.getLevelByName(worldName));
     }
 
     @Override
-    public World getWorld(UUID arg0) {
-        throw Pokkit.unsupported();
-
+    public World getWorld(UUID uuid) {
+        return PokkitWorld.toBukkit(nukkit.getLevel(UniqueIdConversion.levelIdToIndex(uuid)));
     }
 
     @Override
@@ -526,8 +526,11 @@ public final class PokkitServer implements Server {
 
     @Override
     public List<World> getWorlds() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getLevels()
+                .values()
+                .stream()
+                .map(PokkitWorld::toBukkit)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -578,7 +581,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public List<Player> matchPlayer(String partialName) {
-        return Arrays.stream(nukkitServer.matchPlayer(partialName))
+        return Arrays.stream(nukkit.matchPlayer(partialName))
                 .map(PokkitPlayer::toBukkit)
                 .collect(Collectors.toList());
     }
@@ -591,12 +594,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public void reload() {
-        nukkitServer.reload();
+        nukkit.reload();
     }
 
     @Override
     public void reloadWhitelist() {
-        nukkitServer.reloadWhitelist();
+        nukkit.reloadWhitelist();
     }
 
     @Override
@@ -642,7 +645,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public void shutdown() {
-        nukkitServer.shutdown();
+        nukkit.shutdown();
     }
 
     @Override
