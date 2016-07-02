@@ -25,6 +25,20 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<!-- SQLite support for Bukkit plugins -->
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.7.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<!-- MySQL support for Bukkit plugins -->
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.37</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>17.0</version> <!-- Keep in sync with Spigot -->
@@ -58,6 +72,15 @@
 						<goals>
 							<goal>shade</goal>
 						</goals>
+						<configuration>
+							<artifactSet>
+								<excludes>
+									<!-- These are provided by Nukkit -->
+									<exclude>org.yaml:snakeyaml</exclude>
+									<exclude>com.google.code.gson:gson</exclude>
+								</excludes>
+							</artifactSet>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
