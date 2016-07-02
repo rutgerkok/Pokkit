@@ -56,6 +56,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.CachedServerIcon;
 
 import com.avaje.ebean.config.ServerConfig;
+import com.google.common.collect.ImmutableMap;
 
 @SuppressWarnings("deprecation")
 public final class PokkitServer implements Server {
@@ -229,8 +230,10 @@ public final class PokkitServer implements Server {
 
     @Override
     public Map<String, String[]> getCommandAliases() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        ImmutableMap.Builder<String, String[]> allAliases = ImmutableMap.builder();
+        nukkitServer.getCommandAliases().forEach(
+                (command, aliasList) -> allAliases.put(command, aliasList.toArray(new String[0])));
+        return allAliases.build();
     }
 
     @Override
@@ -241,8 +244,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public ConsoleCommandSender getConsoleSender() {
-        throw new UnsupportedOperationException("Not supported by " + Pokkit.NAME);
-
+        return (ConsoleCommandSender) PokkitCommandSender.toBukkit(nukkitServer.getConsoleSender());
     }
 
     @Override

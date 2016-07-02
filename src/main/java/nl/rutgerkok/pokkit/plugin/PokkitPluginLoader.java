@@ -87,8 +87,6 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
         return bukkit;
     }
 
-
-
     @Override
     public Plugin loadPlugin(File file) throws Exception {
         JavaPlugin bukkitPlugin = (JavaPlugin) getPluginLoader().loadPlugin(file);

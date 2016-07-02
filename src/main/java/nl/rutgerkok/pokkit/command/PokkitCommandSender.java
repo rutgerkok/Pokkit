@@ -19,10 +19,14 @@ import org.bukkit.plugin.Plugin;
 public class PokkitCommandSender implements CommandSender {
 
     public static CommandSender toBukkit(cn.nukkit.command.CommandSender nukkit) {
+        // More specialized ones to support instanceof checks
         if (nukkit instanceof cn.nukkit.Player) {
-            // More specialized one to support instanceof checks
             return PokkitPlayer.toBukkit((cn.nukkit.Player) nukkit);
         }
+        if (nukkit instanceof cn.nukkit.command.ConsoleCommandSender) {
+            return new PokkitConsoleCommandSender((cn.nukkit.command.ConsoleCommandSender) nukkit);
+        }
+
         return new PokkitCommandSender(nukkit);
     }
 
@@ -41,7 +45,7 @@ public class PokkitCommandSender implements CommandSender {
 
     private final cn.nukkit.command.CommandSender nukkit;
 
-    private PokkitCommandSender(cn.nukkit.command.CommandSender nukkit) {
+    protected PokkitCommandSender(cn.nukkit.command.CommandSender nukkit) {
         this.nukkit = Objects.requireNonNull(nukkit);
     }
 
