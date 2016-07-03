@@ -128,11 +128,11 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-       PluginCommand bukkitCommand = getBukkitCommand(command);
-       if (bukkitCommand == null) {
-           return false;
-       }
-        return bukkit.onCommand(PokkitCommandSender.toBukkit(sender), bukkitCommand, label, args);
+        PluginCommand bukkitCommand = getBukkitCommand(command);
+        if (bukkitCommand == null) {
+            return false;
+        }
+        return bukkitCommand.getExecutor().onCommand(PokkitCommandSender.toBukkit(sender), bukkitCommand, label, args);
     }
 
     @Override
@@ -180,5 +180,10 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
     @Override
     public boolean saveResource(String filename, String outputName, boolean replace) {
         throw Pokkit.unsupported();
+    }
+
+    @Override
+    public String toString() {
+        return bukkit.toString();
     }
 }
