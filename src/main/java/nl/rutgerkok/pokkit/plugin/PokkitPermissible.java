@@ -1,7 +1,7 @@
 package nl.rutgerkok.pokkit.plugin;
 
-import nl.rutgerkok.pokkit.PokkitPlayer;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permissible;

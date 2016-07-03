@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit;
+package nl.rutgerkok.pokkit.player;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
@@ -9,9 +9,17 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.plugin.PokkitPermission;
+import nl.rutgerkok.pokkit.plugin.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -67,7 +75,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
         if (nukkit == null) {
             return null;
         }
-        return new PokkitPlayer(nukkit);
+        return ((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().getPlayer(nukkit);
     }
 
     public static cn.nukkit.Player toNukkit(Player player) {
@@ -78,9 +86,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     private final cn.nukkit.Player nukkit;
+    private Scoreboard scoreboard;
 
-    private PokkitPlayer(cn.nukkit.Player player) {
+    PokkitPlayer(cn.nukkit.Player player) {
         this.nukkit = Objects.requireNonNull(player);
+        this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     }
 
     @Override
@@ -150,27 +160,32 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin arg0) {
-        throw Pokkit.unsupported();
-
+    public PermissionAttachment addAttachment(Plugin plugin) {
+        return PokkitPermissionAttachment.toBukkit(
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)), this);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin arg0, int arg1) {
-        throw Pokkit.unsupported();
+    public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
+        cn.nukkit.plugin.Plugin nukkitPlugin = PokkitPlugin.toNukkit(plugin);
+        cn.nukkit.permission.PermissionAttachment nukkitAttachment = nukkit.addAttachment(nukkitPlugin);
+        nukkit.getServer().getScheduler().scheduleDelayedTask(() -> {
+            nukkit.removeAttachment(nukkitAttachment);
+        }, ticks);
 
+        return PokkitPermissionAttachment.toBukkit(nukkitAttachment, this);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2) {
-        throw Pokkit.unsupported();
-
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
+        return PokkitPermissionAttachment.toBukkit(
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value), this);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin arg0, String arg1, boolean arg2, int arg3) {
-        throw Pokkit.unsupported();
-
+    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+        return PokkitPermissionAttachment.toBukkit(
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value), this);
     }
 
     @Override
@@ -408,8 +423,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public long getFirstPlayed() {
-        throw Pokkit.unsupported();
-
+        Long firstPlayed = nukkit.getFirstPlayed();
+        if (firstPlayed == null) {
+            return 0;
+        }
+        return firstPlayed;
     }
 
     @Override
@@ -483,8 +501,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public long getLastPlayed() {
-        throw Pokkit.unsupported();
-
+        Long lastPlayed = nukkit.getLastPlayed();
+        if (lastPlayed == null) {
+            return 0;
+        }
+        return lastPlayed;
     }
 
     @Override
@@ -661,8 +682,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public Scoreboard getScoreboard() {
-        throw Pokkit.unsupported();
-
+        return scoreboard;
     }
 
     @Override
@@ -1140,9 +1160,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void removeAttachment(PermissionAttachment arg0) {
-        throw Pokkit.unsupported();
-
+    public void removeAttachment(PermissionAttachment attachment) {
+        nukkit.removeAttachment(PokkitPermissionAttachment.toNukkit(attachment));
     }
 
     @Override
@@ -1223,9 +1242,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public void sendMessage(BaseComponent... components) {
+        StringBuilder text = new StringBuilder();
         for (BaseComponent component : components) {
-            sendMessage(component);
+            text.append(component.toLegacyText());
         }
+        sendMessage(text.toString());
     }
 
     @Override
@@ -1548,9 +1569,9 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void setScoreboard(Scoreboard arg0) throws IllegalArgumentException, IllegalStateException {
-        throw Pokkit.unsupported();
-
+    public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException {
+        Validate.notNull(scoreboard);
+        this.scoreboard = scoreboard;
     }
 
     @Override

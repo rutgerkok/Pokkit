@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.command.PokkitCommandMap;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
+import nl.rutgerkok.pokkit.player.OnlinePlayerData;
+import nl.rutgerkok.pokkit.player.PokkitOfflinePlayer;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
 import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboardManager;
@@ -74,6 +77,7 @@ public final class PokkitServer implements Server {
     private final File pluginFolder;
     private final SimpleServicesManager servicesManager;
     private final ScoreboardManager scoreboardManager;
+    private final OnlinePlayerData onlinePlayerData;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -86,6 +90,7 @@ public final class PokkitServer implements Server {
         this.servicesManager = new SimpleServicesManager();
         this.commandMap = new PokkitCommandMap(nukkitServer::getPluginCommand);
         this.scoreboardManager = new PokkitScoreboardManager();
+        this.onlinePlayerData = new OnlinePlayerData();
     }
 
     @Override
@@ -360,6 +365,14 @@ public final class PokkitServer implements Server {
         return true;
     }
 
+    /**
+     * Gets the data of all online players.
+     * @return The online player data.
+     */
+    public OnlinePlayerData getOnlinePlayerData() {
+        return onlinePlayerData;
+    }
+
     @Override
     public Collection<? extends Player> getOnlinePlayers() {
         return nukkit.getOnlinePlayers()
@@ -387,8 +400,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Player getPlayerExact(String name) {
-        throw Pokkit.unsupported();
-
+        return PokkitPlayer.toBukkit(nukkit.getPlayer(name));
     }
 
     @Override
@@ -555,8 +567,11 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean isPrimaryThread() {
-        throw Pokkit.unsupported();
-
+        String threadName = Thread.currentThread().getName();
+        if (threadName.contains("Async") || threadName.contains("RakNet")) {
+            return false;
+        }
+        return true;
     }
 
     /**

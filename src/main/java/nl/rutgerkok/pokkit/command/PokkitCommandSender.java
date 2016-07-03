@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitPlayer;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.plugin.PokkitPermission;
 
 import org.bukkit.Bukkit;

@@ -1,8 +1,10 @@
-package nl.rutgerkok.pokkit;
+package nl.rutgerkok.pokkit.player;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+
+import nl.rutgerkok.pokkit.UniqueIdConversion;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,7 +15,7 @@ import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.IPlayer;
 
-final class PokkitOfflinePlayer implements OfflinePlayer {
+public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     public static OfflinePlayer deserialize(Map<String, Object> args) {
         String name = (String) args.get("name");
@@ -22,7 +24,7 @@ final class PokkitOfflinePlayer implements OfflinePlayer {
         return player;
     }
 
-    static OfflinePlayer toBukkit(IPlayer offlinePlayer) {
+    public static OfflinePlayer toBukkit(IPlayer offlinePlayer) {
         if (offlinePlayer instanceof cn.nukkit.Player) {
             // More specialized type available
             return PokkitPlayer.toBukkit((cn.nukkit.Player) offlinePlayer);
@@ -32,7 +34,7 @@ final class PokkitOfflinePlayer implements OfflinePlayer {
 
     private final cn.nukkit.IPlayer nukkit;
 
-    public PokkitOfflinePlayer(IPlayer nukkit) {
+    private PokkitOfflinePlayer(IPlayer nukkit) {
         this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
     }
 

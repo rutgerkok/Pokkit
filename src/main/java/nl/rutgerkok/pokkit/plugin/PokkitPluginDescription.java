@@ -64,6 +64,8 @@ final class PokkitPluginDescription extends PluginDescription {
         if (input.get("load") instanceof String) {
             input.put("load", input.get("load").toString().toUpperCase(Locale.ENGLISH));
         }
+        // Nukkit requires version to be a string (and not a double like 0.1)
+        input.put("version", String.valueOf(input.get("version")));
 
         return input;
     }

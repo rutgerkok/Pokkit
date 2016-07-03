@@ -56,7 +56,7 @@ public final class UniqueIdConversion {
      *            The name, case insensitive.
      * @return The UUID.
      */
-    static UUID playerNameToId(String name) {
+    public static UUID playerNameToId(String name) {
         byte[] bytes = name.toLowerCase().getBytes(StandardCharsets.UTF_8);
         byte[] trimmedTo16 = Arrays.copyOf(bytes, 16);
 

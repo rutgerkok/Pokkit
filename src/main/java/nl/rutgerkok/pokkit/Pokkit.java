@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
+import nl.rutgerkok.pokkit.pluginservice.PermissionsYml;
+import nl.rutgerkok.pokkit.pluginservice.PlayerEvents;
 import nl.rutgerkok.pokkit.pluginservice.PluginService;
 import nl.rutgerkok.pokkit.pluginservice.PokkitService;
 
@@ -38,7 +40,9 @@ public final class Pokkit extends PluginBase {
 
     private final List<PokkitService> services = Arrays.asList(
             new MainScoreboardService(),
-            new PluginService());
+            new PermissionsYml(),
+            new PluginService(),
+            new PlayerEvents());
 
     @Override
     public void onDisable() {

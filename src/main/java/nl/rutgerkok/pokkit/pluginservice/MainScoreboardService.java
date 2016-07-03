@@ -25,6 +25,7 @@ public final class MainScoreboardService implements PokkitService {
     public void onDisable(Pokkit pokkit) {
         YamlConfiguration scoreboardConfig = new YamlConfiguration();
         persister.saveScoreboard(scoreboardConfig, Bukkit.getScoreboardManager().getMainScoreboard());
+        scoreboardConfig.options().header("This is the scoreboard data of the main scoreboard.");
         try {
             scoreboardConfig.save(getScoreboardFile(pokkit));
         } catch (IOException e) {

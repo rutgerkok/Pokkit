@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitPlayer;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Chunk;
