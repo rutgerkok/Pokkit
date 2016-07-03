@@ -1,11 +1,15 @@
 package nl.rutgerkok.pokkit;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
+import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
+import nl.rutgerkok.pokkit.pluginservice.PluginService;
+import nl.rutgerkok.pokkit.pluginservice.PokkitService;
+
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginLoadOrder;
 
 import cn.nukkit.plugin.PluginBase;
 
@@ -32,20 +36,18 @@ public final class Pokkit extends PluginBase {
         throw new UnsupportedOperationException("This method is not supported yet by " + NAME + " " + VERSION);
     }
 
-    private Plugin[] plugins = null;
+    private final List<PokkitService> services = Arrays.asList(
+            new MainScoreboardService(),
+            new PluginService());
 
-    private void enablePlugins(PluginLoadOrder pluginLoadOrder) {
-        for (Plugin plugin : plugins) {
-            if (plugin.getDescription().getLoad() == pluginLoadOrder) {
-                Bukkit.getServer().getPluginManager().enablePlugin(plugin);
-            }
-        }
+    @Override
+    public void onDisable() {
+        services.forEach(service -> service.onDisable(this));
     }
 
     @Override
     public void onEnable() {
-        enablePlugins(PluginLoadOrder.POSTWORLD);
-        plugins = null; // field is no longer needed
+        services.forEach(service -> service.onEnable(this));
     }
 
     @Override
@@ -59,7 +61,6 @@ public final class Pokkit extends PluginBase {
         PokkitServer server = new PokkitServer(this.getServer(), logger, pluginFolder);
         Bukkit.setServer(server);
 
-        plugins = server.loadPlugins();
-        enablePlugins(PluginLoadOrder.STARTUP);
+        services.forEach(service -> service.onLoad(this));
     }
 }

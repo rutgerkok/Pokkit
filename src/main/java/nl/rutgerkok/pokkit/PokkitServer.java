@@ -18,6 +18,7 @@ import nl.rutgerkok.pokkit.command.PokkitCommandMap;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
+import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboardManager;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
 import org.bukkit.BanList;
@@ -72,6 +73,7 @@ public final class PokkitServer implements Server {
     private final PokkitCommandMap commandMap;
     private final File pluginFolder;
     private final SimpleServicesManager servicesManager;
+    private final ScoreboardManager scoreboardManager;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -83,6 +85,7 @@ public final class PokkitServer implements Server {
         this.pluginManager = new PokkitPluginManager(nukkitServer.getPluginManager());
         this.servicesManager = new SimpleServicesManager();
         this.commandMap = new PokkitCommandMap(nukkitServer::getPluginCommand);
+        this.scoreboardManager = new PokkitScoreboardManager();
     }
 
     @Override
@@ -417,8 +420,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public ScoreboardManager getScoreboardManager() {
-        throw Pokkit.unsupported();
-
+        return scoreboardManager;
     }
 
     @Override
