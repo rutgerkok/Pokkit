@@ -1403,9 +1403,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void setGameMode(GameMode arg0) {
-        throw Pokkit.unsupported();
-
+    public void setGameMode(GameMode gamemode) {
+        nukkit.setGamemode(PokkitGameMode.toNukkit(gamemode));
     }
 
     @Override

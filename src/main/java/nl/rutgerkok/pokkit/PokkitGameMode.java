@@ -20,4 +20,19 @@ public final class PokkitGameMode {
                 throw new UnsupportedOperationException("Unknown gamemode: " + nukkit);
         }
     }
+
+    public static int toNukkit(GameMode gamemode) {
+        switch (gamemode) {
+            case ADVENTURE:
+                return Player.ADVENTURE;
+            case CREATIVE:
+                return Player.CREATIVE;
+            case SPECTATOR:
+                return Player.SPECTATOR;
+            case SURVIVAL:
+                return Player.SURVIVAL;
+            default:
+                throw new UnsupportedOperationException("Unknown gamemode: " + gamemode);
+        }
+    }
 }
