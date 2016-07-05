@@ -346,8 +346,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public String getDisplayName() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getDisplayName();
     }
 
     @Override
@@ -1358,9 +1357,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void setDisplayName(String arg0) {
-        throw Pokkit.unsupported();
-
+    public void setDisplayName(String displayName) {
+        nukkit.setDisplayName(displayName);
     }
 
     @Override
