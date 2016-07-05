@@ -14,6 +14,7 @@ import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
 import nl.rutgerkok.pokkit.plugin.PokkitPermission;
 import nl.rutgerkok.pokkit.plugin.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
@@ -594,9 +595,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public List<MetadataValue> getMetadata(String arg0) {
-        throw Pokkit.unsupported();
+    public List<MetadataValue> getMetadata(String metadataKey) {
+        return getMetadataStore().getMetadata(this, metadataKey);
+    }
 
+    private PlayerMetadataStore getMetadataStore() {
+        return ((PokkitServer) Bukkit.getServer()).getMetadata().getPlayerMetadata();
     }
 
     @Override
@@ -814,9 +818,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public boolean hasMetadata(String arg0) {
-        throw Pokkit.unsupported();
-
+    public boolean hasMetadata(String metadataKey) {
+        return getMetadataStore().hasMetadata(this, metadataKey);
     }
 
     @Override
@@ -1164,10 +1167,10 @@ public class PokkitPlayer extends Player.Spigot implements Player {
         nukkit.removeAttachment(PokkitPermissionAttachment.toNukkit(attachment));
     }
 
-    @Override
-    public void removeMetadata(String arg0, Plugin arg1) {
-        throw Pokkit.unsupported();
 
+    @Override
+    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+        getMetadataStore().removeMetadata(this, metadataKey, owningPlugin);
     }
 
     @Override
@@ -1503,9 +1506,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void setMetadata(String arg0, MetadataValue arg1) {
-        throw Pokkit.unsupported();
-
+    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+        getMetadataStore().setMetadata(this, metadataKey, newMetadataValue);
     }
 
     @Override

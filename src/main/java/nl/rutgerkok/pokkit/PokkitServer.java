@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.command.PokkitCommandMap;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
+import nl.rutgerkok.pokkit.metadata.AllMetadataStore;
 import nl.rutgerkok.pokkit.player.OnlinePlayerData;
 import nl.rutgerkok.pokkit.player.PokkitOfflinePlayer;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -78,6 +79,7 @@ public final class PokkitServer implements Server {
     private final SimpleServicesManager servicesManager;
     private final ScoreboardManager scoreboardManager;
     private final OnlinePlayerData onlinePlayerData;
+    private final AllMetadataStore metadataOverview;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -91,6 +93,7 @@ public final class PokkitServer implements Server {
         this.commandMap = new PokkitCommandMap(nukkitServer::getPluginCommand);
         this.scoreboardManager = new PokkitScoreboardManager();
         this.onlinePlayerData = new OnlinePlayerData();
+        this.metadataOverview = new AllMetadataStore();
     }
 
     @Override
@@ -324,6 +327,14 @@ public final class PokkitServer implements Server {
     public Messenger getMessenger() {
         throw Pokkit.unsupported();
 
+    }
+
+    /**
+     * Gets all meta data that the Bukkit side of the server knows about.
+     * @return All meta data.
+     */
+    public AllMetadataStore getMetadata() {
+        return metadataOverview;
     }
 
     @Override

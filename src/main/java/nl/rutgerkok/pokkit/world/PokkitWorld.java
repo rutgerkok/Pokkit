@@ -10,10 +10,13 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import org.bukkit.BlockChangeDelegate;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Difficulty;
@@ -325,8 +328,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public List<MetadataValue> getMetadata(String metadataKey) {
-        throw Pokkit.unsupported();
-
+        return getWorldMetadata().getMetadata(this, metadataKey);
     }
 
     @Override
@@ -441,6 +443,10 @@ public final class PokkitWorld implements World {
 
     }
 
+    private WorldMetadataStore getWorldMetadata() {
+        return ((PokkitServer)Bukkit.getServer()).getMetadata().getWorldMetadata();
+    }
+
     @Override
     public WorldType getWorldType() {
         throw Pokkit.unsupported();
@@ -449,8 +455,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public boolean hasMetadata(String metadataKey) {
-        throw Pokkit.unsupported();
-
+        return getWorldMetadata().hasMetadata(this, metadataKey);
     }
 
     @Override
@@ -563,8 +568,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public void removeMetadata(String metadataKey, Plugin owningPlugin) {
-        throw Pokkit.unsupported();
-
+        getWorldMetadata().removeMetadata(this, metadataKey, owningPlugin);
     }
 
     @Override
@@ -627,8 +631,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
-        throw Pokkit.unsupported();
-
+        getWorldMetadata().setMetadata(this, metadataKey, newMetadataValue);
     }
 
     @Override
