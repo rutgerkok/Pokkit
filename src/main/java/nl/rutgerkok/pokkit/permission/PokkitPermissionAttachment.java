@@ -1,7 +1,9 @@
-package nl.rutgerkok.pokkit.plugin;
+package nl.rutgerkok.pokkit.permission;
 
 import java.util.Map;
 import java.util.Objects;
+
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
@@ -17,6 +19,9 @@ public final class PokkitPermissionAttachment extends PermissionAttachment {
 
     public static PermissionAttachment toBukkit(cn.nukkit.permission.PermissionAttachment nukkit,
             Permissible permissible) {
+        if (nukkit == null) {
+            return null;
+        }
         return new PokkitPermissionAttachment(nukkit, permissible);
     }
 

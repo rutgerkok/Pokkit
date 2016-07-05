@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitGameMode;
@@ -15,8 +16,9 @@ import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
-import nl.rutgerkok.pokkit.plugin.PokkitPermission;
-import nl.rutgerkok.pokkit.plugin.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
@@ -351,8 +353,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getEffectivePermissions()
+                .values()
+                .stream()
+                .map(PokkitPermissionAttachmentInfo::toBukkit)
+                .collect(Collectors.toSet());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit.plugin;
+package nl.rutgerkok.pokkit.permission;
 
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;

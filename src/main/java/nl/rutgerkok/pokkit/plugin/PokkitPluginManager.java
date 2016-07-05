@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.permission.PokkitPermissible;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;

@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit.plugin;
+package nl.rutgerkok.pokkit.permission;
 
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
