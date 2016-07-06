@@ -132,11 +132,7 @@ public final class PokkitPluginManager implements PluginManager {
 
     @Override
     public Plugin getPlugin(String name) {
-        cn.nukkit.plugin.Plugin nukkitPlugin = nukkit.getPlugin(name);
-        if (nukkitPlugin instanceof PokkitPlugin) {
-            return PokkitPlugin.toBukkit((PokkitPlugin) nukkitPlugin);
-        }
-        return null;
+        return PokkitPlugin.toBukkit(nukkit.getPlugin(name));
     }
 
     @Override
@@ -144,8 +140,7 @@ public final class PokkitPluginManager implements PluginManager {
         return nukkit.getPlugins()
                 .values()
                 .stream()
-                .filter(nukkitPlugin -> nukkitPlugin instanceof PokkitPlugin)
-                .map(nukkitPlugin -> PokkitPlugin.toBukkit((PokkitPlugin) nukkitPlugin))
+                .map(nukkitPlugin -> PokkitPlugin.toBukkit(nukkitPlugin))
                 .toArray(Plugin[]::new);
     }
 
@@ -189,7 +184,7 @@ public final class PokkitPluginManager implements PluginManager {
         }
 
         // Return the plugin
-        return PokkitPlugin.toBukkit((PokkitPlugin) plugin);
+        return PokkitPlugin.toBukkit(plugin);
     }
 
     @Override
@@ -206,7 +201,7 @@ public final class PokkitPluginManager implements PluginManager {
                 throw new RuntimeException(
                         "Unexpected plugin type: " + nukkitPlugin + "(" + nukkitPlugin.getClass() + ")");
             }
-            bukkitPlugins.add(PokkitPlugin.toBukkit((PokkitPlugin) nukkitPlugin));
+            bukkitPlugins.add(PokkitPlugin.toBukkit(nukkitPlugin));
         }
         return bukkitPlugins.toArray(new Plugin[0]);
     }

@@ -14,7 +14,7 @@ public final class PokkitPermissionAttachmentInfo {
         return new PermissionAttachmentInfo(
                 bukkitPermissible,
                 nukkit.getPermission(),
-                PokkitPermissionAttachment.toBukkit(nukkit.getAttachment(), bukkitPermissible),
+                PokkitPermissionAttachment.toBukkit(nukkit.getAttachment()),
                 nukkit.getValue());
     }
 }

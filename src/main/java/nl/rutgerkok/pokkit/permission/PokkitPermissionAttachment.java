@@ -1,112 +1,55 @@
 package nl.rutgerkok.pokkit.permission;
 
 import java.util.Map;
-import java.util.Objects;
 
+import nl.rutgerkok.pokkit.Reflection;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 
-import org.bukkit.permissions.Permissible;
-import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.permissions.PermissionRemovedExecutor;
 
 /**
- * Wrapper around a Nukkit permission attachment, so that remove listeners still
- * work.
+ * Converters between Bukkit and Nukkit PermissionAttachments, establishing a
+ * magic link between the permission maps.
  *
  */
-public final class PokkitPermissionAttachment extends PermissionAttachment {
+public final class PokkitPermissionAttachment {
 
-    public static PermissionAttachment toBukkit(cn.nukkit.permission.PermissionAttachment nukkit,
-            Permissible permissible) {
+    public static PermissionAttachment toBukkit(cn.nukkit.permission.PermissionAttachment nukkit) {
         if (nukkit == null) {
             return null;
         }
-        return new PokkitPermissionAttachment(nukkit, permissible);
+
+        PermissionAttachment bukkit = new PermissionAttachment(
+                PokkitPlugin.toBukkit(nukkit.getPlugin()),
+                PokkitPermissible
+                        .toBukkit(Reflection.getValueInFieldOfType(nukkit, cn.nukkit.permission.Permissible.class)));
+
+        // Create magic link (= share reference) between permission maps (this
+        // keeps them in sync)
+        Reflection.setValueInFieldOfType(bukkit, Map.class, nukkit.getPermissions());
+
+        return bukkit;
     }
 
-    public static cn.nukkit.permission.PermissionAttachment toNukkit(PermissionAttachment attachment) {
-        if (attachment == null) {
+    public static cn.nukkit.permission.PermissionAttachment toNukkit(PermissionAttachment bukkit) {
+        if (bukkit == null) {
             return null;
         }
 
-        // Try to unwrap
-        if (attachment instanceof PokkitPermissionAttachment) {
-            return ((PokkitPermissionAttachment) attachment).nukkit;
-        }
+        cn.nukkit.permission.PermissionAttachment nukkit = new cn.nukkit.permission.PermissionAttachment(
+                PokkitPlugin.toNukkit(bukkit.getPlugin()),
+                PokkitPermissible.toNukkit(bukkit.getPermissible()));
 
-        throw new IllegalArgumentException("Cannot convert " + attachment);
+        // Create magic link (= share references) between permission maps (this
+        // keeps them in sync)
+        // We can't simply use bukkit.getPermissions(), as that method returns a
+        // copy of the map, so we can't create a magic link
+        @SuppressWarnings("unchecked")
+        Map<String, Boolean> bukkitPermissions = Reflection.getValueInFieldOfType(bukkit, Map.class);
+        nukkit.setPermissions(bukkitPermissions);
+
+        return nukkit;
     }
 
-    private final cn.nukkit.permission.PermissionAttachment nukkit;
-    private final Permissible permissible;
 
-    private PokkitPermissionAttachment(cn.nukkit.permission.PermissionAttachment attachment, Permissible permissible) {
-        super(PokkitPlugin.toBukkit((PokkitPlugin) attachment.getPlugin()), permissible);
-        this.nukkit = Objects.requireNonNull(attachment, "attachment");
-        this.permissible = Objects.requireNonNull(permissible, "permissible");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PokkitPermissionAttachment other = (PokkitPermissionAttachment) obj;
-        return nukkit.equals(other.nukkit);
-    }
-
-    @Override
-    public Permissible getPermissible() {
-        return permissible;
-    }
-
-    @Override
-    public Map<String, Boolean> getPermissions() {
-        return nukkit.getPermissions();
-    }
-
-    @Override
-    public PermissionRemovedExecutor getRemovalCallback() {
-        return attachment -> nukkit.getRemovalCallback().attachmentRemoved(nukkit);
-    }
-
-    @Override
-    public int hashCode() {
-        return nukkit.hashCode();
-    }
-
-    @Override
-    public boolean remove() {
-        nukkit.remove();
-        return true;
-    }
-
-    @Override
-    public void setPermission(Permission perm, boolean value) {
-        nukkit.setPermission(PokkitPermission.toNukkit(perm), value);
-    }
-
-    @Override
-    public void setPermission(String name, boolean value) {
-        nukkit.setPermission(name, value);
-    }
-
-    @Override
-    public void setRemovalCallback(PermissionRemovedExecutor executor) {
-        nukkit.setRemovalCallback(attachment -> executor.attachmentRemoved(this));
-    }
-
-    @Override
-    public void unsetPermission(Permission perm) {
-        unsetPermission(perm.getName());
-    }
-
-    @Override
-    public void unsetPermission(String name) {
-        nukkit.unsetPermission(name, false);
-    }
 }

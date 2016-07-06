@@ -165,7 +165,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     @Override
     public PermissionAttachment addAttachment(Plugin plugin) {
         return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)), this);
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)));
     }
 
     @Override
@@ -176,19 +176,19 @@ public class PokkitPlayer extends Player.Spigot implements Player {
             nukkit.removeAttachment(nukkitAttachment);
         }, ticks);
 
-        return PokkitPermissionAttachment.toBukkit(nukkitAttachment, this);
+        return PokkitPermissionAttachment.toBukkit(nukkitAttachment);
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
         return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value), this);
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
         return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value), this);
+                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
     }
 
     @Override
