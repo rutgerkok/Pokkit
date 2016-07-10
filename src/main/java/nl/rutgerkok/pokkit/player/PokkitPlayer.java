@@ -15,6 +15,7 @@ import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.material.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
@@ -476,8 +477,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public ItemStack getItemInHand() {
-        throw Pokkit.unsupported();
-
+        return PokkitItemStack.toBukkitCopy(nukkit.getInventory().getItemInHand());
     }
 
     @Override
@@ -488,8 +488,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public Player getKiller() {
-        throw Pokkit.unsupported();
-
+        cn.nukkit.entity.Entity entity = nukkit.getKiller();
+        if (entity instanceof cn.nukkit.Player) {
+            return PokkitPlayer.toBukkit((cn.nukkit.Player) entity);
+        }
+        return null;
     }
 
     @Override
@@ -557,7 +560,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public String getLocale() {
-        throw Pokkit.unsupported();
+        return nukkit.getLocale().toString();
     }
 
     @Override
