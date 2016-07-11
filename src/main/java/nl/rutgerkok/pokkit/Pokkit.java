@@ -9,6 +9,7 @@ import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
 import nl.rutgerkok.pokkit.pluginservice.PermissionsYml;
 import nl.rutgerkok.pokkit.pluginservice.PlayerChatEvents;
 import nl.rutgerkok.pokkit.pluginservice.PlayerConnectEvents;
+import nl.rutgerkok.pokkit.pluginservice.PlayerInteractEvents;
 import nl.rutgerkok.pokkit.pluginservice.PluginService;
 import nl.rutgerkok.pokkit.pluginservice.PokkitService;
 
@@ -44,7 +45,8 @@ public final class Pokkit extends PluginBase {
             new PermissionsYml(),
             new PluginService(),
             new PlayerConnectEvents(),
-            new PlayerChatEvents());
+            new PlayerChatEvents(),
+            new PlayerInteractEvents());
 
     @Override
     public void onDisable() {

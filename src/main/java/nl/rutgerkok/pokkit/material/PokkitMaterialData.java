@@ -129,19 +129,30 @@ public final class PokkitMaterialData {
 
     /**
      * Gets the combined id for Bukkit.
-     * 
+     *
      * @param nukkit
-     *            The nukkit item.
+     *            The Nukkit block.
      * @return The combined id for Bukkit.
      */
-    public static int nukkitToBukkit(Item nukkit) {
-        int nukkitId = nukkit.getId();
+    public static int nukkitToBukkit(Block nukkit) {
+        return nukkitToBukkit(nukkit.getId(), nukkit.getDamage());
+    }
+
+    /**
+     * Gets the combined id for Bukkit.
+     *
+     * @param nukkitId
+     *            The Nukkit block/item type.
+     * @param nukkitData
+     *            The Nukkit block data/item damage.
+     * @return The combined id for Bukkit.
+     */
+    public static int nukkitToBukkit(int nukkitId, int nukkitData) {
         if (nukkitId <= 0 || nukkitId > typeNukkitToBukkit.length) {
             return 0;
         }
 
         // Check combined id map, only if data is in block range
-        int nukkitData = nukkit.getDamage();
         if (nukkitData >= 0 && nukkitData < 16) {
             int nukkitCombinedId = toCombinedId(nukkitId, nukkitData);
             int bukkitCombinedId = combinedIdNukkitToBukkit.get(nukkitCombinedId);
@@ -154,11 +165,22 @@ public final class PokkitMaterialData {
         Material mapped = typeNukkitToBukkit[nukkitId];
         if (mapped != null) {
             int resultingId = mapped.ordinal();
-            return toCombinedId(resultingId, nukkit.getDamage());
+            return toCombinedId(resultingId, nukkitData);
         }
 
         // No mapping, return original
-        return toCombinedId(nukkitId, nukkit.getDamage());
+        return toCombinedId(nukkitId, nukkitData);
+    }
+
+    /**
+     * Gets the combined id for Bukkit.
+     * 
+     * @param nukkit
+     *            The nukkit item.
+     * @return The combined id for Bukkit.
+     */
+    public static int nukkitToBukkit(Item nukkit) {
+        return nukkitToBukkit(nukkit.getId(), nukkit.getDamage());
     }
 
     private static int toCombinedId(Block nukkit) {
