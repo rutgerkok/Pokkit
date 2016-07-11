@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 import nl.rutgerkok.pokkit.material.PokkitItemStack;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
@@ -14,13 +15,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
@@ -35,7 +36,7 @@ import cn.nukkit.item.ItemBlock;
  */
 public final class PokkitBlock implements Block {
 
-    public static final Block toBukkit(cn.nukkit.block.Block nukkit) {
+    public static final PokkitBlock toBukkit(cn.nukkit.block.Block nukkit) {
         if (nukkit == null) {
             return null;
         }
@@ -198,8 +199,7 @@ public final class PokkitBlock implements Block {
 
     @Override
     public BlockState getState() {
-        throw Pokkit.unsupported();
-
+        return PokkitBlockState.getBlockState(this);
     }
 
     @Override
@@ -215,6 +215,17 @@ public final class PokkitBlock implements Block {
         return PokkitMaterialData.getMaterial(combinedBukkitId);
     }
 
+    /**
+     * Gets the material data in one call.
+     * @return The material data.
+     */
+    @SuppressWarnings("deprecation")
+    public MaterialData getTypeData() {
+        int combinedBukkitId = PokkitMaterialData.nukkitToBukkit(nukkit);
+        byte bukkitBlockData = (byte) PokkitMaterialData.getBlockData(combinedBukkitId);
+        return PokkitMaterialData.getMaterial(combinedBukkitId).getNewData(bukkitBlockData);
+    }
+
     @Override
     public int getTypeId() {
         @SuppressWarnings("deprecation")
@@ -223,7 +234,7 @@ public final class PokkitBlock implements Block {
     }
 
     @Override
-    public World getWorld() {
+    public PokkitWorld getWorld() {
         return PokkitWorld.toBukkit(nukkit.level);
     }
 
@@ -335,6 +346,19 @@ public final class PokkitBlock implements Block {
 
         // Update block reference
         nukkit = nukkit.level.getBlock(nukkit);
+    }
+
+    /**
+     * Sets a material and data at the same time.
+     * 
+     * @param materialData
+     *            The material and data.
+     * @param applyPhysics
+     *            Whether a physics update must be performed.
+     */
+    public void setTypeAndData(MaterialData materialData, boolean applyPhysics) {
+        int nukkitCombinedId = PokkitMaterialData.bukkitToNukkit(materialData);
+        setType0(nukkitCombinedId, applyPhysics);
     }
 
     @Override

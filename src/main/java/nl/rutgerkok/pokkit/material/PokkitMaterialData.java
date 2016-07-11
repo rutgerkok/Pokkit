@@ -78,6 +78,18 @@ public final class PokkitMaterialData {
     }
 
     /**
+     * Converts a Bukkit {@link MaterialData} to a combined id for Nukkit.
+     *
+     * @param materialData
+     *            The material data.
+     * @return The combined id for Nukkit.
+     */
+    @SuppressWarnings("deprecation")
+    public static int bukkitToNukkit(MaterialData materialData) {
+        return bukkitToNukkit(materialData.getItemType(), materialData.getData());
+    }
+
+    /**
      * Gets the block data or item damage from the combined block id (from
      * Bukkit or Nukkit, that doesn't matter).
      *

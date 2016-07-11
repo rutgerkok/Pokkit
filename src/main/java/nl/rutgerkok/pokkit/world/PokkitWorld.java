@@ -53,7 +53,7 @@ public final class PokkitWorld implements World {
 
     private static final int WORLD_HEIGHT = 128;
 
-    public static World toBukkit(Level level) {
+    public static PokkitWorld toBukkit(Level level) {
         if (level == null) {
             return null;
         }
@@ -163,7 +163,7 @@ public final class PokkitWorld implements World {
     }
 
     @Override
-    public Block getBlockAt(int x, int y, int z) {
+    public PokkitBlock getBlockAt(int x, int y, int z) {
         return PokkitBlock.toBukkit(nukkit.getBlock(new Vector3(x, y, z)));
     }
 
