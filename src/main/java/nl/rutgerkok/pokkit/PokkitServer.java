@@ -80,6 +80,7 @@ public final class PokkitServer implements Server {
     private final ScoreboardManager scoreboardManager;
     private final OnlinePlayerData onlinePlayerData;
     private final AllMetadataStore metadataOverview;
+    private final PokkitUnsafe pokkitUnsafe;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -94,6 +95,7 @@ public final class PokkitServer implements Server {
         this.scoreboardManager = new PokkitScoreboardManager();
         this.onlinePlayerData = new OnlinePlayerData();
         this.metadataOverview = new AllMetadataStore();
+        this.pokkitUnsafe = new PokkitUnsafe();
     }
 
     @Override
@@ -491,9 +493,9 @@ public final class PokkitServer implements Server {
     }
 
     @Override
+    @Deprecated
     public UnsafeValues getUnsafe() {
-        throw Pokkit.unsupported();
-
+        return pokkitUnsafe;
     }
 
     @Override
