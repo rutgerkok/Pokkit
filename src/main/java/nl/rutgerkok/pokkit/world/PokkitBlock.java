@@ -127,8 +127,14 @@ public final class PokkitBlock implements Block {
 
     @Override
     public BlockFace getFace(Block block) {
-        throw Pokkit.unsupported();
-
+        for (BlockFace face : BlockFace.values()) {
+            if (block.getX() == this.getX() + face.getModX()
+                    && block.getY() == this.getY() + face.getModY()
+                    && block.getZ() == this.getZ() + face.getModZ()) {
+                return face;
+            }
+        }
+        return null;
     }
 
     @Override
