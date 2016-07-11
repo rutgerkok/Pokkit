@@ -62,6 +62,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Batch scripts
+*.bat
+
 # Eclipse
 # =========================
 .classpath
