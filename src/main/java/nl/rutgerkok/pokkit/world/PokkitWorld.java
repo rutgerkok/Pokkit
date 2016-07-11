@@ -47,6 +47,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.level.Level;
+import cn.nukkit.math.Vector3;
 
 public final class PokkitWorld implements World {
 
@@ -163,26 +164,24 @@ public final class PokkitWorld implements World {
 
     @Override
     public Block getBlockAt(int x, int y, int z) {
-        throw Pokkit.unsupported();
-
+        return PokkitBlock.toBukkit(nukkit.getBlock(new Vector3(x, y, z)));
     }
 
     @Override
     public Block getBlockAt(Location location) {
-        throw Pokkit.unsupported();
-
+        return getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
     @Override
+    @Deprecated
     public int getBlockTypeIdAt(int x, int y, int z) {
-        throw Pokkit.unsupported();
-
+        return getBlockAt(x, y, z).getTypeId();
     }
 
     @Override
+    @Deprecated
     public int getBlockTypeIdAt(Location location) {
-        throw Pokkit.unsupported();
-
+        return getBlockAt(location).getTypeId();
     }
 
     @Override
@@ -490,8 +489,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public boolean isGameRule(String rule) {
-        throw Pokkit.unsupported();
-
+        return false;
     }
 
     @Override
@@ -619,8 +617,7 @@ public final class PokkitWorld implements World {
 
     @Override
     public boolean setGameRuleValue(String rule, String value) {
-        throw Pokkit.unsupported();
-
+        return false;
     }
 
     @Override
