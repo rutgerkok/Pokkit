@@ -2,6 +2,8 @@ package nl.rutgerkok.pokkit.blockstate;
 
 import java.util.Objects;
 
+import nl.rutgerkok.pokkit.Pokkit;
+
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.material.MaterialData;
@@ -11,14 +13,29 @@ import com.google.common.base.Preconditions;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntitySign;
 
-final class SignBlockState extends PokkitBlockState implements Sign {
+public final class SignBlockState extends PokkitBlockState implements Sign {
 
     private final String[] lines;
+    private String hiddenData;
 
-    protected SignBlockState(Location locationOrNull, MaterialData materialData, String[] lines) {
+    protected SignBlockState(Location locationOrNull, MaterialData materialData, String[] lines, String hiddenData) {
         super(locationOrNull, materialData);
         this.lines = Objects.requireNonNull(lines, "lines");
+        this.hiddenData = Objects.requireNonNull(hiddenData, "hiddenData");
         Preconditions.checkArgument(lines.length == 4, "there must be four lines on a sign");
+    }
+
+    /**
+     * Gets hidden data on this sign.
+     *
+     * <p>
+     * While players cannot temper with this data, other plugins can. Always
+     * check the format of the returned string.
+     *
+     * @return Hidden data.
+     */
+    public String getHiddenData() {
+        return hiddenData;
     }
 
     @Override
@@ -35,8 +52,25 @@ final class SignBlockState extends PokkitBlockState implements Sign {
     protected void onUpdate() {
         BlockEntity blockEntity = getBlockEntity();
         if (blockEntity instanceof BlockEntitySign) {
-            ((BlockEntitySign) blockEntity).setText(lines[0], lines[1], lines[2], lines[3]);
+            BlockEntitySign sign = (BlockEntitySign) blockEntity;
+            sign.setText(lines[0], lines[1], lines[2], lines[3]);
+            if (hiddenData.isEmpty()) {
+                sign.namedTag.remove(Pokkit.NAME);
+            } else {
+                sign.namedTag.putString(Pokkit.NAME, hiddenData);
+            }
         }
+    }
+
+    /**
+     * Sets hidden data on this sign. Set to an empty string to clear the hidden
+     * data.
+     *
+     * @param string
+     *            The hidden data.
+     */
+    public void setHiddenData(String string) {
+        this.hiddenData = Objects.requireNonNull(string);
     }
 
     @Override

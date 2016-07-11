@@ -3,6 +3,7 @@ package nl.rutgerkok.pokkit.blockstate;
 import java.util.List;
 import java.util.Objects;
 
+import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
@@ -26,7 +27,8 @@ public abstract class PokkitBlockState implements BlockState {
         Location location = block.getLocation();
 
         if (blockEntity instanceof BlockEntitySign) {
-            return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntity).getText());
+            String hiddenData = blockEntity.namedTag.getString(Pokkit.NAME);
+            return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntity).getText(), hiddenData);
         }
         return new PlainBlockState(location, materialData);
     }
