@@ -14,6 +14,7 @@ import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.material.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
@@ -1141,15 +1142,29 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void playSound(Location arg0, Sound arg1, float arg2, float arg3) {
-        throw Pokkit.unsupported();
+    public void playSound(Location location, Sound sound, float volume, float pitch) {
+        if (location == null || sound == null) {
+            return;
+        }
 
+        cn.nukkit.level.sound.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
+        if (nukkitSound == null) {
+            return;
+        }
+        nukkit.level.addSound(nukkitSound, nukkit);
     }
 
     @Override
-    public void playSound(Location arg0, String arg1, float arg2, float arg3) {
-        throw Pokkit.unsupported();
-
+    public void playSound(Location location, String soundString, float volume, float pitch) {
+        if (location == null || soundString == null) {
+            return;
+        }
+        try {
+            Sound sound = Sound.valueOf(soundString.replace("minecraft:", "").toUpperCase());
+            playSound(location, sound, volume, pitch);
+        } catch (IllegalArgumentException e) {
+            // Ignore non-existing sound
+        }
     }
 
     @Override

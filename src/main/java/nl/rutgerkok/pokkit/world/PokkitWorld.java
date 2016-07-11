@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -542,14 +543,28 @@ public final class PokkitWorld implements World {
 
     @Override
     public void playSound(Location location, Sound sound, float volume, float pitch) {
-        throw Pokkit.unsupported();
+        if (location == null || sound == null) {
+            return;
+        }
 
+        cn.nukkit.level.sound.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
+        if (nukkitSound == null) {
+            return;
+        }
+        nukkit.addSound(nukkitSound);
     }
 
     @Override
-    public void playSound(Location location, String sound, float volume, float pitch) {
-        throw Pokkit.unsupported();
-
+    public void playSound(Location location, String soundString, float volume, float pitch) {
+        if (location == null || soundString == null) {
+            return;
+        }
+        try {
+            Sound sound = Sound.valueOf(soundString.replace("minecraft:", "").toUpperCase());
+            playSound(location, sound, volume, pitch);
+        } catch (IllegalArgumentException e) {
+            // Ignore non-existing sound
+        }
     }
 
     @Override
