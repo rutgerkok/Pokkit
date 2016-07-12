@@ -1,10 +1,10 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import nl.rutgerkok.pokkit.material.PokkitItemStack;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitBlockFace;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;

@@ -16,13 +16,13 @@ import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.material.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
@@ -91,13 +91,13 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     private final cn.nukkit.Player nukkit;
+
     private Scoreboard scoreboard;
 
     PokkitPlayer(cn.nukkit.Player player) {
         this.nukkit = Objects.requireNonNull(player);
         this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     }
-
     @Override
     public void _INVALID_damage(int arg0) {
         throw Pokkit.unsupported();
@@ -293,6 +293,20 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     public boolean eject() {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PokkitPlayer other = (PokkitPlayer) obj;
+        if (!getName().equals(other.getName()))
+            return false;
+        return true;
     }
 
     @Override
@@ -817,6 +831,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     public boolean hasGravity() {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
     }
 
     @Override

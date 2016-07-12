@@ -24,6 +24,7 @@ import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
 import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboardManager;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemFactory;
 
 import org.bukkit.BanList;
 import org.bukkit.BanList.Type;
@@ -81,6 +82,7 @@ public final class PokkitServer implements Server {
     private final OnlinePlayerData onlinePlayerData;
     private final AllMetadataStore metadataOverview;
     private final PokkitUnsafe pokkitUnsafe;
+    private final PokkitItemFactory itemFactory;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -96,6 +98,7 @@ public final class PokkitServer implements Server {
         this.onlinePlayerData = new OnlinePlayerData();
         this.metadataOverview = new AllMetadataStore();
         this.pokkitUnsafe = new PokkitUnsafe();
+        this.itemFactory = new PokkitItemFactory();
     }
 
     @Override
@@ -300,8 +303,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public ItemFactory getItemFactory() {
-        throw Pokkit.unsupported();
-
+        return itemFactory;
     }
 
     @Override

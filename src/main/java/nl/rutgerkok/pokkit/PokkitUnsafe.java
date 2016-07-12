@@ -3,6 +3,7 @@ package nl.rutgerkok.pokkit;
 import java.util.List;
 
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.world.item.PokkitItemMeta;
 
 import org.bukkit.Achievement;
 import org.bukkit.Material;
@@ -48,6 +49,9 @@ public class PokkitUnsafe implements UnsafeValues {
     @Override
     public ItemStack modifyItemStack(ItemStack stack, String arguments) {
         // NBT not yet supported
+        PokkitItemMeta itemMeta = (PokkitItemMeta) stack.getItemMeta();
+        itemMeta.getTag().putString("Unknown", arguments);
+        stack.setItemMeta(itemMeta);
         return stack;
     }
 
