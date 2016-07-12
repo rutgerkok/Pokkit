@@ -17,10 +17,19 @@ import org.bukkit.plugin.Plugin;
 
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntitySign;
+import cn.nukkit.blockentity.BlockEntitySpawnable;
 import cn.nukkit.math.Vector3;
+import cn.nukkit.nbt.tag.CompoundTag;
 
 public abstract class PokkitBlockState implements BlockState {
 
+    /**
+     * Gets the block state for a given block.
+     *
+     * @param block
+     *            The block.
+     * @return The block state.
+     */
     public static PokkitBlockState getBlockState(PokkitBlock block) {
         BlockEntity blockEntity = PokkitWorld.toNukkit(block.getWorld()).getBlockEntity(PokkitBlock.toNukkit(block));
         MaterialData materialData = block.getTypeData();
@@ -31,6 +40,29 @@ public abstract class PokkitBlockState implements BlockState {
             return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntity).getText(), hiddenData);
         }
         return new PlainBlockState(location, materialData);
+    }
+
+    /**
+     * Gets a virtual block state.
+     *
+     * @param material
+     *            The material.
+     * @param tag
+     *            The block entity data.
+     * @return The vitual block state.
+     */
+    public static PokkitBlockState getVirtual(Material material, CompoundTag tag) {
+        @SuppressWarnings("deprecation")
+        MaterialData materialData = material.getNewData((byte) 0);
+
+        if (material == Material.SIGN) {
+            String[] lines = new String[] { tag.getString("Text1"), tag.getString("Text2"), tag.getString("Text3"),
+                    tag.getString("Text4") };
+            String hiddenData = tag.getString(Pokkit.NAME);
+            return new SignBlockState(null, materialData, lines, hiddenData);
+        }
+
+        return new PlainBlockState(null, materialData);
     }
 
     private PokkitWorld worldOrNull;
@@ -154,16 +186,18 @@ public abstract class PokkitBlockState implements BlockState {
         return this.worldOrNull != null;
     }
 
-    /**
-     * Called when the update is method is called successfully. Use this to
-     * update other block properties, like the text on the sign.
-     */
-    protected abstract void onUpdate();
-
     @Override
     public void removeMetadata(String metadataKey, Plugin owningPlugin) {
         getBlock().removeMetadata(metadataKey, owningPlugin);
     }
+
+    /**
+     * Saves the state of this block state to the given compound tag.
+     * 
+     * @param tag
+     *            The tag.
+     */
+    public abstract void saveToTag(CompoundTag tag);
 
     @Override
     public void setData(MaterialData data) {
@@ -212,12 +246,29 @@ public abstract class PokkitBlockState implements BlockState {
     @Override
     public final boolean update(boolean force, boolean applyPhysics) {
         PokkitBlock block = getBlock();
-        if (force || block.getType() == materialData.getItemType()) {
+        if (!block.getTypeData().equals(materialData)) {
+            // Block type has changed
+            if (!force) {
+                return false;
+            }
             block.setTypeAndData(materialData, applyPhysics);
-            onUpdate();
-            return true;
         }
-        return false;
+
+        // Update NBT data
+        BlockEntity blockEntity = getBlockEntity();
+        saveToTag(blockEntity.namedTag);
+        if (!(blockEntity instanceof BlockEntitySpawnable)) {
+            return false;
+        }
+
+        // Send updates
+        ((BlockEntitySpawnable) blockEntity).spawnToAll();
+        if (blockEntity.chunk != null) {
+            blockEntity.chunk.setChanged();
+            blockEntity.level.clearChunkCache(blockEntity.chunk.getX(), blockEntity.chunk.getZ());
+        }
+
+        return true;
     }
 
 }

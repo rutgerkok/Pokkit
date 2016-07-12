@@ -10,8 +10,7 @@ import org.bukkit.material.MaterialData;
 
 import com.google.common.base.Preconditions;
 
-import cn.nukkit.blockentity.BlockEntity;
-import cn.nukkit.blockentity.BlockEntitySign;
+import cn.nukkit.nbt.tag.CompoundTag;
 
 public final class SignBlockState extends PokkitBlockState implements Sign {
 
@@ -49,16 +48,15 @@ public final class SignBlockState extends PokkitBlockState implements Sign {
     }
 
     @Override
-    protected void onUpdate() {
-        BlockEntity blockEntity = getBlockEntity();
-        if (blockEntity instanceof BlockEntitySign) {
-            BlockEntitySign sign = (BlockEntitySign) blockEntity;
-            sign.setText(lines[0], lines[1], lines[2], lines[3]);
-            if (hiddenData.isEmpty()) {
-                sign.namedTag.remove(Pokkit.NAME);
-            } else {
-                sign.namedTag.putString(Pokkit.NAME, hiddenData);
-            }
+    public void saveToTag(CompoundTag tag) {
+        tag.putString("Text1", lines[0]);
+        tag.putString("Text2", lines[1]);
+        tag.putString("Text3", lines[2]);
+        tag.putString("Text4", lines[3]);
+        if (hiddenData.isEmpty()) {
+            tag.remove(Pokkit.NAME);
+        } else {
+            tag.putString(Pokkit.NAME, hiddenData);
         }
     }
 
