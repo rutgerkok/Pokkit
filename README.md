@@ -5,7 +5,7 @@ The Minecraft multiplayer scene is fragmented. There are many competing server i
 Pokkit is an attempt at creating a translation layer, that allows Spigot plugins to work on Nukkit.
 
 ## How to use it
-Install Nukkit like you would install any Nukkit plugin: place the JAR file in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
+Install Pokkit like you would install any Nukkit plugin: place the JAR file in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
 
 * A folder called `bukkitPlugins`: place any plugin written for Spigot in this folder.
 * A file called `permissions.yml`: this is Bukkit's [permissions.yml file](http://wiki.bukkit.org/Permissions.yml).
@@ -23,3 +23,8 @@ It is important to remember that you must **install Bukkit plugins in the `plugi
 
 ## Pull requests
 Contributions are always welcome. If you have any questions, feel free to send me an e-mail (address is on my Github profile).
+
+## License
+License is MIT, except for some file that were derived from the Bukkit project. See the [license][] file for details.
+
+[license]: ./LICENSE.md
