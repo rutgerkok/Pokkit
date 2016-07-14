@@ -19,12 +19,22 @@ public final class PokkitItemStack {
         return (PokkitItemFactory) Bukkit.getItemFactory();
     }
 
+    /**
+     * Creates a Bukkit copy of the item stack.
+     *
+     * @param nukkit
+     *            The Nukkit stack.
+     * @return A {@link ItemStack}, or null if Nukkit has an air or null stack.
+     */
     public static ItemStack toBukkitCopy(cn.nukkit.item.Item nukkit) {
         if (nukkit == null) {
             return null;
         }
         int combinedBukkitId = PokkitMaterialData.nukkitToBukkit(nukkit);
         Material material = PokkitMaterialData.getMaterial(combinedBukkitId);
+        if (material == null) {
+            return null;
+        }
         ItemStack bukkit = new ItemStack(material, nukkit.getCount(), (short) PokkitMaterialData.getBlockData(combinedBukkitId));
 
         // Convert item meta
