@@ -4,13 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -29,6 +22,12 @@ import com.google.common.collect.ImmutableList;
 
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.item.ItemBlock;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 /**
  * Converts between Nukkit and Bukkit blocks.
@@ -90,8 +89,7 @@ public final class PokkitBlock implements Block {
 
     @Override
     public Chunk getChunk() {
-        throw Pokkit.unsupported();
-
+        return PokkitChunk.of(this);
     }
 
     @Override

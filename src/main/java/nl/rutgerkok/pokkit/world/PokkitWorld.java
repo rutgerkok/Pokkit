@@ -8,14 +8,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -49,6 +41,13 @@ import org.bukkit.util.Vector;
 
 import cn.nukkit.level.Level;
 import cn.nukkit.math.Vector3;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 public final class PokkitWorld implements World {
 
@@ -187,19 +186,17 @@ public final class PokkitWorld implements World {
 
     @Override
     public Chunk getChunkAt(Block block) {
-        throw Pokkit.unsupported();
-
+        return PokkitChunk.of(block);
     }
 
     @Override
     public Chunk getChunkAt(int x, int z) {
-        throw Pokkit.unsupported();
-
+        return new PokkitChunk(this, x, z);
     }
 
     @Override
     public Chunk getChunkAt(Location location) {
-        throw Pokkit.unsupported();
+        return PokkitChunk.of(location);
 
     }
 
