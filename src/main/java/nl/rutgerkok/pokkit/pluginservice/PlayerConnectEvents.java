@@ -1,14 +1,14 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.TextContainer;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 public final class PlayerConnectEvents extends EventTranslator {
 
@@ -21,7 +21,7 @@ public final class PlayerConnectEvents extends EventTranslator {
         PlayerJoinEvent bukkitEvent = new PlayerJoinEvent(
                 PokkitPlayer.toBukkit(event.getPlayer()), event.getJoinMessage().getText());
         callUncancellable(bukkitEvent);
-        event.setJoinMessage(bukkitEvent.getJoinMessage());
+        event.setJoinMessage(toNukkit(event.getJoinMessage(), bukkitEvent.getJoinMessage(), event));
     }
 
     @EventHandler(ignoreCancelled = false)
@@ -30,7 +30,7 @@ public final class PlayerConnectEvents extends EventTranslator {
             PlayerKickEvent bukkitEvent = new PlayerKickEvent(
                     PokkitPlayer.toBukkit(event.getPlayer()), event.getReason(), event.getQuitMessage().getText());
             callCancellable(event, bukkitEvent);
-            event.setQuitMessage(bukkitEvent.getLeaveMessage());
+            event.setQuitMessage(toNukkit(event.getQuitMessage(), bukkitEvent.getLeaveMessage(), event));
         }
 
         removeFromOnlinePlayers(event.getPlayer());
@@ -41,7 +41,7 @@ public final class PlayerConnectEvents extends EventTranslator {
         if (!canIgnore(PlayerQuitEvent.getHandlerList())) {
             PlayerQuitEvent bukkitEvent = new PlayerQuitEvent(PokkitPlayer.toBukkit(event.getPlayer()), event.getQuitMessage().getText());
             callUncancellable(bukkitEvent);
-            event.setQuitMessage(bukkitEvent.getQuitMessage());
+            event.setQuitMessage(toNukkit(event.getQuitMessage(), bukkitEvent.getQuitMessage(), event));
         }
 
         removeFromOnlinePlayers(event.getPlayer());
@@ -49,6 +49,14 @@ public final class PlayerConnectEvents extends EventTranslator {
 
     private void removeFromOnlinePlayers(cn.nukkit.Player player) {
         ((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().logsOut(player);
+    }
+
+    private TextContainer toNukkit(TextContainer originalMessage, String message,
+            cn.nukkit.event.player.PlayerEvent event) {
+        if (originalMessage.getText().equals(message)) {
+            return originalMessage;
+        }
+        return new TextContainer(message);
     }
 
 }
