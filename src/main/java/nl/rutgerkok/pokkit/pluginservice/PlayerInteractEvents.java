@@ -1,25 +1,23 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
+import org.bukkit.block.Block;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.math.Vector3;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitBlockFace;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
-import org.bukkit.block.Block;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-
-import cn.nukkit.event.EventHandler;
-import cn.nukkit.math.Vector3;
-
 public final class PlayerInteractEvents extends EventTranslator {
 
     @EventHandler(ignoreCancelled = false)
     public void onPlayerInteract(cn.nukkit.event.player.PlayerInteractEvent event) {
-        if (canIgnore(AsyncPlayerChatEvent.getHandlerList())) {
+        if (canIgnore(PlayerInteractEvent.getHandlerList())) {
             return;
         }
 

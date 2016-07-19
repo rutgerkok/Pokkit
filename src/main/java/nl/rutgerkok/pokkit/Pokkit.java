@@ -5,17 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+
+import cn.nukkit.plugin.PluginBase;
 import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
 import nl.rutgerkok.pokkit.pluginservice.PermissionsYml;
+import nl.rutgerkok.pokkit.pluginservice.PlayerBlockEvents;
 import nl.rutgerkok.pokkit.pluginservice.PlayerChatEvents;
 import nl.rutgerkok.pokkit.pluginservice.PlayerConnectEvents;
 import nl.rutgerkok.pokkit.pluginservice.PlayerInteractEvents;
 import nl.rutgerkok.pokkit.pluginservice.PluginService;
 import nl.rutgerkok.pokkit.pluginservice.PokkitService;
-
-import org.bukkit.Bukkit;
-
-import cn.nukkit.plugin.PluginBase;
 
 /**
  * Startup class.
@@ -44,6 +44,7 @@ public final class Pokkit extends PluginBase {
             new MainScoreboardService(),
             new PermissionsYml(),
             new PluginService(),
+            new PlayerBlockEvents(),
             new PlayerConnectEvents(),
             new PlayerChatEvents(),
             new PlayerInteractEvents());
