@@ -48,6 +48,7 @@ import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PokkitWorld implements World {
 
@@ -110,14 +111,14 @@ public final class PokkitWorld implements World {
 
     @Override
     public Item dropItem(Location location, ItemStack item) {
-        throw Pokkit.unsupported();
-
+        nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item), new Vector3(0, 0, 0));
+        return null; // TODO add entity support
     }
 
     @Override
     public Item dropItemNaturally(Location location, ItemStack item) {
-        throw Pokkit.unsupported();
-
+        nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item));
+        return null; // TODO add entity support
     }
 
     @Override

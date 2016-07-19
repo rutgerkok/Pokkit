@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.world;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-
-import com.google.common.collect.ImmutableList;
 
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.item.ItemBlock;
@@ -50,6 +49,11 @@ public final class PokkitBlock implements Block {
     }
 
     private cn.nukkit.block.Block nukkit;
+
+    /**
+     * Allows for changed drops.
+     */
+    private List<ItemStack> drops;
 
     private PokkitBlock(cn.nukkit.block.Block nukkit) {
         this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
@@ -108,19 +112,24 @@ public final class PokkitBlock implements Block {
     }
 
     private Collection<ItemStack> getDrops0(cn.nukkit.item.Item item) {
+        if (this.drops != null) {
+            return this.drops;
+        }
+
         if (item == null) {
             item = new ItemBlock(new BlockAir(), 0, 0);
         }
 
         int[][] drops = nukkit.getDrops(item);
-        ImmutableList.Builder<ItemStack> result = ImmutableList.builder();
+        List<ItemStack> result = new ArrayList<>();
         for (int[] drop : drops) {
             int bukkitCombinedId = PokkitMaterialData.nukkitToBukkit(drop[0], drop[1]);
             ItemStack stack = new ItemStack(PokkitMaterialData.getMaterial(bukkitCombinedId), drop[2],
                     (short) PokkitMaterialData.getBlockData(bukkitCombinedId));
             result.add(stack);
         }
-        return result.build();
+        this.drops = result;
+        return result;
     }
 
     @Override
