@@ -5,11 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -18,6 +13,10 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.item.Item;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 /**
  * Inventory implementation that forwards changes directly to a Nukkit
@@ -29,7 +28,7 @@ import cn.nukkit.item.Item;
  */
 public class PokkitLiveInventory extends PokkitAbstractInventory {
 
-    private cn.nukkit.inventory.Inventory nukkit;
+    protected cn.nukkit.inventory.Inventory nukkit;
 
     public PokkitLiveInventory(cn.nukkit.inventory.Inventory inventory) {
         this.nukkit = Objects.requireNonNull(inventory, "inventory");
