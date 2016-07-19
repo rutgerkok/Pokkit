@@ -70,8 +70,11 @@ public class PokkitLogger extends Logger {
     }
 
     protected PokkitLogger(PluginLogger nukkit) {
-        super(Pokkit.NAME, null);
+        // Use "Minecraft" as name to support Logger.getLogger("Minecraft")
+        super("Minecraft", null);
+
         this.setLevel(Level.FINE);
+        this.setUseParentHandlers(false);
         this.addHandler(new PokkitHandler(nukkit));
     }
 

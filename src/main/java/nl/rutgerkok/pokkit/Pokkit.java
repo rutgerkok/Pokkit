@@ -3,6 +3,7 @@ package nl.rutgerkok.pokkit;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -67,6 +68,8 @@ public final class Pokkit extends PluginBase {
         }
 
         Logger logger = new PokkitLogger(this.getLogger());
+        LogManager.getLogManager().addLogger(logger);
+
         PokkitServer server = new PokkitServer(this.getServer(), logger, pluginFolder);
         Bukkit.setServer(server);
 
