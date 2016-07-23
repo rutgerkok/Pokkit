@@ -59,7 +59,7 @@ public final class PlayerBlockEvents extends EventTranslator {
         cn.nukkit.block.Block placed = event.getBlock();
         BlockState replacedBlockState = PokkitWorld.toBukkit(placed.level)
                 .getBlockAt((int) placed.x, (int) placed.y, (int) placed.z).getState();
-        BlockPlaceEvent bukkitEvent = new BlockPlaceEvent(PokkitBlock.toBukkit(event.getBlockReplace()),
+        BlockPlaceEvent bukkitEvent = new BlockPlaceEvent(PokkitBlock.toBukkit(placed),
                 replacedBlockState, PokkitBlock.toBukkit(event.getBlockAgainst()),
                 PokkitItemStack.toBukkitCopy(event.getItem()), PokkitPlayer.toBukkit(event.getPlayer()),
                 true, EquipmentSlot.HAND);
