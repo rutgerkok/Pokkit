@@ -57,6 +57,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
+import cn.nukkit.network.protocol.UpdateBlockPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitGameMode;
@@ -65,6 +66,7 @@ import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
@@ -98,6 +100,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
         this.nukkit = Objects.requireNonNull(player);
         this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     }
+
     @Override
     public void _INVALID_damage(int arg0) {
         throw Pokkit.unsupported();
@@ -1207,7 +1210,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
         nukkit.removeAttachment(PokkitPermissionAttachment.toNukkit(attachment));
     }
 
-
     @Override
     public void removeMetadata(String metadataKey, Plugin owningPlugin) {
         getMetadataStore().removeMetadata(this, metadataKey, owningPlugin);
@@ -1255,15 +1257,29 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void sendBlockChange(Location arg0, int arg1, byte arg2) {
-        throw Pokkit.unsupported();
-
+    @Deprecated
+    public void sendBlockChange(Location location, int materialId, byte blockData) {
+        Material material = Material.getMaterial(materialId);
+        if (material == null) {
+            return;
+        }
+        sendBlockChange(location, material, blockData);
     }
 
     @Override
-    public void sendBlockChange(Location arg0, Material arg1, byte arg2) {
-        throw Pokkit.unsupported();
+    public void sendBlockChange(Location location, Material material, byte blockData) {
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+        int combinedNukkitId = PokkitMaterialData.bukkitToNukkit(material, blockData);
+        int nukkitBlockId = PokkitMaterialData.getNukkitBlockId(combinedNukkitId);
+        int nukkitBlockData = PokkitMaterialData.getBlockData(combinedNukkitId);
+        int flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
 
+        UpdateBlockPacket packet = new UpdateBlockPacket();
+        packet.records = new UpdateBlockPacket.Entry[] {
+                new UpdateBlockPacket.Entry(x, z, y, nukkitBlockId, nukkitBlockData, flags) };
+        nukkit.dataPacket(packet, false);
     }
 
     @Override
