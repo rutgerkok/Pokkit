@@ -1,12 +1,12 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitServer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.PluginManager;
+
+import cn.nukkit.plugin.PluginBase;
+import nl.rutgerkok.pokkit.PokkitServer;
 
 /**
  * Loads and enables the Bukkit plugins.
@@ -25,17 +25,16 @@ public final class PluginService implements PokkitService {
     }
 
     @Override
-    public void onEnable(Pokkit pokkit) {
+    public void onEnable(PluginBase pokkit) {
         enablePlugins(PluginLoadOrder.POSTWORLD);
         plugins = null; // no longer needed, Nukkit takes care of them now
     }
 
     @Override
-    public void onLoad(Pokkit pokkit) {
+    public void onLoad(PluginBase pokkit) {
         PokkitServer server = ((PokkitServer) Bukkit.getServer());
-        plugins  = server.loadPlugins();
+        plugins = server.loadPlugins();
         enablePlugins(PluginLoadOrder.STARTUP);
     }
-
 
 }

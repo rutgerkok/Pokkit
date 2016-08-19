@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import cn.nukkit.event.EventHandler;
-import cn.nukkit.event.TextContainer;
+import cn.nukkit.lang.TextContainer;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
@@ -18,8 +18,8 @@ public final class PlayerConnectEvents extends EventTranslator {
             return;
         }
 
-        PlayerJoinEvent bukkitEvent = new PlayerJoinEvent(
-                PokkitPlayer.toBukkit(event.getPlayer()), event.getJoinMessage().getText());
+        PlayerJoinEvent bukkitEvent = new PlayerJoinEvent(PokkitPlayer.toBukkit(event.getPlayer()),
+                event.getJoinMessage().getText());
         callUncancellable(bukkitEvent);
         event.setJoinMessage(toNukkit(event.getJoinMessage(), bukkitEvent.getJoinMessage(), event));
     }
@@ -27,8 +27,8 @@ public final class PlayerConnectEvents extends EventTranslator {
     @EventHandler(ignoreCancelled = false)
     public void onPlayerKick(cn.nukkit.event.player.PlayerKickEvent event) {
         if (!canIgnore(PlayerKickEvent.getHandlerList())) {
-            PlayerKickEvent bukkitEvent = new PlayerKickEvent(
-                    PokkitPlayer.toBukkit(event.getPlayer()), event.getReason(), event.getQuitMessage().getText());
+            PlayerKickEvent bukkitEvent = new PlayerKickEvent(PokkitPlayer.toBukkit(event.getPlayer()),
+                    event.getReason(), event.getQuitMessage().getText());
             callCancellable(event, bukkitEvent);
             event.setQuitMessage(toNukkit(event.getQuitMessage(), bukkitEvent.getLeaveMessage(), event));
         }
@@ -39,7 +39,8 @@ public final class PlayerConnectEvents extends EventTranslator {
     @EventHandler(ignoreCancelled = false)
     public void onPlayerQuit(cn.nukkit.event.player.PlayerQuitEvent event) {
         if (!canIgnore(PlayerQuitEvent.getHandlerList())) {
-            PlayerQuitEvent bukkitEvent = new PlayerQuitEvent(PokkitPlayer.toBukkit(event.getPlayer()), event.getQuitMessage().getText());
+            PlayerQuitEvent bukkitEvent = new PlayerQuitEvent(PokkitPlayer.toBukkit(event.getPlayer()),
+                    event.getQuitMessage().getText());
             callUncancellable(bukkitEvent);
             event.setQuitMessage(toNukkit(event.getQuitMessage(), bukkitEvent.getQuitMessage(), event));
         }

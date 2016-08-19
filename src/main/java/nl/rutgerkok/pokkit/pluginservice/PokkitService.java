@@ -1,8 +1,8 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import nl.rutgerkok.pokkit.Pokkit;
-
 import org.bukkit.Bukkit;
+
+import cn.nukkit.plugin.PluginBase;
 
 /**
  * Interface for holding code that makes Pokkit work properly.
@@ -14,9 +14,9 @@ public interface PokkitService {
      * Called when Pokkit is disabled.
      *
      * @param pokkit
-     *            The Pokkit instance.
+     *            The NukkitHook instance.
      */
-    default void onDisable(Pokkit pokkit) {
+    default void onDisable(PluginBase pokkit) {
         // Empty!
     }
 
@@ -24,9 +24,9 @@ public interface PokkitService {
      * Called after the worlds are initialized.
      *
      * @param pokkit
-     *            The Pokkit instance.
+     *            The NukkitHook instance.
      */
-    default void onEnable(Pokkit pokkit) {
+    default void onEnable(PluginBase pokkit) {
         // Empty!
     }
 
@@ -35,9 +35,9 @@ public interface PokkitService {
      * available.
      *
      * @param pokkit
-     *            The Pokkit instance.
+     *            The NukkitHook instance.
      */
-    default void onLoad(Pokkit pokkit) {
+    default void onLoad(PluginBase pokkit) {
         // Empty!
     }
 }

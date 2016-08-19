@@ -1,13 +1,12 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import nl.rutgerkok.pokkit.Pokkit;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import cn.nukkit.event.Listener;
+import cn.nukkit.plugin.PluginBase;
 
 /**
  * Abstract base class for Nukkit --> Pokkit event transformers.
@@ -30,7 +29,7 @@ abstract class EventTranslator implements PokkitService, Listener {
     }
 
     @Override
-    public void onEnable(Pokkit pokkit) {
+    public void onEnable(PluginBase pokkit) {
         pokkit.getServer().getPluginManager().registerEvents(this, pokkit);
     }
 }

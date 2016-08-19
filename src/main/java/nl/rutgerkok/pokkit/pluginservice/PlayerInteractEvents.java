@@ -30,8 +30,8 @@ public final class PlayerInteractEvents extends EventTranslator {
                     (int) touchVector.y, (int) touchVector.z);
         }
         PlayerInteractEvent bukkitEvent = new PlayerInteractEvent(PokkitPlayer.toBukkit(event.getPlayer()),
-                toBukkit(event.getAction()), PokkitItemStack.toBukkitCopy(event.getItem()),
-                bukkitBlock, PokkitBlockFace.toBukkit(event.getFace()));
+                toBukkit(event.getAction()), PokkitItemStack.toBukkitCopy(event.getItem()), bukkitBlock,
+                PokkitBlockFace.toBukkit(event.getFace()));
 
         callCancellable(event, bukkitEvent);
     }

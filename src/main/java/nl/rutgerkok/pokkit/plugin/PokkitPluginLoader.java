@@ -29,7 +29,7 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 
     private static PokkitPluginLoader temporaryInstance;
 
-    public static PokkitPluginLoader getInstanceBack() {
+    static PokkitPluginLoader getInstanceBack() {
         Preconditions.checkState(temporaryInstance != null, "No temporary instance available");
         PokkitPluginLoader returnValue = temporaryInstance;
         temporaryInstance = null;
@@ -45,12 +45,12 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 
     @Override
     public void disablePlugin(Plugin plugin) {
-        getPluginLoader().disablePlugin(PokkitPlugin.toBukkit((PokkitPlugin) plugin));
+        getPluginLoader().disablePlugin(PokkitPlugin.toBukkit(plugin));
     }
 
     @Override
     public void enablePlugin(Plugin plugin) {
-        getPluginLoader().enablePlugin(PokkitPlugin.toBukkit((PokkitPlugin) plugin));
+        getPluginLoader().enablePlugin(PokkitPlugin.toBukkit(plugin));
     }
 
     @Override

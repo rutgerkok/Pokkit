@@ -35,15 +35,14 @@ public final class PlayerChatEvents extends EventTranslator {
 
         @Override
         public Iterator<Player> iterator() {
-            Iterator<CommandSender> bukkitIterator = Iterators.transform(original.iterator(), PokkitCommandSender::toBukkit);
+            Iterator<CommandSender> bukkitIterator = Iterators.transform(original.iterator(),
+                    PokkitCommandSender::toBukkit);
             return Iterators.filter(bukkitIterator, Player.class);
         }
 
         @Override
         public int size() {
-            return (int) original.stream()
-                    .filter(commandSender -> commandSender instanceof cn.nukkit.Player)
-                    .count();
+            return (int) original.stream().filter(commandSender -> commandSender instanceof cn.nukkit.Player).count();
         }
 
     }
@@ -53,8 +52,8 @@ public final class PlayerChatEvents extends EventTranslator {
         if (canIgnore(AsyncPlayerChatEvent.getHandlerList())) {
             return;
         }
-        AsyncPlayerChatEvent bukkitEvent = new AsyncPlayerChatEvent(
-                false, PokkitPlayer.toBukkit(event.getPlayer()), event.getMessage(), new RecipientsSet(event.getRecipients()));
+        AsyncPlayerChatEvent bukkitEvent = new AsyncPlayerChatEvent(false, PokkitPlayer.toBukkit(event.getPlayer()),
+                event.getMessage(), new RecipientsSet(event.getRecipients()));
         bukkitEvent.setFormat(event.getFormat());
 
         callCancellable(event, bukkitEvent);

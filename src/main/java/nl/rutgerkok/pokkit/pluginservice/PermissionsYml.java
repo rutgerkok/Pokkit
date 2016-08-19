@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import nl.rutgerkok.pokkit.Pokkit;
-
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
+
+import cn.nukkit.plugin.PluginBase;
 
 /**
  * Service to load the permissions.yml file.
@@ -29,7 +29,7 @@ public final class PermissionsYml implements PokkitService {
 
     /**
      * Based on CraftBukkit code.
-     * 
+     *
      * @param file
      *            The custom permissions file.
      */
@@ -62,15 +62,14 @@ public final class PermissionsYml implements PokkitService {
                 getLogger().log(Level.SEVERE, "Cannot create server permisisons file " + file, e);
             }
         } catch (MarkedYAMLException ex) {
-            getLogger().log(Level.WARNING,
-                    "Server permissions file " + file + " is not valid YAML: " + ex.toString());
+            getLogger().log(Level.WARNING, "Server permissions file " + file + " is not valid YAML: " + ex.toString());
         } catch (Throwable ex) {
             getLogger().log(Level.WARNING, "Server permissions file " + file + " is not valid YAML.", ex);
         }
     }
 
     @Override
-    public void onLoad(Pokkit pokkit) {
+    public void onLoad(PluginBase pokkit) {
 
         File file = new File(pokkit.getDataFolder(), "permissions.yml");
         loadCustomPermissions(file);
