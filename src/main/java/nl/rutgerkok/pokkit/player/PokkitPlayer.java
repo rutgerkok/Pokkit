@@ -169,8 +169,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin) {
-        return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)));
+        return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)));
     }
 
     @Override
@@ -186,14 +185,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-        return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
+        return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-        return PokkitPermissionAttachment.toBukkit(
-                nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
+        return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
     }
 
     @Override
@@ -372,10 +369,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        return nukkit.getEffectivePermissions()
-                .values()
-                .stream()
-                .map(PokkitPermissionAttachmentInfo::toBukkit)
+        return nukkit.getEffectivePermissions().values().stream().map(PokkitPermissionAttachmentInfo::toBukkit)
                 .collect(Collectors.toSet());
     }
 
@@ -683,6 +677,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     public WeatherType getPlayerWeather() {
         throw Pokkit.unsupported();
 
+    }
+
+    @Override
+    public PotionEffect getPotionEffect(PotionEffectType type) {
+        throw Pokkit.unsupported();
     }
 
     @Override
@@ -1327,9 +1326,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void sendRawMessage(String arg0) {
-        throw Pokkit.unsupported();
-
+    public void sendRawMessage(String message) {
+        nukkit.sendMessage(message);
     }
 
     @Override
@@ -1707,9 +1705,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void setWhitelisted(boolean arg0) {
-        throw Pokkit.unsupported();
-
+    public void setWhitelisted(boolean value) {
+        nukkit.setWhitelisted(value);
     }
 
     @Override
@@ -1809,39 +1806,33 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     }
 
     @Override
-    public void stopSound(Sound arg0) {
-        throw Pokkit.unsupported();
-
+    public void stopSound(Sound sound) {
+        // Silently unsupported!
     }
 
     @Override
-    public void stopSound(String arg0) {
-        throw Pokkit.unsupported();
-
+    public void stopSound(String sound) {
+        // Silently unsupported!
     }
 
     @Override
-    public boolean teleport(Entity arg0) {
-        throw Pokkit.unsupported();
-
+    public boolean teleport(Entity entity) {
+        return teleport(entity.getLocation());
     }
 
     @Override
     public boolean teleport(Entity entity, TeleportCause cause) {
-        throw Pokkit.unsupported();
-
+        return teleport(entity.getLocation(), cause);
     }
 
     @Override
-    public boolean teleport(Location arg0) {
-        throw Pokkit.unsupported();
-
+    public boolean teleport(Location location) {
+        return nukkit.teleport(PokkitLocation.toNukkit(location));
     }
 
     @Override
-    public boolean teleport(Location arg0, TeleportCause arg1) {
-        throw Pokkit.unsupported();
-
+    public boolean teleport(Location location, TeleportCause cause) {
+        return nukkit.teleport(PokkitLocation.toNukkit(location), PokkitTeleportCause.toNukkit(cause));
     }
 
     @Override
