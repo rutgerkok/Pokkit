@@ -43,6 +43,7 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
@@ -65,8 +66,10 @@ import org.bukkit.util.CachedServerIcon;
 import com.avaje.ebean.config.ServerConfig;
 import com.google.common.collect.ImmutableMap;
 
+import net.md_5.bungee.api.chat.BaseComponent;
+
 @SuppressWarnings("deprecation")
-public final class PokkitServer implements Server {
+public final class PokkitServer extends Server.Spigot implements Server {
 
     public static cn.nukkit.Server toNukkit(Server server) {
         return ((PokkitServer) server).nukkit;
@@ -117,25 +120,35 @@ public final class PokkitServer implements Server {
     @Override
     public boolean addRecipe(Recipe arg0) {
         throw Pokkit.unsupported();
-
     }
 
     @Override
-    public void banIP(String arg0) {
-        throw Pokkit.unsupported();
-
+    public void banIP(String ip) {
+        nukkit.getIPBans().addBan(ip);
     }
 
     @Override
-    public int broadcast(String arg0, String arg1) {
-        throw Pokkit.unsupported();
-
+    public void broadcast(BaseComponent component) {
+        broadcastMessage(component.toLegacyText());
     }
 
     @Override
-    public int broadcastMessage(String arg0) {
-        throw Pokkit.unsupported();
+    public void broadcast(BaseComponent... components) {
+        StringBuilder message = new StringBuilder();
+        for (BaseComponent component : components) {
+            message.append(component.toLegacyText());
+        }
+        broadcastMessage(message.toString());
+    }
 
+    @Override
+    public int broadcast(String message, String permission) {
+        return nukkit.broadcast(message, permission);
+    }
+
+    @Override
+    public int broadcastMessage(String message) {
+        return nukkit.broadcastMessage(message);
     }
 
     @Override
@@ -211,14 +224,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean getAllowFlight() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getAllowFlight();
     }
 
     @Override
     public boolean getAllowNether() {
-        throw Pokkit.unsupported();
-
+        return false;
     }
 
     @Override
@@ -259,6 +270,11 @@ public final class PokkitServer implements Server {
     }
 
     @Override
+    public YamlConfiguration getConfig()    {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public long getConnectionThrottle() {
         throw Pokkit.unsupported();
 
@@ -294,14 +310,12 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getIp() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getIp();
     }
 
     @Override
     public Set<String> getIPBans() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getIPBans();
     }
 
     @Override
@@ -377,9 +391,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public boolean getOnlineMode() {
-        // Pretend we are running in online mode - this should stop plugins from
-        // complaining
-        return true;
+        return false;
     }
 
     /**
@@ -432,8 +444,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public int getPort() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getPort();
     }
 
     @Override
@@ -465,8 +476,9 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getServerName() {
-        throw Pokkit.unsupported();
-
+        // Nukkit has no concept of "server name"
+        // Still, it would be nice if the server admin could change this
+        return "Minecraft Server";
     }
 
     @Override
@@ -642,6 +654,11 @@ public final class PokkitServer implements Server {
     }
 
     @Override
+    public void restart() {
+        throw Pokkit.unsupported();
+    }
+
+    @Override
     public void savePlayers() {
         throw Pokkit.unsupported();
 
@@ -683,8 +700,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Spigot spigot() {
-        throw Pokkit.unsupported();
-
+        return this;
     }
 
     @Override
