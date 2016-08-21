@@ -247,7 +247,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public String getBukkitVersion() {
-        return Pokkit.VERSION;
+        return Pokkit.BUKKIT_VERSION;
     }
 
     @Override

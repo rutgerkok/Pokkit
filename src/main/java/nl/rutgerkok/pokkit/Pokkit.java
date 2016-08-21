@@ -5,11 +5,6 @@ import java.util.List;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
-
-import com.google.common.collect.ImmutableList;
-
-import cn.nukkit.plugin.PluginBase;
 import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
 import nl.rutgerkok.pokkit.pluginservice.PermissionsYml;
 import nl.rutgerkok.pokkit.pluginservice.PlayerBlockEvents;
@@ -19,6 +14,12 @@ import nl.rutgerkok.pokkit.pluginservice.PlayerInteractEvents;
 import nl.rutgerkok.pokkit.pluginservice.PluginService;
 import nl.rutgerkok.pokkit.pluginservice.PokkitService;
 
+import org.bukkit.Bukkit;
+
+import com.google.common.collect.ImmutableList;
+
+import cn.nukkit.plugin.PluginBase;
+
 /**
  * Startup class.
  *
@@ -26,7 +27,8 @@ import nl.rutgerkok.pokkit.pluginservice.PokkitService;
 public final class Pokkit {
 
     public static final String NAME = "Pokkit";
-    public static final String VERSION = "1.10-R0.1-SNAPSHOT";
+    public static final String VERSION = "0.0.1-SNAPSHOT";
+    public static final String BUKKIT_VERSION = "1.10.2-R0.1-SNAPSHOT";
 
     /**
      * Use {@code throw Pokkit.unsupported()} to indicate that a Bukkit API
