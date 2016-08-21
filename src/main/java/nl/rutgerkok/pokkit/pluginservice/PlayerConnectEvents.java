@@ -1,14 +1,20 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
+import java.net.InetAddress;
+
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.lang.TextContainer;
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 public final class PlayerConnectEvents extends EventTranslator {
 
@@ -34,6 +40,22 @@ public final class PlayerConnectEvents extends EventTranslator {
         }
 
         removeFromOnlinePlayers(event.getPlayer());
+    }
+
+    @EventHandler(ignoreCancelled = false)
+    public void onPlayerLogin(cn.nukkit.event.player.PlayerLoginEvent event) {
+        if (canIgnore(PlayerLoginEvent.getHandlerList())) {
+            return;
+        }
+
+        Player bukkitPlayer = PokkitPlayer.toBukkit(event.getPlayer());
+        InetAddress address = bukkitPlayer.getAddress().getAddress();
+        PlayerLoginEvent bukkitEvent = new PlayerLoginEvent(bukkitPlayer, bukkitPlayer.getAddress().getHostName(),
+                address, event.isCancelled()? Result.KICK_OTHER : Result.ALLOWED, event.getKickMessage(), address);
+        Bukkit.getPluginManager().callEvent(bukkitEvent);
+        event.setCancelled(bukkitEvent.getResult() != Result.ALLOWED);
+
+        event.setKickMessage(bukkitEvent.getKickMessage());
     }
 
     @EventHandler(ignoreCancelled = false)

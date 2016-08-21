@@ -10,6 +10,22 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
@@ -59,21 +75,6 @@ import org.bukkit.util.Vector;
 
 import cn.nukkit.network.protocol.UpdateBlockPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitGameMode;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
-import nl.rutgerkok.pokkit.permission.PokkitPermission;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
-import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 @DelegateDeserialization(PokkitOfflinePlayer.class)
 public class PokkitPlayer extends Player.Spigot implements Player {
@@ -95,6 +96,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
     private final cn.nukkit.Player nukkit;
 
     private Scoreboard scoreboard;
+    private InetSocketAddress address;
 
     PokkitPlayer(cn.nukkit.Player player) {
         this.nukkit = Objects.requireNonNull(player);
@@ -317,8 +319,13 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
     @Override
     public InetSocketAddress getAddress() {
-        throw Pokkit.unsupported();
-
+        InetSocketAddress address = this.address;
+        if (address == null) {
+            address = InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
+            ;
+            this.address = address;
+        }
+        return address;
     }
 
     @Override
