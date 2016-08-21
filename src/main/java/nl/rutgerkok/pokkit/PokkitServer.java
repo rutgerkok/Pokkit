@@ -83,6 +83,8 @@ public final class PokkitServer implements Server {
     private final AllMetadataStore metadataOverview;
     private final PokkitUnsafe pokkitUnsafe;
     private final PokkitItemFactory itemFactory;
+    private final PokkitHelpMap helpMap;
+    private final Messenger messenger;
     private Logger logger;
 
     public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
@@ -99,6 +101,8 @@ public final class PokkitServer implements Server {
         this.metadataOverview = new AllMetadataStore();
         this.pokkitUnsafe = new PokkitUnsafe();
         this.itemFactory = new PokkitItemFactory();
+        this.helpMap = new PokkitHelpMap();
+        this.messenger = new PokkitPluginMessenger();
     }
 
     @Override
@@ -279,8 +283,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public HelpMap getHelpMap() {
-        throw Pokkit.unsupported();
-
+        return helpMap;
     }
 
     @Override
@@ -329,8 +332,7 @@ public final class PokkitServer implements Server {
 
     @Override
     public Messenger getMessenger() {
-        throw Pokkit.unsupported();
-
+        return messenger;
     }
 
     /**
@@ -591,7 +593,7 @@ public final class PokkitServer implements Server {
 
     /**
      * Loads the Bukkit plugins. Must be called only once.
-     * 
+     *
      * @return The plugins that were loaded.
      */
     public Plugin[] loadPlugins() {
