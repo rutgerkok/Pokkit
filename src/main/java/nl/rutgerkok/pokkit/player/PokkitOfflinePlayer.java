@@ -15,13 +15,20 @@ import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.IPlayer;
 
+/**
+ * Offline player implementation. This class tries to avoid creating a
+ * {@link IPlayer} instance, as that instance load information from disk.
+ *
+ */
 public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     public static OfflinePlayer deserialize(Map<String, Object> args) {
         String name = (String) args.get("name");
-        @SuppressWarnings("deprecation")
-        OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(name);
-        return player;
+        return fromName(name);
+    }
+
+    public static OfflinePlayer fromName(String name) {
+        return new PokkitOfflinePlayer(name, null);
     }
 
     public static OfflinePlayer toBukkit(IPlayer offlinePlayer) {
@@ -29,13 +36,15 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
             // More specialized type available
             return PokkitPlayer.toBukkit((cn.nukkit.Player) offlinePlayer);
         }
-        return new PokkitOfflinePlayer(offlinePlayer);
+        return new PokkitOfflinePlayer(offlinePlayer.getName(), offlinePlayer);
     }
 
-    private final cn.nukkit.IPlayer nukkit;
+    private final String name;
+    private IPlayer nukkitOrNull;
 
-    private PokkitOfflinePlayer(IPlayer nukkit) {
-        this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
+    private PokkitOfflinePlayer(String name, IPlayer nukkitOrNull) {
+        this.name = Objects.requireNonNull(name, "name");
+        this.nukkitOrNull = nukkitOrNull;
     }
 
     @Override
@@ -45,7 +54,7 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     @Override
     public long getFirstPlayed() {
-        Long firstPlayed = nukkit.getFirstPlayed();
+        Long firstPlayed = getNukkit().getFirstPlayed();
         if (firstPlayed == null) {
             return 0;
         }
@@ -54,7 +63,7 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     @Override
     public long getLastPlayed() {
-        Long lastPlayed = nukkit.getFirstPlayed();
+        Long lastPlayed = getNukkit().getLastPlayed();
         if (lastPlayed == null) {
             return 0;
         }
@@ -63,12 +72,21 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     @Override
     public String getName() {
-        return nukkit.getName();
+        return name;
+    }
+
+    private IPlayer getNukkit() {
+        IPlayer iPlayer = this.nukkitOrNull;
+        if (iPlayer == null) {
+            iPlayer = cn.nukkit.Server.getInstance().getOfflinePlayer(getName());
+            this.nukkitOrNull = iPlayer;
+        }
+        return iPlayer;
     }
 
     @Override
     public Player getPlayer() {
-        return PokkitPlayer.toBukkit(nukkit.getPlayer());
+        return Bukkit.getPlayer(getName());
     }
 
     @Override
@@ -78,27 +96,27 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 
     @Override
     public boolean hasPlayedBefore() {
-        return nukkit.hasPlayedBefore();
+        return getNukkit().hasPlayedBefore();
     }
 
     @Override
     public boolean isBanned() {
-        return nukkit.isBanned();
+        return getNukkit().isBanned();
     }
 
     @Override
     public boolean isOnline() {
-        return nukkit.isOnline();
+        return Bukkit.getPlayerExact(getName()) != null;
     }
 
     @Override
     public boolean isOp() {
-        return nukkit.isOp();
+        return getNukkit().isOp();
     }
 
     @Override
     public boolean isWhitelisted() {
-        return nukkit.isWhitelisted();
+        return cn.nukkit.Server.getInstance().isWhitelisted(getName());
     }
 
     @Override
@@ -107,17 +125,17 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
     }
     @Override
     public void setBanned(boolean banned) {
-        nukkit.setBanned(banned);
+        getNukkit().setBanned(banned);
     }
 
     @Override
     public void setOp(boolean value) {
-        nukkit.setOp(value);
+        getNukkit().setOp(value);
     }
 
     @Override
     public void setWhitelisted(boolean value) {
-        nukkit.setWhitelisted(value);
+        getNukkit().setWhitelisted(value);
     }
 
 }

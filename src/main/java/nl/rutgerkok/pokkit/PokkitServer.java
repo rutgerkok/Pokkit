@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import nl.rutgerkok.pokkit.plugin.PokkitPluginManager;
 import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
 import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboardManager;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.PokkitWorldType;
 import nl.rutgerkok.pokkit.world.item.PokkitItemFactory;
 
 import org.bukkit.BanList;
@@ -34,6 +36,7 @@ import org.bukkit.Server;
 import org.bukkit.UnsafeValues;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -66,6 +69,7 @@ import org.bukkit.util.CachedServerIcon;
 import com.avaje.ebean.config.ServerConfig;
 import com.google.common.collect.ImmutableMap;
 
+import cn.nukkit.level.Level;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 @SuppressWarnings("deprecation")
@@ -110,11 +114,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public Player[] _INVALID_getOnlinePlayers() {
-        return nukkit.getOnlinePlayers()
-                .values()
-                .stream()
-                .map(PokkitPlayer::toBukkit)
-                .toArray(Player[]::new);
+        return nukkit.getOnlinePlayers().values().stream().map(PokkitPlayer::toBukkit).toArray(Player[]::new);
     }
 
     @Override
@@ -206,9 +206,27 @@ public final class PokkitServer extends Server.Spigot implements Server {
     }
 
     @Override
-    public World createWorld(WorldCreator arg0) {
-        throw Pokkit.unsupported();
+    public World createWorld(WorldCreator creator) {
+        World alreadyLoaded = this.getWorld(creator.name());
+        if (alreadyLoaded != null) {
+            return alreadyLoaded;
+        }
 
+        if (creator.environment() != Environment.NORMAL) {
+            throw new IllegalArgumentException("No Nether or End support yet");
+        }
+        if (creator.generator() != null) {
+            throw new IllegalArgumentException("Custom generators are not yet supported");
+        }
+
+        Map<String, Object> options = new HashMap<>();
+        options.put("preset", creator.generatorSettings());
+        if (!nukkit.generateLevel(creator.name(), creator.seed(), PokkitWorldType.toNukkit(creator.type()), options)) {
+            throw new RuntimeException("Failed to create world " + creator.name());
+        }
+        World world = this.getWorld(creator.name());
+        Pokkit.assertion(world != null, "World was still null");
+        return world;
     }
 
     @Override
@@ -218,8 +236,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public boolean getAllowEnd() {
-        throw Pokkit.unsupported();
-
+        return false;
     }
 
     @Override
@@ -264,13 +281,13 @@ public final class PokkitServer extends Server.Spigot implements Server {
     @Override
     public Map<String, String[]> getCommandAliases() {
         ImmutableMap.Builder<String, String[]> allAliases = ImmutableMap.builder();
-        nukkit.getCommandAliases().forEach(
-                (command, aliasList) -> allAliases.put(command, aliasList.toArray(new String[0])));
+        nukkit.getCommandAliases()
+                .forEach((command, aliasList) -> allAliases.put(command, aliasList.toArray(new String[0])));
         return allAliases.build();
     }
 
     @Override
-    public YamlConfiguration getConfig()    {
+    public YamlConfiguration getConfig() {
         throw Pokkit.unsupported();
     }
 
@@ -287,14 +304,12 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public GameMode getDefaultGameMode() {
-        throw Pokkit.unsupported();
-
+        return PokkitGameMode.toBukkit(nukkit.getDefaultGamemode());
     }
 
     @Override
     public boolean getGenerateStructures() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getGenerateStructures();
     }
 
     @Override
@@ -315,7 +330,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public Set<String> getIPBans() {
-        return nukkit.getIPBans();
+        return nukkit.getIPBans().getEntires().keySet();
     }
 
     @Override
@@ -351,6 +366,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     /**
      * Gets all meta data that the Bukkit side of the server knows about.
+     *
      * @return All meta data.
      */
     public AllMetadataStore getMetadata() {
@@ -375,7 +391,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public OfflinePlayer getOfflinePlayer(String name) {
-        return PokkitOfflinePlayer.toBukkit(nukkit.getOfflinePlayer(name));
+        return PokkitOfflinePlayer.fromName(name);
     }
 
     @Override
@@ -396,6 +412,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     /**
      * Gets the data of all online players.
+     *
      * @return The online player data.
      */
     public OnlinePlayerData getOnlinePlayerData() {
@@ -404,11 +421,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public Collection<? extends Player> getOnlinePlayers() {
-        return nukkit.getOnlinePlayers()
-                .values()
-                .stream()
-                .map(PokkitPlayer::toBukkit)
-                .collect(Collectors.toList());
+        return nukkit.getOnlinePlayers().values().stream().map(PokkitPlayer::toBukkit).collect(Collectors.toList());
     }
 
     @Override
@@ -478,7 +491,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
     public String getServerName() {
         // Nukkit has no concept of "server name"
         // Still, it would be nice if the server admin could change this
-        return "Minecraft Server";
+        return "this Minecraft Server";
     }
 
     @Override
@@ -547,8 +560,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public Set<OfflinePlayer> getWhitelistedPlayers() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getWhitelist().getKeys(true).stream().map(this::getOfflinePlayer).collect(Collectors.toSet());
     }
 
     @Override
@@ -563,35 +575,28 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public File getWorldContainer() {
-        throw Pokkit.unsupported();
-
+        // Copied from nukkit.generateLevel
+        return new File(nukkit.getDataPath() + "worlds/");
     }
 
     @Override
     public List<World> getWorlds() {
-        return nukkit.getLevels()
-                .values()
-                .stream()
-                .map(PokkitWorld::toBukkit)
-                .collect(Collectors.toList());
+        return nukkit.getLevels().values().stream().map(PokkitWorld::toBukkit).collect(Collectors.toList());
     }
 
     @Override
     public String getWorldType() {
-        throw Pokkit.unsupported();
-
+        return nukkit.getLevelType();
     }
 
     @Override
     public boolean hasWhitelist() {
-        throw Pokkit.unsupported();
-
+        return nukkit.hasWhitelist();
     }
 
     @Override
     public boolean isHardcore() {
-        throw Pokkit.unsupported();
-
+        return nukkit.isHardcore();
     }
 
     @Override
@@ -626,9 +631,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public List<Player> matchPlayer(String partialName) {
-        return Arrays.stream(nukkit.matchPlayer(partialName))
-                .map(PokkitPlayer::toBukkit)
-                .collect(Collectors.toList());
+        return Arrays.stream(nukkit.matchPlayer(partialName)).map(PokkitPlayer::toBukkit).collect(Collectors.toList());
     }
 
     @Override
@@ -660,8 +663,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
     @Override
     public void savePlayers() {
-        throw Pokkit.unsupported();
-
+        nukkit.getOnlinePlayers().values().forEach(cn.nukkit.Player::save);
     }
 
     @Override
@@ -671,9 +673,11 @@ public final class PokkitServer extends Server.Spigot implements Server {
     }
 
     @Override
-    public void setDefaultGameMode(GameMode arg0) {
-        throw Pokkit.unsupported();
+    public void setDefaultGameMode(GameMode gameMode) {
+        // See nukkit.getDefaultGamemode() for setting name
+        nukkit.setPropertyInt("gamemode", PokkitGameMode.toNukkit(gameMode));
 
+        Pokkit.assertion(getDefaultGameMode() == gameMode, "Failed to set game mode");
     }
 
     @Override
@@ -683,14 +687,19 @@ public final class PokkitServer extends Server.Spigot implements Server {
     }
 
     @Override
-    public void setSpawnRadius(int arg0) {
-        throw Pokkit.unsupported();
+    public void setSpawnRadius(int radius) {
+        // See nukkit.getSpawnRadius() for setting name
+        nukkit.setPropertyInt("spawn-protection", radius);
+
+        Pokkit.assertion(nukkit.getSpawnRadius() == radius, "Failed to set spawn radius");
     }
 
     @Override
-    public void setWhitelist(boolean arg0) {
-        throw Pokkit.unsupported();
+    public void setWhitelist(boolean whitelist) {
+        // See nukkit.hasWhitelist() for setting name
+        nukkit.setPropertyBoolean("white-list", whitelist);
 
+        Pokkit.assertion(nukkit.hasWhitelist() == whitelist, "Failed to set whitelist");
     }
 
     @Override
@@ -704,21 +713,26 @@ public final class PokkitServer extends Server.Spigot implements Server {
     }
 
     @Override
-    public void unbanIP(String arg0) {
-        throw Pokkit.unsupported();
-
+    public void unbanIP(String ip) {
+        nukkit.getIPBans().remove(ip);
     }
 
     @Override
-    public boolean unloadWorld(String arg0, boolean arg1) {
-        throw Pokkit.unsupported();
-
+    public boolean unloadWorld(String name, boolean save) {
+        World world = this.getWorld(name);
+        if (world == null) {
+            return false;
+        }
+        return unloadWorld(world, save);
     }
 
     @Override
-    public boolean unloadWorld(World arg0, boolean arg1) {
-        throw Pokkit.unsupported();
-
+    public boolean unloadWorld(World world, boolean save) {
+        Level level = PokkitWorld.toNukkit(world);
+        if (save) {
+            level.save(true);
+        }
+        return nukkit.unloadLevel(level, true);
     }
 
     @Override

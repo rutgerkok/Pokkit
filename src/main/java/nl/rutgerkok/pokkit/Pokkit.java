@@ -35,6 +35,23 @@ public final class Pokkit {
     static String BUKKIT_VERSION = "?";
 
     /**
+     * Makes sure that the given expression is true. If not, an exception is
+     * thrown.
+     * 
+     * @param expression
+     *            The expression that must be true.
+     * @param errorMessage
+     *            The error message, shown in case the expression is not true.
+     * @throws UnsupportedOperationException
+     *             If the expression evaluates to false.
+     */
+    public static void assertion(boolean expression, String errorMessage) {
+        if (!expression) {
+            throw new UnsupportedOperationException("Error in " + NAME + " " + VERSION + ": " + errorMessage);
+        }
+    }
+
+    /**
      * Use {@code throw Pokkit.unsupported()} to indicate that a Bukkit API
      * method has not been implemented yet.
      *
