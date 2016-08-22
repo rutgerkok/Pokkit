@@ -13,6 +13,8 @@ If you are a Spigot plugin developer looking to port your plugin, Pokkit may be 
 
 While testing your plugin, you will most likely come accross an unimplemented method or event. You are encouraged to implement these methods and events, and to submit your changes as a pull request. This will bring us closer to a complete implementation of the Spigot API.
 
+To get started writing code for Pokkit, I have created a [file with examples](./IMPL_EXAMPLES.md) on how I implemented the methods.
+
 ## How to use it
 Install Pokkit like you would install any Nukkit plugin: place the JAR file in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
 
