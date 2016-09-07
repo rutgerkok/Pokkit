@@ -1847,4 +1847,10 @@ public class PokkitPlayer extends Player.Spigot implements Player {
         nukkit.getInventory().sendContents(nukkit);
     }
 
+	@Override
+	public boolean isHandRaised() {
+		// TODO 자동 생성된 메소드 스텁
+		return false;
+	}
+
 }
