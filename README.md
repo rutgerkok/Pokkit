@@ -44,4 +44,4 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 License is MIT, except for the files that were derived from the Bukkit project. See the [license](./LICENSE.md) file for details.
 
 ##Author
-**ZINGDING , rutgerkok
+**ZINGDING , rutgerkok**
