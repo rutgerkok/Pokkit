@@ -19,36 +19,36 @@ import com.google.common.collect.ImmutableList;
  */
 final class PokkitHelpMap implements HelpMap {
 
-    private final Map<String, HelpTopic> helpTopics = new HashMap<>();
+	private final Map<String, HelpTopic> helpTopics = new HashMap<>();
 
-    @Override
-    public void addTopic(HelpTopic topic) {
-        helpTopics.put(topic.getName().toLowerCase(), topic);
-    }
+	@Override
+	public void addTopic(HelpTopic topic) {
+		helpTopics.put(topic.getName().toLowerCase(), topic);
+	}
 
-    @Override
-    public void clear() {
-        helpTopics.clear();
-    }
+	@Override
+	public void clear() {
+		helpTopics.clear();
+	}
 
-    @Override
-    public HelpTopic getHelpTopic(String topicName) {
-        return helpTopics.get(topicName.toLowerCase());
-    }
+	@Override
+	public HelpTopic getHelpTopic(String topicName) {
+		return helpTopics.get(topicName.toLowerCase());
+	}
 
-    @Override
-    public Collection<HelpTopic> getHelpTopics() {
-        return ImmutableList.copyOf(helpTopics.values());
-    }
+	@Override
+	public Collection<HelpTopic> getHelpTopics() {
+		return ImmutableList.copyOf(helpTopics.values());
+	}
 
-    @Override
-    public List<String> getIgnoredPlugins() {
-        return Collections.emptyList();
-    }
+	@Override
+	public List<String> getIgnoredPlugins() {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public void registerHelpTopicFactory(Class<?> commandClass, HelpTopicFactory<?> factory) {
-        // Help topics are not implemented yet
-    }
+	@Override
+	public void registerHelpTopicFactory(Class<?> commandClass, HelpTopicFactory<?> factory) {
+		// Help topics are not implemented yet
+	}
 
 }

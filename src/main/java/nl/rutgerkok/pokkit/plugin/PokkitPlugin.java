@@ -36,298 +36,298 @@ import cn.nukkit.utils.Config;
  */
 public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
-    /**
-     * For showing Nukkit plugins to Bukkit.
-     */
-    private static class NukkitPluginWrapper implements Plugin {
-        
-        private final cn.nukkit.plugin.Plugin nukkit;
-        
-        private NukkitPluginWrapper(cn.nukkit.plugin.Plugin nukkit) {
-            this.nukkit = Objects.requireNonNull(nukkit);
-            if (nukkit instanceof PokkitPlugin) {
-                throw new IllegalArgumentException("Cannot wrap Bukkit plugin into Nukkit plugin into Bukkit plugin");
-            }
-        }
+	/**
+	 * For showing Nukkit plugins to Bukkit.
+	 */
+	private static class NukkitPluginWrapper implements Plugin {
 
-        @Override
-        public FileConfiguration getConfig() {
-            throw Pokkit.unsupported();
-        }
+		private final cn.nukkit.plugin.Plugin nukkit;
 
-        @Override
-        public EbeanServer getDatabase() {
-            throw Pokkit.unsupported();
-        }
+		private NukkitPluginWrapper(cn.nukkit.plugin.Plugin nukkit) {
+			this.nukkit = Objects.requireNonNull(nukkit);
+			if (nukkit instanceof PokkitPlugin) {
+				throw new IllegalArgumentException("Cannot wrap Bukkit plugin into Nukkit plugin into Bukkit plugin");
+			}
+		}
 
-        @Override
-        public File getDataFolder() {
-            return nukkit.getDataFolder();
-        }
+		@Override
+		public FileConfiguration getConfig() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-            return null;
-        }
+		@Override
+		public EbeanServer getDatabase() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public PluginDescriptionFile getDescription() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public File getDataFolder() {
+			return nukkit.getDataFolder();
+		}
 
-        @Override
-        public Logger getLogger() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+			return null;
+		}
 
-        @Override
-        public String getName() {
-            return nukkit.getName();
-        }
+		@Override
+		public PluginDescriptionFile getDescription() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public org.bukkit.plugin.PluginLoader getPluginLoader() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public Logger getLogger() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public InputStream getResource(String filename) {
-            return nukkit.getResource(filename);
-        }
+		@Override
+		public String getName() {
+			return nukkit.getName();
+		}
 
-        @Override
-        public org.bukkit.Server getServer() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public org.bukkit.plugin.PluginLoader getPluginLoader() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public boolean isEnabled() {
-            return nukkit.isEnabled();
-        }
+		@Override
+		public InputStream getResource(String filename) {
+			return nukkit.getResource(filename);
+		}
 
-        @Override
-        public boolean isNaggable() {
-            return false;
-        }
+		@Override
+		public org.bukkit.Server getServer() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public boolean onCommand(org.bukkit.command.CommandSender sender, org.bukkit.command.Command command,
-                String label, String[] args) {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public boolean isEnabled() {
+			return nukkit.isEnabled();
+		}
 
-        @Override
-        public void onDisable() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public boolean isNaggable() {
+			return false;
+		}
 
-        @Override
-        public void onEnable() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public boolean onCommand(org.bukkit.command.CommandSender sender, org.bukkit.command.Command command,
+				String label, String[] args) {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public void onLoad() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public void onDisable() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public List<String> onTabComplete(org.bukkit.command.CommandSender sender, org.bukkit.command.Command command,
-                String alias, String[] args) {
-            return Collections.emptyList();
-        }
+		@Override
+		public void onEnable() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public void reloadConfig() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public void onLoad() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public void saveConfig() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public List<String> onTabComplete(org.bukkit.command.CommandSender sender, org.bukkit.command.Command command,
+				String alias, String[] args) {
+			return Collections.emptyList();
+		}
 
-        @Override
-        public void saveDefaultConfig() {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public void reloadConfig() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public void saveResource(String resourcePath, boolean replace) {
-            throw Pokkit.unsupported();
-        }
+		@Override
+		public void saveConfig() {
+			throw Pokkit.unsupported();
+		}
 
-        @Override
-        public void setNaggable(boolean canNag) {
-            // Empty!
-        }
+		@Override
+		public void saveDefaultConfig() {
+			throw Pokkit.unsupported();
+		}
 
-    }
+		@Override
+		public void saveResource(String resourcePath, boolean replace) {
+			throw Pokkit.unsupported();
+		}
 
-    /**
-     * Gets the plugin as a Bukkit plugin. Either this method gets the
-     * underlying Bukkit plugin of a Nukkit wrapper, or creates a Bukkit wrapper
-     * for a Nukkit plugin.
-     *
-     * @param plugin
-     *            The Nukkit wrapper.
-     * @return The Bukkit plugin.
-     */
-    public static Plugin toBukkit(cn.nukkit.plugin.Plugin plugin) {
-        if (plugin == null) {
-            return null;
-        }
-        if (plugin instanceof PokkitPlugin) {
-            return ((PokkitPlugin) plugin).bukkit;
-        }
-        return new NukkitPluginWrapper(plugin);
-    }
+		@Override
+		public void setNaggable(boolean canNag) {
+			// Empty!
+		}
 
-    /**
-     * Gets the Nukkit wrapper for the given Bukkit plugin.
-     *
-     * @param plugin
-     *            The Bukkit plugin.
-     * @return The Nukkit wrapper.
-     */
-    public static cn.nukkit.plugin.Plugin toNukkit(Plugin plugin) {
-        return PokkitServer.toNukkit(Bukkit.getServer()).getPluginManager().getPlugin(plugin.getName());
-    }
+	}
 
-    private final JavaPlugin bukkit;
-    private final PluginDescription pluginDescription;
-    private final PluginLoader loader;
+	/**
+	 * Gets the plugin as a Bukkit plugin. Either this method gets the
+	 * underlying Bukkit plugin of a Nukkit wrapper, or creates a Bukkit wrapper
+	 * for a Nukkit plugin.
+	 *
+	 * @param plugin
+	 *            The Nukkit wrapper.
+	 * @return The Bukkit plugin.
+	 */
+	public static Plugin toBukkit(cn.nukkit.plugin.Plugin plugin) {
+		if (plugin == null) {
+			return null;
+		}
+		if (plugin instanceof PokkitPlugin) {
+			return ((PokkitPlugin) plugin).bukkit;
+		}
+		return new NukkitPluginWrapper(plugin);
+	}
 
-    private final PluginLogger logger;
+	/**
+	 * Gets the Nukkit wrapper for the given Bukkit plugin.
+	 *
+	 * @param plugin
+	 *            The Bukkit plugin.
+	 * @return The Nukkit wrapper.
+	 */
+	public static cn.nukkit.plugin.Plugin toNukkit(Plugin plugin) {
+		return PokkitServer.toNukkit(Bukkit.getServer()).getPluginManager().getPlugin(plugin.getName());
+	}
 
-    PokkitPlugin(JavaPlugin bukkit, PluginDescription pluginDescription, PluginLoader pluginLoader) throws IOException {
-        this.bukkit = Objects.requireNonNull(bukkit);
-        this.pluginDescription = Objects.requireNonNull(pluginDescription);
-        this.loader = Objects.requireNonNull(pluginLoader);
+	private final JavaPlugin bukkit;
+	private final PluginDescription pluginDescription;
+	private final PluginLoader loader;
 
-        this.logger = new PluginLogger(this);
-    }
+	private final PluginLogger logger;
 
-    private PluginCommand getBukkitCommand(Command command) {
-        org.bukkit.command.PluginCommand bukkitCommand = Bukkit.getServer().getPluginCommand(command.getName());
-        if (bukkitCommand == null || !bukkitCommand.getPlugin().equals(bukkit)) {
-            // Not registered, or registered by other plugin
-            bukkitCommand = Bukkit.getServer()
-                    .getPluginCommand(pluginDescription.getName().toLowerCase() + ":" + command.getName());
-        }
-        return bukkitCommand;
-    }
+	PokkitPlugin(JavaPlugin bukkit, PluginDescription pluginDescription, PluginLoader pluginLoader) throws IOException {
+		this.bukkit = Objects.requireNonNull(bukkit);
+		this.pluginDescription = Objects.requireNonNull(pluginDescription);
+		this.loader = Objects.requireNonNull(pluginLoader);
 
-    @Override
-    public Config getConfig() {
-        // Maybe we want to allow Nukkit to have a look into Bukkit plugin
-        // config files?
-        return new Config();
-    }
+		this.logger = new PluginLogger(this);
+	}
 
-    @Override
-    public File getDataFolder() {
-        return bukkit.getDataFolder();
-    }
+	private PluginCommand getBukkitCommand(Command command) {
+		org.bukkit.command.PluginCommand bukkitCommand = Bukkit.getServer().getPluginCommand(command.getName());
+		if (bukkitCommand == null || !bukkitCommand.getPlugin().equals(bukkit)) {
+			// Not registered, or registered by other plugin
+			bukkitCommand = Bukkit.getServer()
+					.getPluginCommand(pluginDescription.getName().toLowerCase() + ":" + command.getName());
+		}
+		return bukkitCommand;
+	}
 
-    @Override
-    public PluginDescription getDescription() {
-        return pluginDescription;
-    }
+	@Override
+	public Config getConfig() {
+		// Maybe we want to allow Nukkit to have a look into Bukkit plugin
+		// config files?
+		return new Config();
+	}
 
-    @Override
-    public PluginLogger getLogger() {
-        return logger;
-    }
+	@Override
+	public File getDataFolder() {
+		return bukkit.getDataFolder();
+	}
 
-    @Override
-    public String getName() {
-        return bukkit.getName();
-    }
+	@Override
+	public PluginDescription getDescription() {
+		return pluginDescription;
+	}
 
-    @Override
-    public PluginLoader getPluginLoader() {
-        return loader;
-    }
+	@Override
+	public PluginLogger getLogger() {
+		return logger;
+	}
 
-    @Override
-    public InputStream getResource(String filename) {
-        return bukkit.getResource(filename);
-    }
+	@Override
+	public String getName() {
+		return bukkit.getName();
+	}
 
-    @Override
-    public Server getServer() {
-        return PokkitServer.toNukkit(Bukkit.getServer());
-    }
+	@Override
+	public PluginLoader getPluginLoader() {
+		return loader;
+	}
 
-    @Override
-    public boolean isDisabled() {
-        return !bukkit.isEnabled();
-    }
+	@Override
+	public InputStream getResource(String filename) {
+		return bukkit.getResource(filename);
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return bukkit.isEnabled();
-    }
+	@Override
+	public Server getServer() {
+		return PokkitServer.toNukkit(Bukkit.getServer());
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        PluginCommand bukkitCommand = getBukkitCommand(command);
-        if (bukkitCommand == null) {
-            return false;
-        }
-        return bukkitCommand.getExecutor().onCommand(PokkitCommandSender.toBukkit(sender), bukkitCommand, label, args);
-    }
+	@Override
+	public boolean isDisabled() {
+		return !bukkit.isEnabled();
+	}
 
-    @Override
-    public void onDisable() {
-        bukkit.onDisable();
-    }
+	@Override
+	public boolean isEnabled() {
+		return bukkit.isEnabled();
+	}
 
-    @Override
-    public void onEnable() {
-        bukkit.onEnable();
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		PluginCommand bukkitCommand = getBukkitCommand(command);
+		if (bukkitCommand == null) {
+			return false;
+		}
+		return bukkitCommand.getExecutor().onCommand(PokkitCommandSender.toBukkit(sender), bukkitCommand, label, args);
+	}
 
-    @Override
-    public void onLoad() {
-        bukkit.onLoad();
-    }
+	@Override
+	public void onDisable() {
+		bukkit.onDisable();
+	}
 
-    @Override
-    public void reloadConfig() {
-        bukkit.reloadConfig();
-    }
+	@Override
+	public void onEnable() {
+		bukkit.onEnable();
+	}
 
-    @Override
-    public void saveConfig() {
-        bukkit.saveConfig();
-    }
+	@Override
+	public void onLoad() {
+		bukkit.onLoad();
+	}
 
-    @Override
-    public void saveDefaultConfig() {
-        bukkit.saveDefaultConfig();
-    }
+	@Override
+	public void reloadConfig() {
+		bukkit.reloadConfig();
+	}
 
-    @Override
-    public boolean saveResource(String resourcePath) {
-        bukkit.saveResource(resourcePath, false);
-        return true;
-    }
+	@Override
+	public void saveConfig() {
+		bukkit.saveConfig();
+	}
 
-    @Override
-    public boolean saveResource(String resourcePath, boolean replace) {
-        bukkit.saveResource(resourcePath, replace);
-        return true;
-    }
+	@Override
+	public void saveDefaultConfig() {
+		bukkit.saveDefaultConfig();
+	}
 
-    @Override
-    public boolean saveResource(String filename, String outputName, boolean replace) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean saveResource(String resourcePath) {
+		bukkit.saveResource(resourcePath, false);
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return bukkit.toString();
-    }
+	@Override
+	public boolean saveResource(String resourcePath, boolean replace) {
+		bukkit.saveResource(resourcePath, replace);
+		return true;
+	}
+
+	@Override
+	public boolean saveResource(String filename, String outputName, boolean replace) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public String toString() {
+		return bukkit.toString();
+	}
 }

@@ -15,14 +15,14 @@ public final class PokkitTeleportCause {
 	 */
 	public static TeleportCause toNukkit(org.bukkit.event.player.PlayerTeleportEvent.TeleportCause cause) {
 		switch (cause) {
-			case COMMAND:
-				return TeleportCause.COMMAND;
-			case NETHER_PORTAL:
-				return TeleportCause.NETHER_PORTAL;
-			case PLUGIN:
-				return TeleportCause.PLUGIN;
-			default:
-				return TeleportCause.UNKNOWN;
+		case COMMAND:
+			return TeleportCause.COMMAND;
+		case NETHER_PORTAL:
+			return TeleportCause.NETHER_PORTAL;
+		case PLUGIN:
+			return TeleportCause.PLUGIN;
+		default:
+			return TeleportCause.UNKNOWN;
 		}
 	}
 

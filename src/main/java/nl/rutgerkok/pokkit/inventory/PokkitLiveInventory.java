@@ -28,262 +28,259 @@ import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
  */
 public class PokkitLiveInventory extends PokkitAbstractInventory {
 
-    protected cn.nukkit.inventory.Inventory nukkit;
+	protected cn.nukkit.inventory.Inventory nukkit;
 
-    public PokkitLiveInventory(cn.nukkit.inventory.Inventory inventory) {
-        this.nukkit = Objects.requireNonNull(inventory, "inventory");
-    }
+	public PokkitLiveInventory(cn.nukkit.inventory.Inventory inventory) {
+		this.nukkit = Objects.requireNonNull(inventory, "inventory");
+	}
 
-    @Override
-    protected int addSingleStack(ItemStack item) {
-        Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
-        int remaining = nukkitItem.count;
+	@Override
+	protected int addSingleStack(ItemStack item) {
+		Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
+		int remaining = nukkitItem.count;
 
-        // Try to disperse over the existing stacks first
-        int size = getSize();
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (!atPosition.equals(nukkitItem)) {
-                // Another stack type
-                continue;
-            }
+		// Try to disperse over the existing stacks first
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (!atPosition.equals(nukkitItem)) {
+				// Another stack type
+				continue;
+			}
 
-            int maxStackSize = Math.min(atPosition.getMaxStackSize(), this.getMaxStackSize());
-            if (atPosition.count >= maxStackSize) {
-                // Already full
-                continue;
-            }
+			int maxStackSize = Math.min(atPosition.getMaxStackSize(), this.getMaxStackSize());
+			if (atPosition.count >= maxStackSize) {
+				// Already full
+				continue;
+			}
 
-            int transferAmount = Math.min(atPosition.count - maxStackSize, remaining);
-            remaining -= transferAmount;
-            atPosition.count += transferAmount;
+			int transferAmount = Math.min(atPosition.count - maxStackSize, remaining);
+			remaining -= transferAmount;
+			atPosition.count += transferAmount;
 
-            if (remaining == 0) {
-                return 0;
-            }
-        }
+			if (remaining == 0) {
+				return 0;
+			}
+		}
 
-        // Try to disperse over empty slots
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (atPosition.getId() != Item.AIR) {
-                continue;
-            }
+		// Try to disperse over empty slots
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (atPosition.getId() != Item.AIR) {
+				continue;
+			}
 
-            int transferAmount = Math.min(getMaxStackSize(), remaining);
-            remaining -= transferAmount;
-            Item newItem = nukkitItem.clone();
-            newItem.count = transferAmount;
-            nukkit.setItem(i, newItem);
+			int transferAmount = Math.min(getMaxStackSize(), remaining);
+			remaining -= transferAmount;
+			Item newItem = nukkitItem.clone();
+			newItem.count = transferAmount;
+			nukkit.setItem(i, newItem);
 
-            if (remaining == 0) {
-                return 0;
-            }
-        }
+			if (remaining == 0) {
+				return 0;
+			}
+		}
 
-        return remaining;
-    }
+		return remaining;
+	}
 
-    @Override
-    public HashMap<Integer, ? extends ItemStack> all(ItemStack item) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public HashMap<Integer, ? extends ItemStack> all(ItemStack item) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public HashMap<Integer, ? extends ItemStack> all(Material material) throws IllegalArgumentException {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public HashMap<Integer, ? extends ItemStack> all(Material material) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void clear() {
-        nukkit.clearAll();
-    }
+	@Override
+	public void clear() {
+		nukkit.clearAll();
+	}
 
-    @Override
-    public void clear(int index) {
-        nukkit.clear(index);
-    }
+	@Override
+	public void clear(int index) {
+		nukkit.clear(index);
+	}
 
-    @Override
-    public boolean contains(ItemStack item) {
-        if (item == null) {
-            return false;
-        }
+	@Override
+	public boolean contains(ItemStack item) {
+		if (item == null) {
+			return false;
+		}
 
-        Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
+		Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
 
-        int size = getSize();
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (exactMatch(nukkitItem, atPosition)) {
-                return true;
-            }
-        }
-        return false;
-    }
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (exactMatch(nukkitItem, atPosition)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public boolean contains(ItemStack item, int amount) {
-        if (item == null) {
-            return false;
-        }
-        if (amount < 1) {
-            return true;
-        }
-        int remaining = amount;
+	@Override
+	public boolean contains(ItemStack item, int amount) {
+		if (item == null) {
+			return false;
+		}
+		if (amount < 1) {
+			return true;
+		}
+		int remaining = amount;
 
-        Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
+		Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
 
-        int size = getSize();
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (exactMatch(nukkitItem, atPosition)) {
-                remaining--;
-                if (remaining <= 0) {
-                    return true;
-                }
-            }
-        }
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (exactMatch(nukkitItem, atPosition)) {
+				remaining--;
+				if (remaining <= 0) {
+					return true;
+				}
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public boolean contains(Material material, int amount) throws IllegalArgumentException {
-        Validate.notNull(material, "material");
-        int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
+	@Override
+	public boolean contains(Material material, int amount) throws IllegalArgumentException {
+		Validate.notNull(material, "material");
+		int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
 
-        int remaining = amount;
+		int remaining = amount;
 
-        int size = getSize();
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (atPosition.getId() == nukkitTypeId) {
-                remaining -= atPosition.getCount();
-                if (remaining <= 0) {
-                    return true;
-                }
-            }
-        }
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (atPosition.getId() == nukkitTypeId) {
+				remaining -= atPosition.getCount();
+				if (remaining <= 0) {
+					return true;
+				}
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public boolean containsAtLeast(ItemStack item, int amount) {
-        if (item == null || amount < 1) {
-            return false;
-        }
-        Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
-        nukkitItem.count = amount;
-        return nukkit.contains(nukkitItem);
-    }
+	@Override
+	public boolean containsAtLeast(ItemStack item, int amount) {
+		if (item == null || amount < 1) {
+			return false;
+		}
+		Item nukkitItem = PokkitItemStack.toNukkitCopy(item);
+		nukkitItem.count = amount;
+		return nukkit.contains(nukkitItem);
+	}
 
-    private boolean exactMatch(Item first, Item second) {
-        return first.count == second.count && first.equals(second);
-    }
+	private boolean exactMatch(Item first, Item second) {
+		return first.count == second.count && first.equals(second);
+	}
 
-    @Override
-    public int first(ItemStack item) {
-        if (item == null) {
-            return -1;
-        }
-        return nukkit.first(PokkitItemStack.toNukkitCopy(item));
-    }
+	@Override
+	public int first(ItemStack item) {
+		if (item == null) {
+			return -1;
+		}
+		return nukkit.first(PokkitItemStack.toNukkitCopy(item));
+	}
 
-    @Override
-    public int first(Material material) throws IllegalArgumentException {
-        Validate.notNull(material, "material");
-        int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
+	@Override
+	public int first(Material material) throws IllegalArgumentException {
+		Validate.notNull(material, "material");
+		int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
 
-        int size = getSize();
-        for (int i = 0; i < size; i++) {
-            Item atPosition = nukkit.getItem(i);
-            if (atPosition.getId() == nukkitTypeId) {
-                return i;
-            }
-        }
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			Item atPosition = nukkit.getItem(i);
+			if (atPosition.getId() == nukkitTypeId) {
+				return i;
+			}
+		}
 
-        return -1;
-    }
+		return -1;
+	}
 
-    @Override
-    public int firstEmpty() {
-        return nukkit.firstEmpty(Item.get(Item.AIR));
-    }
+	@Override
+	public int firstEmpty() {
+		return nukkit.firstEmpty(Item.get(Item.AIR));
+	}
 
-    @Override
-    public ItemStack[] getContents() {
-        ItemStack[] contents = new ItemStack[getSize()];
-        nukkit.getContents().forEach((slot, item) -> contents[slot] = PokkitItemStack.toBukkitCopy(item));
-        return contents;
-    }
+	@Override
+	public ItemStack[] getContents() {
+		ItemStack[] contents = new ItemStack[getSize()];
+		nukkit.getContents().forEach((slot, item) -> contents[slot] = PokkitItemStack.toBukkitCopy(item));
+		return contents;
+	}
 
-    @Override
-    public InventoryHolder getHolder() {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public InventoryHolder getHolder() {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public ItemStack getItem(int index) {
-        return PokkitItemStack.toBukkitCopy(nukkit.getItem(index));
-    }
+	@Override
+	public ItemStack getItem(int index) {
+		return PokkitItemStack.toBukkitCopy(nukkit.getItem(index));
+	}
 
-    @Override
-    public int getMaxStackSize() {
-        return nukkit.getMaxStackSize();
-    }
+	@Override
+	public int getMaxStackSize() {
+		return nukkit.getMaxStackSize();
+	}
 
-    @Override
-    public String getName() {
-        return nukkit.getName();
-    }
+	@Override
+	public String getName() {
+		return nukkit.getName();
+	}
 
-    @Override
-    public int getSize() {
-        return nukkit.getSize();
-    }
+	@Override
+	public int getSize() {
+		return nukkit.getSize();
+	}
 
-    @Override
-    public String getTitle() {
-        return nukkit.getTitle();
-    }
+	@Override
+	public String getTitle() {
+		return nukkit.getTitle();
+	}
 
-    @Override
-    public InventoryType getType() {
-        return PokkitInventoryType.toBukkit(nukkit.getType());
-    }
+	@Override
+	public InventoryType getType() {
+		return PokkitInventoryType.toBukkit(nukkit.getType());
+	}
 
-    @Override
-    public List<HumanEntity> getViewers() {
-        return nukkit.getViewers()
-                .stream()
-                .map(PokkitPlayer::toBukkit)
-                .collect(Collectors.toList());
-    }
+	@Override
+	public List<HumanEntity> getViewers() {
+		return nukkit.getViewers().stream().map(PokkitPlayer::toBukkit).collect(Collectors.toList());
+	}
 
-    @Override
-    public void remove(ItemStack item) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public void remove(ItemStack item) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void remove(Material material) throws IllegalArgumentException {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public void remove(Material material) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public HashMap<Integer, ItemStack> removeItem(ItemStack... items) throws IllegalArgumentException {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public HashMap<Integer, ItemStack> removeItem(ItemStack... items) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void setItem(int index, ItemStack item) {
-        nukkit.setItem(index, PokkitItemStack.toNukkitCopy(item));
-    }
+	@Override
+	public void setItem(int index, ItemStack item) {
+		nukkit.setItem(index, PokkitItemStack.toNukkitCopy(item));
+	}
 
-    @Override
-    public void setMaxStackSize(int size) {
-        nukkit.setMaxStackSize(size);
-    }
+	@Override
+	public void setMaxStackSize(int size) {
+		nukkit.setMaxStackSize(size);
+	}
 }

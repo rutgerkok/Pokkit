@@ -21,199 +21,199 @@ import cn.nukkit.nbt.tag.CompoundTag;
 
 public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
-    protected CompoundTag tag;
+	protected CompoundTag tag;
 
-    PokkitItemMeta(CompoundTag tag) {
-        this.tag = Objects.requireNonNull(tag, "tag");
-    }
+	PokkitItemMeta(CompoundTag tag) {
+		this.tag = Objects.requireNonNull(tag, "tag");
+	}
 
-    @Override
-    public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void addItemFlags(ItemFlag... itemFlags) {
-        // No supported
-    }
+	@Override
+	public void addItemFlags(ItemFlag... itemFlags) {
+		// No supported
+	}
 
-    @Override
-    public ItemMeta clone() {
-        try {
-            PokkitItemMeta meta = (PokkitItemMeta) super.clone();
-            meta.tag = this.tag.copy();
-            return meta;
-        } catch (CloneNotSupportedException e) {
-            throw Throwables.propagate(e);
-        }
-    }
+	@Override
+	public ItemMeta clone() {
+		try {
+			PokkitItemMeta meta = (PokkitItemMeta) super.clone();
+			meta.tag = this.tag.copy();
+			return meta;
+		} catch (CloneNotSupportedException e) {
+			throw Throwables.propagate(e);
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PokkitItemMeta other = (PokkitItemMeta) obj;
-        if (!tag.equals(other.tag))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PokkitItemMeta other = (PokkitItemMeta) obj;
+		if (!tag.equals(other.tag))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String getDisplayName() {
-        if (!tag.contains("display")) {
-            return "";
-        }
-        CompoundTag displayTag = tag.getCompound("display");
-        return displayTag.getString("Name");
-    }
+	@Override
+	public String getDisplayName() {
+		if (!tag.contains("display")) {
+			return "";
+		}
+		CompoundTag displayTag = tag.getCompound("display");
+		return displayTag.getString("Name");
+	}
 
-    @Override
-    public int getEnchantLevel(Enchantment ench) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public int getEnchantLevel(Enchantment ench) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public Map<Enchantment, Integer> getEnchants() {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public Map<Enchantment, Integer> getEnchants() {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public Set<ItemFlag> getItemFlags() {
-        return EnumSet.noneOf(ItemFlag.class);
-    }
+	@Override
+	public Set<ItemFlag> getItemFlags() {
+		return EnumSet.noneOf(ItemFlag.class);
+	}
 
-    @Override
-    public List<String> getLore() {
-        return new ArrayList<>();
-    }
+	@Override
+	public List<String> getLore() {
+		return new ArrayList<>();
+	}
 
-    /**
-     * Accesses the NBT tag of this item meta.
-     *
-     * @return The NBT tag.
-     */
-    public CompoundTag getTag() {
-        return tag;
-    }
+	/**
+	 * Accesses the NBT tag of this item meta.
+	 *
+	 * @return The NBT tag.
+	 */
+	public CompoundTag getTag() {
+		return tag;
+	}
 
-    @Override
-    public boolean hasConflictingEnchant(Enchantment ench) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean hasConflictingEnchant(Enchantment ench) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public boolean hasDisplayName() {
-        if (!tag.contains("display")) {
-            return false;
-        }
-        CompoundTag displayTag = tag.getCompound("display");
-        return displayTag.contains("Name");
-    }
+	@Override
+	public boolean hasDisplayName() {
+		if (!tag.contains("display")) {
+			return false;
+		}
+		CompoundTag displayTag = tag.getCompound("display");
+		return displayTag.contains("Name");
+	}
 
-    @Override
-    public boolean hasEnchant(Enchantment ench) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean hasEnchant(Enchantment ench) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public boolean hasEnchants() {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean hasEnchants() {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public int hashCode() {
-        return tag.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return tag.hashCode();
+	}
 
-    @Override
-    public boolean hasItemFlag(ItemFlag flag) {
-        return false;
-    }
+	@Override
+	public boolean hasItemFlag(ItemFlag flag) {
+		return false;
+	}
 
-    @Override
-    public boolean hasLore() {
-        return false;
-    }
+	@Override
+	public boolean hasLore() {
+		return false;
+	}
 
-    boolean isApplicable(Material material) {
-        return true;
-    }
+	boolean isApplicable(Material material) {
+		return true;
+	}
 
-    @Override
-    public boolean isUnbreakable()    {
-        return false;
-    }
+	@Override
+	public boolean isUnbreakable() {
+		return false;
+	}
 
-    @Override
-    public boolean removeEnchant(Enchantment ench) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public boolean removeEnchant(Enchantment ench) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void removeItemFlags(ItemFlag... itemFlags) {
-        // Not supported
-    }
+	@Override
+	public void removeItemFlags(ItemFlag... itemFlags) {
+		// Not supported
+	}
 
-    @Override
-    public Map<String, Object> serialize() {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public Map<String, Object> serialize() {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public void setDisplayName(String name) {
-        if (Strings.isNullOrEmpty(name)) {
-            if (!hasDisplayName()) {
-                return;
-            }
+	@Override
+	public void setDisplayName(String name) {
+		if (Strings.isNullOrEmpty(name)) {
+			if (!hasDisplayName()) {
+				return;
+			}
 
-            // Remove custom name
-            CompoundTag displayTag = tag.getCompound("display");
-            displayTag.remove("Name");
-            setOrRemoveChildTag(tag, "display", displayTag);
-            return;
-        }
+			// Remove custom name
+			CompoundTag displayTag = tag.getCompound("display");
+			displayTag.remove("Name");
+			setOrRemoveChildTag(tag, "display", displayTag);
+			return;
+		}
 
-        CompoundTag displayTag = tag.getCompound("display");
-        displayTag.putString("Name", name);
-        tag.putCompound("display", displayTag);
-    }
+		CompoundTag displayTag = tag.getCompound("display");
+		displayTag.putString("Name", name);
+		tag.putCompound("display", displayTag);
+	}
 
-    @Override
-    public void setLore(List<String> lore) {
-        // Not supported
-    }
+	@Override
+	public void setLore(List<String> lore) {
+		// Not supported
+	}
 
-    /**
-     * Sets the child in the parent when the child is not empty. If the child is
-     * empty, the child tag is removed from the parent.
-     *
-     * @param parent
-     *            The parent tag.
-     * @param name
-     *            The name of the child tag.
-     * @param child
-     *            The child tag.
-     */
-    protected void setOrRemoveChildTag(CompoundTag parent, String name, CompoundTag child) {
-        if (child.isEmpty()) {
-            parent.remove(name);
-        } else {
-            parent.putCompound(name, child);
-        }
-    }
+	/**
+	 * Sets the child in the parent when the child is not empty. If the child is
+	 * empty, the child tag is removed from the parent.
+	 *
+	 * @param parent
+	 *            The parent tag.
+	 * @param name
+	 *            The name of the child tag.
+	 * @param child
+	 *            The child tag.
+	 */
+	protected void setOrRemoveChildTag(CompoundTag parent, String name, CompoundTag child) {
+		if (child.isEmpty()) {
+			parent.remove(name);
+		} else {
+			parent.putCompound(name, child);
+		}
+	}
 
-    @Override
-    public void setUnbreakable(boolean unbreakable) {
-        throw Pokkit.unsupported();
-    }
+	@Override
+	public void setUnbreakable(boolean unbreakable) {
+		throw Pokkit.unsupported();
+	}
 
-    @Override
-    public Spigot spigot() {
-        return this;
-    }
+	@Override
+	public Spigot spigot() {
+		return this;
+	}
 
 }

@@ -10,18 +10,18 @@ import org.bukkit.metadata.MetadataStoreBase;
  * Class has been copied from CraftBukkit.
  */
 public final class WorldMetadataStore extends MetadataStoreBase<World> implements MetadataStore<World> {
-    /**
-     * Generates a unique metadata key for a {@link World} object based on the
-     * world UID.
-     *
-     * @param world
-     *            the world
-     * @param metadataKey
-     *            The name identifying the metadata value
-     * @return a unique metadata key
-     */
-    @Override
-    protected String disambiguate(World world, String metadataKey) {
-        return world.getUID().toString() + ":" + metadataKey;
-    }
+	/**
+	 * Generates a unique metadata key for a {@link World} object based on the
+	 * world UID.
+	 *
+	 * @param world
+	 *            the world
+	 * @param metadataKey
+	 *            The name identifying the metadata value
+	 * @return a unique metadata key
+	 */
+	@Override
+	protected String disambiguate(World world, String metadataKey) {
+		return world.getUID().toString() + ":" + metadataKey;
+	}
 }

@@ -12,25 +12,25 @@ import cn.nukkit.level.Level;
  */
 public final class AllMetadataStore {
 
-    private final PlayerMetadataStore playerMeta = new PlayerMetadataStore();
-    private final WorldMetadataStore worldMeta = new WorldMetadataStore();
-    private final BlockMetadataStore blockMeta = new BlockMetadataStore();
+	private final PlayerMetadataStore playerMeta = new PlayerMetadataStore();
+	private final WorldMetadataStore worldMeta = new WorldMetadataStore();
+	private final BlockMetadataStore blockMeta = new BlockMetadataStore();
 
-    public BlockMetadataStore getBlockMetadata() {
-        return blockMeta;
-    }
+	public BlockMetadataStore getBlockMetadata() {
+		return blockMeta;
+	}
 
-    public List<MetadataValue> getBlockMetadata(Level level) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public List<MetadataValue> getBlockMetadata(Level level) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public PlayerMetadataStore getPlayerMetadata() {
-        return playerMeta;
-    }
+	public PlayerMetadataStore getPlayerMetadata() {
+		return playerMeta;
+	}
 
-    public WorldMetadataStore getWorldMetadata() {
-        return worldMeta;
-    }
+	public WorldMetadataStore getWorldMetadata() {
+		return worldMeta;
+	}
 
 }

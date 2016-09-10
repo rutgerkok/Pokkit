@@ -13,28 +13,28 @@ import nl.rutgerkok.pokkit.PokkitServer;
  */
 public final class PluginService implements PokkitService {
 
-    private Plugin[] plugins = null;
+	private Plugin[] plugins = null;
 
-    private void enablePlugins(PluginLoadOrder pluginLoadOrder) {
-        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        for (Plugin plugin : plugins) {
-            if (plugin.getDescription().getLoad() == pluginLoadOrder) {
-                pluginManager.enablePlugin(plugin);
-            }
-        }
-    }
+	private void enablePlugins(PluginLoadOrder pluginLoadOrder) {
+		PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+		for (Plugin plugin : plugins) {
+			if (plugin.getDescription().getLoad() == pluginLoadOrder) {
+				pluginManager.enablePlugin(plugin);
+			}
+		}
+	}
 
-    @Override
-    public void onEnable(PluginBase pokkit) {
-        enablePlugins(PluginLoadOrder.POSTWORLD);
-        plugins = null; // no longer needed, Nukkit takes care of them now
-    }
+	@Override
+	public void onEnable(PluginBase pokkit) {
+		enablePlugins(PluginLoadOrder.POSTWORLD);
+		plugins = null; // no longer needed, Nukkit takes care of them now
+	}
 
-    @Override
-    public void onLoad(PluginBase pokkit) {
-        PokkitServer server = ((PokkitServer) Bukkit.getServer());
-        plugins = server.loadPlugins();
-        enablePlugins(PluginLoadOrder.STARTUP);
-    }
+	@Override
+	public void onLoad(PluginBase pokkit) {
+		PokkitServer server = ((PokkitServer) Bukkit.getServer());
+		plugins = server.loadPlugins();
+		enablePlugins(PluginLoadOrder.STARTUP);
+	}
 
 }

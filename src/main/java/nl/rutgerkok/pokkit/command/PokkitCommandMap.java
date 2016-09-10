@@ -26,61 +26,61 @@ import cn.nukkit.command.PluginIdentifiableCommand;
  */
 public final class PokkitCommandMap {
 
-    private final Function<String, PluginIdentifiableCommand> nukkitCommandMap;
-    private final Map<PluginIdentifiableCommand, PluginCommand> toBukkitCommand = new IdentityHashMap<>();
+	private final Function<String, PluginIdentifiableCommand> nukkitCommandMap;
+	private final Map<PluginIdentifiableCommand, PluginCommand> toBukkitCommand = new IdentityHashMap<>();
 
-    public PokkitCommandMap(Function<String, PluginIdentifiableCommand> nukkitCommandMap) {
-        this.nukkitCommandMap = Objects.requireNonNull(nukkitCommandMap, "nukkitCommandMap");
-    }
+	public PokkitCommandMap(Function<String, PluginIdentifiableCommand> nukkitCommandMap) {
+		this.nukkitCommandMap = Objects.requireNonNull(nukkitCommandMap, "nukkitCommandMap");
+	}
 
-    /**
-     * Creates a new Bukkit command.
-     * 
-     * @param nukkitCommand
-     *            The Nukkit command.
-     * @return The plugin command.
-     * @throws ClassCastException
-     *             If the nukkitCommand is not provided by a Bukkit plugin.
-     */
-    private PluginCommand createNewBukkitCommand(cn.nukkit.command.PluginCommand<?> nukkitCommand) {
-        Plugin bukkitPlugin = PokkitPlugin.toBukkit((PokkitPlugin) nukkitCommand.getPlugin());
-        try {
-            Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class,
-                    Plugin.class);
-            constructor.setAccessible(true);
-            PluginCommand bukkitCommand = constructor.newInstance(nukkitCommand.getName(), bukkitPlugin);
+	/**
+	 * Creates a new Bukkit command.
+	 * 
+	 * @param nukkitCommand
+	 *            The Nukkit command.
+	 * @return The plugin command.
+	 * @throws ClassCastException
+	 *             If the nukkitCommand is not provided by a Bukkit plugin.
+	 */
+	private PluginCommand createNewBukkitCommand(cn.nukkit.command.PluginCommand<?> nukkitCommand) {
+		Plugin bukkitPlugin = PokkitPlugin.toBukkit((PokkitPlugin) nukkitCommand.getPlugin());
+		try {
+			Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class,
+					Plugin.class);
+			constructor.setAccessible(true);
+			PluginCommand bukkitCommand = constructor.newInstance(nukkitCommand.getName(), bukkitPlugin);
 
-            bukkitCommand.setAliases(Arrays.asList(nukkitCommand.getAliases()));
-            bukkitCommand.setDescription(nukkitCommand.getDescription());
-            bukkitCommand.setLabel(nukkitCommand.getLabel());
-            bukkitCommand.setPermission(nukkitCommand.getPermission());
-            bukkitCommand.setPermissionMessage(nukkitCommand.getPermissionMessage());
-            bukkitCommand.setUsage(nukkitCommand.getUsage());
+			bukkitCommand.setAliases(Arrays.asList(nukkitCommand.getAliases()));
+			bukkitCommand.setDescription(nukkitCommand.getDescription());
+			bukkitCommand.setLabel(nukkitCommand.getLabel());
+			bukkitCommand.setPermission(nukkitCommand.getPermission());
+			bukkitCommand.setPermissionMessage(nukkitCommand.getPermissionMessage());
+			bukkitCommand.setUsage(nukkitCommand.getUsage());
 
-            return bukkitCommand;
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e);
-        }
-    }
+			return bukkitCommand;
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public PluginCommand getPluginCommand(String name) {
-        cn.nukkit.command.PluginCommand<?> nukkitCommand = (cn.nukkit.command.PluginCommand<?>) nukkitCommandMap
-                .apply(name);
+	public PluginCommand getPluginCommand(String name) {
+		cn.nukkit.command.PluginCommand<?> nukkitCommand = (cn.nukkit.command.PluginCommand<?>) nukkitCommandMap
+				.apply(name);
 
-        if (nukkitCommand == null) {
-            // No command exists with that name
-            return null;
-        }
-        if (!(nukkitCommand.getPlugin() instanceof PokkitPlugin)) {
-            // Command not provided by a Bukkit plugin
-            return null;
-        }
+		if (nukkitCommand == null) {
+			// No command exists with that name
+			return null;
+		}
+		if (!(nukkitCommand.getPlugin() instanceof PokkitPlugin)) {
+			// Command not provided by a Bukkit plugin
+			return null;
+		}
 
-        PluginCommand bukkitCommand = toBukkitCommand.get(nukkitCommand);
-        if (bukkitCommand == null) {
-            bukkitCommand = createNewBukkitCommand(nukkitCommand);
-            toBukkitCommand.put(nukkitCommand, bukkitCommand);
-        }
-        return bukkitCommand;
-    }
+		PluginCommand bukkitCommand = toBukkitCommand.get(nukkitCommand);
+		if (bukkitCommand == null) {
+			bukkitCommand = createNewBukkitCommand(nukkitCommand);
+			toBukkitCommand.put(nukkitCommand, bukkitCommand);
+		}
+		return bukkitCommand;
+	}
 }

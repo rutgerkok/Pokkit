@@ -27,75 +27,75 @@ import cn.nukkit.plugin.PluginDescription;
  */
 public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 
-    private static PokkitPluginLoader temporaryInstance;
+	private static PokkitPluginLoader temporaryInstance;
 
-    static PokkitPluginLoader getInstanceBack() {
-        Preconditions.checkState(temporaryInstance != null, "No temporary instance available");
-        PokkitPluginLoader returnValue = temporaryInstance;
-        temporaryInstance = null;
-        return returnValue;
-    }
+	static PokkitPluginLoader getInstanceBack() {
+		Preconditions.checkState(temporaryInstance != null, "No temporary instance available");
+		PokkitPluginLoader returnValue = temporaryInstance;
+		temporaryInstance = null;
+		return returnValue;
+	}
 
-    private JavaPluginLoader bukkit;
+	private JavaPluginLoader bukkit;
 
-    public PokkitPluginLoader(cn.nukkit.Server server) {
-        // Required for instantiation
-        temporaryInstance = this;
-    }
+	public PokkitPluginLoader(cn.nukkit.Server server) {
+		// Required for instantiation
+		temporaryInstance = this;
+	}
 
-    @Override
-    public void disablePlugin(Plugin plugin) {
-        getPluginLoader().disablePlugin(PokkitPlugin.toBukkit(plugin));
-    }
+	@Override
+	public void disablePlugin(Plugin plugin) {
+		getPluginLoader().disablePlugin(PokkitPlugin.toBukkit(plugin));
+	}
 
-    @Override
-    public void enablePlugin(Plugin plugin) {
-        getPluginLoader().enablePlugin(PokkitPlugin.toBukkit(plugin));
-    }
+	@Override
+	public void enablePlugin(Plugin plugin) {
+		getPluginLoader().enablePlugin(PokkitPlugin.toBukkit(plugin));
+	}
 
-    @Override
-    public PluginDescription getPluginDescription(File file) {
-        try (JarFile jar = new JarFile(file)) {
-            JarEntry entry = jar.getJarEntry("plugin.yml");
-            if (entry == null) {
-                return null;
-            }
+	@Override
+	public PluginDescription getPluginDescription(File file) {
+		try (JarFile jar = new JarFile(file)) {
+			JarEntry entry = jar.getJarEntry("plugin.yml");
+			if (entry == null) {
+				return null;
+			}
 
-            InputStream stream = jar.getInputStream(entry);
-            return new PokkitPluginDescription(stream);
-        } catch (Exception e) {
-            Bukkit.getServer().getLogger().log(Level.SEVERE, "Could not load plugin " + file.getName(), e);
-            return null;
-        }
-    }
+			InputStream stream = jar.getInputStream(entry);
+			return new PokkitPluginDescription(stream);
+		} catch (Exception e) {
+			Bukkit.getServer().getLogger().log(Level.SEVERE, "Could not load plugin " + file.getName(), e);
+			return null;
+		}
+	}
 
-    @Override
-    public PluginDescription getPluginDescription(String fileName) {
-        return getPluginDescription(new File(fileName));
-    }
+	@Override
+	public PluginDescription getPluginDescription(String fileName) {
+		return getPluginDescription(new File(fileName));
+	}
 
-    @Override
-    public Pattern[] getPluginFilters() {
-        return new Pattern[] { Pattern.compile("^.+\\.jar$") };
-    }
+	@Override
+	public Pattern[] getPluginFilters() {
+		return new Pattern[] { Pattern.compile("^.+\\.jar$") };
+	}
 
-    @SuppressWarnings("deprecation")
-    private JavaPluginLoader getPluginLoader() {
-        if (bukkit == null) {
-            bukkit = new JavaPluginLoader(Bukkit.getServer());
-        }
-        return bukkit;
-    }
+	@SuppressWarnings("deprecation")
+	private JavaPluginLoader getPluginLoader() {
+		if (bukkit == null) {
+			bukkit = new JavaPluginLoader(Bukkit.getServer());
+		}
+		return bukkit;
+	}
 
-    @Override
-    public Plugin loadPlugin(File file) throws Exception {
-        JavaPlugin bukkitPlugin = (JavaPlugin) getPluginLoader().loadPlugin(file);
-        return new PokkitPlugin(bukkitPlugin, getPluginDescription(file), this);
-    }
+	@Override
+	public Plugin loadPlugin(File file) throws Exception {
+		JavaPlugin bukkitPlugin = (JavaPlugin) getPluginLoader().loadPlugin(file);
+		return new PokkitPlugin(bukkitPlugin, getPluginDescription(file), this);
+	}
 
-    @Override
-    public Plugin loadPlugin(String filename) throws Exception {
-        return loadPlugin(new File(filename));
-    }
+	@Override
+	public Plugin loadPlugin(String filename) throws Exception {
+		return loadPlugin(new File(filename));
+	}
 
 }

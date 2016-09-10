@@ -9,31 +9,31 @@ import cn.nukkit.scheduler.TaskHandler;
 
 final class PokkitTask implements BukkitTask {
 
-    private final TaskHandler nukkit;
-    private final Plugin plugin;
+	private final TaskHandler nukkit;
+	private final Plugin plugin;
 
-    PokkitTask(TaskHandler nukkit, Plugin plugin) {
-        this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
-        this.plugin = Objects.requireNonNull(plugin, "plugin");
-    }
+	PokkitTask(TaskHandler nukkit, Plugin plugin) {
+		this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
+		this.plugin = Objects.requireNonNull(plugin, "plugin");
+	}
 
-    @Override
-    public void cancel() {
-        nukkit.cancel();
-    }
+	@Override
+	public void cancel() {
+		nukkit.cancel();
+	}
 
-    @Override
-    public Plugin getOwner() {
-        return plugin;
-    }
+	@Override
+	public Plugin getOwner() {
+		return plugin;
+	}
 
-    @Override
-    public int getTaskId() {
-        return nukkit.getTaskId();
-    }
+	@Override
+	public int getTaskId() {
+		return nukkit.getTaskId();
+	}
 
-    @Override
-    public boolean isSync() {
-        return !nukkit.isAsynchronous();
-    }
+	@Override
+	public boolean isSync() {
+		return !nukkit.isAsynchronous();
+	}
 }

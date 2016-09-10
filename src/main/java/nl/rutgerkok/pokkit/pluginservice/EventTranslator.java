@@ -14,22 +14,22 @@ import cn.nukkit.plugin.PluginBase;
  */
 abstract class EventTranslator implements PokkitService, Listener {
 
-    protected void callCancellable(cn.nukkit.event.Cancellable nukkit, Cancellable bukkit) {
-        bukkit.setCancelled(nukkit.isCancelled());
-        Bukkit.getPluginManager().callEvent((Event) bukkit);
-        nukkit.setCancelled(bukkit.isCancelled());
-    }
+	protected void callCancellable(cn.nukkit.event.Cancellable nukkit, Cancellable bukkit) {
+		bukkit.setCancelled(nukkit.isCancelled());
+		Bukkit.getPluginManager().callEvent((Event) bukkit);
+		nukkit.setCancelled(bukkit.isCancelled());
+	}
 
-    protected void callUncancellable(Event bukkit) {
-        Bukkit.getPluginManager().callEvent(bukkit);
-    }
+	protected void callUncancellable(Event bukkit) {
+		Bukkit.getPluginManager().callEvent(bukkit);
+	}
 
-    protected boolean canIgnore(HandlerList handlerList) {
-        return handlerList.getRegisteredListeners().length == 0;
-    }
+	protected boolean canIgnore(HandlerList handlerList) {
+		return handlerList.getRegisteredListeners().length == 0;
+	}
 
-    @Override
-    public void onEnable(PluginBase pokkit) {
-        pokkit.getServer().getPluginManager().registerEvents(this, pokkit);
-    }
+	@Override
+	public void onEnable(PluginBase pokkit) {
+		pokkit.getServer().getPluginManager().registerEvents(this, pokkit);
+	}
 }

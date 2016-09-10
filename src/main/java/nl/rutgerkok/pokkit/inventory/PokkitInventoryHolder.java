@@ -6,8 +6,8 @@ import org.bukkit.inventory.InventoryHolder;
 
 public class PokkitInventoryHolder {
 
-    public static InventoryHolder toBukkit(cn.nukkit.inventory.InventoryHolder holder) {
-        throw Pokkit.unsupported();
-    }
+	public static InventoryHolder toBukkit(cn.nukkit.inventory.InventoryHolder holder) {
+		throw Pokkit.unsupported();
+	}
 
 }

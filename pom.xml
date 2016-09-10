@@ -6,7 +6,7 @@
 	<artifactId>pokkit</artifactId>
 	<version>0.2-SNAPSHOT</version>
 	<name>Pokkit</name>
-	<description>Run Bukkit plugins on Nukkit</description>
+	<description>Run Bukkit and Spigot plugins on Nukkit!</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

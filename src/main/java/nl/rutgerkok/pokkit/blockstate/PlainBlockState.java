@@ -7,13 +7,13 @@ import cn.nukkit.nbt.tag.CompoundTag;
 
 final class PlainBlockState extends PokkitBlockState {
 
-    PlainBlockState(Location locationOrNull, MaterialData materialData) {
-        super(locationOrNull, materialData);
-    }
+	PlainBlockState(Location locationOrNull, MaterialData materialData) {
+		super(locationOrNull, materialData);
+	}
 
-    @Override
-    public void saveToTag(CompoundTag tag) {
-        // Empty!
-    }
+	@Override
+	public void saveToTag(CompoundTag tag) {
+		// Empty!
+	}
 
 }

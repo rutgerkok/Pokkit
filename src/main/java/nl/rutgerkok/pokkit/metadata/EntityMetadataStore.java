@@ -12,19 +12,18 @@ import org.bukkit.metadata.MetadataStoreBase;
  */
 public final class EntityMetadataStore extends MetadataStoreBase<Entity> implements MetadataStore<Entity> {
 
-    /**
-     * Generates a unique metadata key for an {@link Entity} UUID.
-     *
-     * @see MetadataStoreBase#disambiguate(Object, String)
-     * @param entity
-     *            the entity
-     * @param metadataKey
-     *            The name identifying the metadata value
-     * @return a unique metadata key
-     */
-    @Override
-    protected String disambiguate(Entity entity, String metadataKey) {
-        return entity.getUniqueId().toString() + ":" + metadataKey;
-    }
+	/**
+	 * Generates a unique metadata key for an {@link Entity} UUID.
+	 *
+	 * @see MetadataStoreBase#disambiguate(Object, String)
+	 * @param entity
+	 *            the entity
+	 * @param metadataKey
+	 *            The name identifying the metadata value
+	 * @return a unique metadata key
+	 */
+	@Override
+	protected String disambiguate(Entity entity, String metadataKey) {
+		return entity.getUniqueId().toString() + ":" + metadataKey;
+	}
 }
-

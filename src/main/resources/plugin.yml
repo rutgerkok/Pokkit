@@ -1,8 +1,10 @@
 name: ${project.name}
 main: nl.rutgerkok.pokkit.startup.NukkitHook
-version: "${project.version}"
-api: ["1.0.0"]
-
-author: Rutger Kok
+version: ${project.version}
+api:
+- 1.0.0
+author:
+- Rutger Kok
+- ZINGDING
 load: POSTWORLD
 description: ${project.description}

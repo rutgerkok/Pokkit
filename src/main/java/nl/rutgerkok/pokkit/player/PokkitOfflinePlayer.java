@@ -22,120 +22,121 @@ import cn.nukkit.IPlayer;
  */
 public final class PokkitOfflinePlayer implements OfflinePlayer {
 
-    public static OfflinePlayer deserialize(Map<String, Object> args) {
-        String name = (String) args.get("name");
-        return fromName(name);
-    }
+	public static OfflinePlayer deserialize(Map<String, Object> args) {
+		String name = (String) args.get("name");
+		return fromName(name);
+	}
 
-    public static OfflinePlayer fromName(String name) {
-        return new PokkitOfflinePlayer(name, null);
-    }
+	public static OfflinePlayer fromName(String name) {
+		return new PokkitOfflinePlayer(name, null);
+	}
 
-    public static OfflinePlayer toBukkit(IPlayer offlinePlayer) {
-        if (offlinePlayer instanceof cn.nukkit.Player) {
-            // More specialized type available
-            return PokkitPlayer.toBukkit((cn.nukkit.Player) offlinePlayer);
-        }
-        return new PokkitOfflinePlayer(offlinePlayer.getName(), offlinePlayer);
-    }
+	public static OfflinePlayer toBukkit(IPlayer offlinePlayer) {
+		if (offlinePlayer instanceof cn.nukkit.Player) {
+			// More specialized type available
+			return PokkitPlayer.toBukkit((cn.nukkit.Player) offlinePlayer);
+		}
+		return new PokkitOfflinePlayer(offlinePlayer.getName(), offlinePlayer);
+	}
 
-    private final String name;
-    private IPlayer nukkitOrNull;
+	private final String name;
+	private IPlayer nukkitOrNull;
 
-    private PokkitOfflinePlayer(String name, IPlayer nukkitOrNull) {
-        this.name = Objects.requireNonNull(name, "name");
-        this.nukkitOrNull = nukkitOrNull;
-    }
+	private PokkitOfflinePlayer(String name, IPlayer nukkitOrNull) {
+		this.name = Objects.requireNonNull(name, "name");
+		this.nukkitOrNull = nukkitOrNull;
+	}
 
-    @Override
-    public Location getBedSpawnLocation() {
-        return null;
-    }
+	@Override
+	public Location getBedSpawnLocation() {
+		return null;
+	}
 
-    @Override
-    public long getFirstPlayed() {
-        Long firstPlayed = getNukkit().getFirstPlayed();
-        if (firstPlayed == null) {
-            return 0;
-        }
-        return firstPlayed.longValue();
-    }
+	@Override
+	public long getFirstPlayed() {
+		Long firstPlayed = getNukkit().getFirstPlayed();
+		if (firstPlayed == null) {
+			return 0;
+		}
+		return firstPlayed.longValue();
+	}
 
-    @Override
-    public long getLastPlayed() {
-        Long lastPlayed = getNukkit().getLastPlayed();
-        if (lastPlayed == null) {
-            return 0;
-        }
-        return lastPlayed.longValue();
-    }
+	@Override
+	public long getLastPlayed() {
+		Long lastPlayed = getNukkit().getLastPlayed();
+		if (lastPlayed == null) {
+			return 0;
+		}
+		return lastPlayed.longValue();
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    private IPlayer getNukkit() {
-        IPlayer iPlayer = this.nukkitOrNull;
-        if (iPlayer == null) {
-            iPlayer = cn.nukkit.Server.getInstance().getOfflinePlayer(getName());
-            this.nukkitOrNull = iPlayer;
-        }
-        return iPlayer;
-    }
+	private IPlayer getNukkit() {
+		IPlayer iPlayer = this.nukkitOrNull;
+		if (iPlayer == null) {
+			iPlayer = cn.nukkit.Server.getInstance().getOfflinePlayer(getName());
+			this.nukkitOrNull = iPlayer;
+		}
+		return iPlayer;
+	}
 
-    @Override
-    public Player getPlayer() {
-        return Bukkit.getPlayer(getName());
-    }
+	@Override
+	public Player getPlayer() {
+		return Bukkit.getPlayer(getName());
+	}
 
-    @Override
-    public UUID getUniqueId() {
-        return UniqueIdConversion.playerNameToId(getName());
-    }
+	@Override
+	public UUID getUniqueId() {
+		return UniqueIdConversion.playerNameToId(getName());
+	}
 
-    @Override
-    public boolean hasPlayedBefore() {
-        return getNukkit().hasPlayedBefore();
-    }
+	@Override
+	public boolean hasPlayedBefore() {
+		return getNukkit().hasPlayedBefore();
+	}
 
-    @Override
-    public boolean isBanned() {
-        return getNukkit().isBanned();
-    }
+	@Override
+	public boolean isBanned() {
+		return getNukkit().isBanned();
+	}
 
-    @Override
-    public boolean isOnline() {
-        return Bukkit.getPlayerExact(getName()) != null;
-    }
+	@Override
+	public boolean isOnline() {
+		return Bukkit.getPlayerExact(getName()) != null;
+	}
 
-    @Override
-    public boolean isOp() {
-        return getNukkit().isOp();
-    }
+	@Override
+	public boolean isOp() {
+		return getNukkit().isOp();
+	}
 
-    @Override
-    public boolean isWhitelisted() {
-        return cn.nukkit.Server.getInstance().isWhitelisted(getName());
-    }
+	@Override
+	public boolean isWhitelisted() {
+		return cn.nukkit.Server.getInstance().isWhitelisted(getName());
+	}
 
-    @Override
-    public Map<String, Object> serialize() {
-        return ImmutableMap.of("name", getName());
-    }
-    @Override
-    public void setBanned(boolean banned) {
-        getNukkit().setBanned(banned);
-    }
+	@Override
+	public Map<String, Object> serialize() {
+		return ImmutableMap.of("name", getName());
+	}
 
-    @Override
-    public void setOp(boolean value) {
-        getNukkit().setOp(value);
-    }
+	@Override
+	public void setBanned(boolean banned) {
+		getNukkit().setBanned(banned);
+	}
 
-    @Override
-    public void setWhitelisted(boolean value) {
-        getNukkit().setWhitelisted(value);
-    }
+	@Override
+	public void setOp(boolean value) {
+		getNukkit().setOp(value);
+	}
+
+	@Override
+	public void setWhitelisted(boolean value) {
+		getNukkit().setWhitelisted(value);
+	}
 
 }

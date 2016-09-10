@@ -12,11 +12,10 @@ import org.bukkit.metadata.MetadataStoreBase;
  */
 public final class BlockMetadataStore extends MetadataStoreBase<Block> implements MetadataStore<Block> {
 
-    @Override
-    protected String disambiguate(Block block, String metadataKey) {
-        return block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":"
-                + block.getZ() + ":" + metadataKey;
-    }
+	@Override
+	protected String disambiguate(Block block, String metadataKey) {
+		return block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ() + ":"
+				+ metadataKey;
+	}
 
 }
-

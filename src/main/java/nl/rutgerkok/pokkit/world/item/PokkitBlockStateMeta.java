@@ -12,38 +12,38 @@ import cn.nukkit.nbt.tag.CompoundTag;
 
 final class PokkitBlockStateMeta extends PokkitItemMeta implements BlockStateMeta {
 
-    private final Material material;
+	private final Material material;
 
-    PokkitBlockStateMeta(CompoundTag tag, Material material) {
-        super(tag);
-        this.material = Objects.requireNonNull(material, "material");
-    }
+	PokkitBlockStateMeta(CompoundTag tag, Material material) {
+		super(tag);
+		this.material = Objects.requireNonNull(material, "material");
+	}
 
-    @Override
-    public BlockState getBlockState() {
-        CompoundTag blockState = tag.getCompound("BlockEntityTag");
-        return PokkitBlockState.getVirtual(this.material, blockState);
-    }
+	@Override
+	public BlockState getBlockState() {
+		CompoundTag blockState = tag.getCompound("BlockEntityTag");
+		return PokkitBlockState.getVirtual(this.material, blockState);
+	}
 
-    @Override
-    public boolean hasBlockState() {
-        return tag.contains("BlockEntityTag");
-    }
+	@Override
+	public boolean hasBlockState() {
+		return tag.contains("BlockEntityTag");
+	}
 
-    @Override
-    boolean isApplicable(Material material) {
-        return material == this.material;
-    }
+	@Override
+	boolean isApplicable(Material material) {
+		return material == this.material;
+	}
 
-    @Override
-    public void setBlockState(BlockState blockState) {
-        if (blockState == null) {
-            tag.remove("BlockEntityTag");
-        } else {
-            CompoundTag blockStateTag = tag.getCompound("BlockEntityTag");
-            ((PokkitBlockState) blockState).saveToTag(blockStateTag);
-            setOrRemoveChildTag(tag, "BlockEntityTag", blockStateTag);
-        }
-    }
+	@Override
+	public void setBlockState(BlockState blockState) {
+		if (blockState == null) {
+			tag.remove("BlockEntityTag");
+		} else {
+			CompoundTag blockStateTag = tag.getCompound("BlockEntityTag");
+			((PokkitBlockState) blockState).saveToTag(blockStateTag);
+			setOrRemoveChildTag(tag, "BlockEntityTag", blockStateTag);
+		}
+	}
 
 }
