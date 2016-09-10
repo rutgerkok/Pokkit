@@ -1,4 +1,4 @@
-# Pokkit
+# Pokkit  [![Build Status](https://travis-ci.org/ZINGDING/Pokkit.svg?branch=master)](https://travis-ci.org/ZINGDING/Pokkit)
 
 The Minecraft multiplayer scene is fragmented. There are many competing server implementations. A popular server is [Spigot](http://www.spigotmc.org/). Spigot is able to load plugins, which can interact with Minecraft through the Spigot Plugin API. For Minecraft Pocket Edition, the mobile version of Minecraft, a server with a plugin API similar to Spigot exists: [Nukkit](https://forums.nukkit.io/). Unfortunately, plugins written for Spigot cannot run on Nukkit.
 
