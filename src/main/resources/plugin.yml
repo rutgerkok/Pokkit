@@ -3,8 +3,6 @@ main: nl.rutgerkok.pokkit.startup.NukkitHook
 version: ${project.version}
 api:
 - 1.0.0
-author:
-- Rutger Kok
-- ZINGDING
+author: "Rutger Kok, ZINGDING"
 load: POSTWORLD
 description: ${project.description}
