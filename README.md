@@ -4,7 +4,7 @@ The Minecraft multiplayer scene is fragmented. There are many competing server i
 
 Pokkit is a translation layer that allows plugins written for Spigot to work on Nukkit. However, it is far from perfect. Because of the size of the Spigot API, it is not possible for me to implement all of the Spigot API.
 
-Do not expect that Pokkit allows you to run a random Spigot plugin on Nukkit. Pokkit is still very incomplete, so only a handful of plugins will work. A list of plugins that are confirmed to work or not to work can be found on [Google Docs](https://docs.google.com/spreadsheets/d/1afyyvkdQWyJO6bv1kzofrJxqniqlg28TKqr3YK6ouic/edit?usp=sharing). You are encouraged to edit this list yourself if you have found a Spigot plugin that works or doesn't work.
+**Do not expect that Pokkit allows you to run a random Spigot plugin on Nukkit.** Pokkit is still very incomplete, so only a handful of plugins will work. A list of plugins that are confirmed to work or not to work can be found on [Google Docs](https://docs.google.com/spreadsheets/d/1afyyvkdQWyJO6bv1kzofrJxqniqlg28TKqr3YK6ouic/edit?usp=sharing). You are encouraged to edit this list yourself if you have found a Spigot plugin that works or doesn't work.
 
 My motivation for creating Pokkit was to allow some plugins that I use to work on Nukkit. I am not trying to write a complete implementation of the Spigot API myself. This would be impossible. Keep in mind that Spigot was created over the span of five years by hundreds of different programmers.
 
@@ -16,7 +16,7 @@ While testing your plugin, you will most likely come accross an unimplemented me
 To get started writing code for Pokkit, I have created a [file with examples](./IMPL_EXAMPLES.md) on how I implemented the methods.
 
 ## How to use it
-Install Pokkit like you would install any Nukkit plugin: place the JAR file in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
+Install Pokkit like you would install any Nukkit plugin: place [the JAR file](/rutgerkok/Pokkit/releases) in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
 
 * A folder called `bukkitPlugins`: place any plugin written for Spigot in this folder.
 * A file called `permissions.yml`: this is Bukkit's [permissions.yml file](http://wiki.bukkit.org/Permissions.yml).
