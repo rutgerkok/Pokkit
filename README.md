@@ -16,7 +16,7 @@ While testing your plugin, you will most likely come accross an unimplemented me
 To get started writing code for Pokkit, I have created a [file with examples](./IMPL_EXAMPLES.md) on how I implemented the methods.
 
 ## How to use it
-Install Pokkit like you would install any Nukkit plugin: place [the JAR file](/rutgerkok/Pokkit/releases) in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
+Install Pokkit like you would install any Nukkit plugin: place [the JAR file](https://github.com/rutgerkok/Pokkit/releases) in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
 
 * A folder called `bukkitPlugins`: place any plugin written for Spigot in this folder.
 * A file called `permissions.yml`: this is Bukkit's [permissions.yml file](http://wiki.bukkit.org/Permissions.yml).
