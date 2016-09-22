@@ -1,33 +1,35 @@
 package nl.rutgerkok.pokkit.inventory;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import java.util.EnumMap;
+import java.util.Map;
 
-import cn.nukkit.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType;
 
 public final class PokkitInventoryType {
 
-	private static BiMap<InventoryType, org.bukkit.event.inventory.InventoryType> map = HashBiMap.create();
+	private static Map<cn.nukkit.inventory.InventoryType, InventoryType> nukkitToBukkit = new EnumMap<>(
+			cn.nukkit.inventory.InventoryType.class);
+	private static Map<InventoryType, cn.nukkit.inventory.InventoryType> bukkitToNukkit = new EnumMap<>(
+			InventoryType.class);
+
 	static {
-		map.put(InventoryType.get(InventoryType.ANVIL), org.bukkit.event.inventory.InventoryType.ANVIL);
-		map.put(new InventoryType(1, "Beacon", typeOf(InventoryType.ENCHANT_TABLE)),
-				org.bukkit.event.inventory.InventoryType.BEACON);
-		map.put(InventoryType.get(InventoryType.BREWING_STAND), org.bukkit.event.inventory.InventoryType.BREWING);
-		map.put(InventoryType.get(InventoryType.CHEST), org.bukkit.event.inventory.InventoryType.CHEST);
-		map.put(InventoryType.get(InventoryType.CRAFTING), org.bukkit.event.inventory.InventoryType.CRAFTING);
-		map.put(InventoryType.get(InventoryType.DOUBLE_CHEST), org.bukkit.event.inventory.InventoryType.CHEST);
-		map.put(InventoryType.get(InventoryType.PLAYER), org.bukkit.event.inventory.InventoryType.CREATIVE);
-		map.put(InventoryType.get(InventoryType.DISPENSER), org.bukkit.event.inventory.InventoryType.DISPENSER);
-		map.put(InventoryType.get(InventoryType.DROPPER), org.bukkit.event.inventory.InventoryType.DROPPER);
-		map.put(InventoryType.get(InventoryType.ENCHANT_TABLE), org.bukkit.event.inventory.InventoryType.ENCHANTING);
-		map.put(new InventoryType(3, "Ender Chest", typeOf(InventoryType.CHEST)),
-				org.bukkit.event.inventory.InventoryType.ENDER_CHEST);
-		map.put(InventoryType.get(InventoryType.FURNACE), org.bukkit.event.inventory.InventoryType.FURNACE);
-		map.put(InventoryType.get(InventoryType.HOPPER), org.bukkit.event.inventory.InventoryType.HOPPER);
-		map.put(new InventoryType(3, "Villager", typeOf(InventoryType.ANVIL)),
-				org.bukkit.event.inventory.InventoryType.MERCHANT);
-		map.put(InventoryType.get(InventoryType.PLAYER), org.bukkit.event.inventory.InventoryType.PLAYER);
-		map.put(InventoryType.get(InventoryType.WORKBENCH), org.bukkit.event.inventory.InventoryType.WORKBENCH);
+		twoWay(cn.nukkit.inventory.InventoryType.ANVIL, InventoryType.ANVIL);
+		twoWay(cn.nukkit.inventory.InventoryType.BREWING_STAND, InventoryType.BREWING);
+		twoWay(cn.nukkit.inventory.InventoryType.CHEST, InventoryType.CHEST);
+		twoWay(cn.nukkit.inventory.InventoryType.CRAFTING, InventoryType.CRAFTING);
+		twoWay(cn.nukkit.inventory.InventoryType.DOUBLE_CHEST, InventoryType.CHEST);
+		twoWay(cn.nukkit.inventory.InventoryType.DISPENSER, InventoryType.DISPENSER);
+		twoWay(cn.nukkit.inventory.InventoryType.DROPPER, InventoryType.DROPPER);
+		twoWay(cn.nukkit.inventory.InventoryType.ENCHANT_TABLE, InventoryType.ENCHANTING);
+		twoWay(cn.nukkit.inventory.InventoryType.CHEST, InventoryType.ENDER_CHEST);
+		twoWay(cn.nukkit.inventory.InventoryType.FURNACE, InventoryType.FURNACE);
+		twoWay(cn.nukkit.inventory.InventoryType.HOPPER, InventoryType.HOPPER);
+		twoWay(cn.nukkit.inventory.InventoryType.PLAYER, InventoryType.PLAYER);
+		twoWay(cn.nukkit.inventory.InventoryType.WORKBENCH, InventoryType.WORKBENCH);
+
+		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
+		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);
+		bukkitToNukkit.put(InventoryType.CREATIVE, cn.nukkit.inventory.InventoryType.PLAYER);
 	}
 
 	/**
@@ -37,8 +39,8 @@ public final class PokkitInventoryType {
 	 *            The Nukkit inventory type.
 	 * @return The Bukkit inventory type.
 	 */
-	public static org.bukkit.event.inventory.InventoryType toBukkit(InventoryType nukkit) {
-		return map.get(nukkit);
+	public static InventoryType toBukkit(cn.nukkit.inventory.InventoryType nukkit) {
+		return nukkitToBukkit.get(nukkit);
 	}
 
 	/**
@@ -48,11 +50,12 @@ public final class PokkitInventoryType {
 	 *            The Bukkit inventory type.
 	 * @return The Nukkit invenotry type.
 	 */
-	public static InventoryType toNukkit(org.bukkit.event.inventory.InventoryType inventoryType) {
-		return map.inverse().get(inventoryType);
+	public static cn.nukkit.inventory.InventoryType toNukkit(InventoryType inventoryType) {
+		return bukkitToNukkit.get(inventoryType);
 	}
 
-	private static int typeOf(int inventoryType) {
-		return InventoryType.get(inventoryType).getNetworkType();
+	private static void twoWay(cn.nukkit.inventory.InventoryType nukkit, InventoryType bukkit) {
+		nukkitToBukkit.put(nukkit, bukkit);
+		bukkitToNukkit.put(bukkit, nukkit);
 	}
 }
