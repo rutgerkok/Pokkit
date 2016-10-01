@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.permission.PokkitPermissible;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.plugin.PokkitPluginLoader.RecognizeJarsInDir;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -175,21 +176,24 @@ public final class PokkitPluginManager implements PluginManager {
 
 	@Override
 	public Plugin[] loadPlugins(File directory) {
-		// Load the plugins
-		List<String> pluginLoader = Collections.singletonList(PokkitPluginLoader.class.getName());
-		Collection<cn.nukkit.plugin.Plugin> nukkitPlugins = nukkit.loadPlugins(directory, pluginLoader).values();
+		try (RecognizeJarsInDir recognizeJarsInDirectory = this.pluginLoader.recognizeJarFiles()) {
+			// Load the plugins
+			List<String> recognizeOnlyBukkitPlugins = Collections.singletonList(PokkitPluginLoader.class.getName());
+			Collection<cn.nukkit.plugin.Plugin> nukkitPlugins = nukkit
+					.loadPlugins(directory, recognizeOnlyBukkitPlugins).values();
 
-		// Check and convert the plugins
-		List<Plugin> bukkitPlugins = new ArrayList<>();
-		for (cn.nukkit.plugin.Plugin nukkitPlugin : nukkitPlugins) {
-			if (!(nukkitPlugin instanceof PokkitPlugin)) {
-				// This should be impossible with our loader
-				throw new RuntimeException(
-						"Unexpected plugin type: " + nukkitPlugin + "(" + nukkitPlugin.getClass() + ")");
+			// Check and convert the plugins
+			List<Plugin> bukkitPlugins = new ArrayList<>();
+			for (cn.nukkit.plugin.Plugin nukkitPlugin : nukkitPlugins) {
+				if (!(nukkitPlugin instanceof PokkitPlugin)) {
+					// This should be impossible with our loader
+					throw new RuntimeException(
+							"Unexpected plugin type: " + nukkitPlugin + "(" + nukkitPlugin.getClass() + ")");
+				}
+				bukkitPlugins.add(PokkitPlugin.toBukkit(nukkitPlugin));
 			}
-			bukkitPlugins.add(PokkitPlugin.toBukkit(nukkitPlugin));
+			return bukkitPlugins.toArray(new Plugin[0]);
 		}
-		return bukkitPlugins.toArray(new Plugin[0]);
 	}
 
 	@Override

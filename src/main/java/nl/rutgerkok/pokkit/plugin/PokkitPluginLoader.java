@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.plugin;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.InputStream;
 import java.util.jar.JarEntry;
@@ -27,6 +28,20 @@ import cn.nukkit.plugin.PluginDescription;
  */
 public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 
+	class RecognizeJarsInDir implements Closeable {
+
+		private RecognizeJarsInDir() {
+			Preconditions.checkState(!recognizeJars, "No two Bukkit plugin loading allowers may be active at the same time");
+			recognizeJars = true;
+		}
+
+		@Override
+		public void close() {
+			recognizeJars = false;
+		}
+
+	}
+
 	private static PokkitPluginLoader temporaryInstance;
 
 	static PokkitPluginLoader getInstanceBack() {
@@ -37,6 +52,7 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 	}
 
 	private JavaPluginLoader bukkit;
+	private boolean recognizeJars = false;
 
 	public PokkitPluginLoader(cn.nukkit.Server server) {
 		// Required for instantiation
@@ -76,6 +92,11 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 
 	@Override
 	public Pattern[] getPluginFilters() {
+		if (!this.recognizeJars) {
+			// Normally, we don't want to recognize plugins, to give room to the
+			// Nukkit plugin loader
+			return new Pattern[0];
+		}
 		return new Pattern[] { Pattern.compile("^.+\\.jar$") };
 	}
 
@@ -96,6 +117,19 @@ public final class PokkitPluginLoader implements cn.nukkit.plugin.PluginLoader {
 	@Override
 	public Plugin loadPlugin(String filename) throws Exception {
 		return loadPlugin(new File(filename));
+	}
+
+	/**
+	 * Temporarily allows loading of Bukkit plugins from a directory by letting
+	 * this plugin loader recognize all JAR files through the
+	 * {@link #getPluginFilters()} method. Close the returned instance when you
+	 * are done loading Bukkit plugins from a directory.
+	 *
+	 * @return Instance that must be loaded when you are done loading Bukkit
+	 *         plugins.
+	 */
+	RecognizeJarsInDir recognizeJarFiles() {
+		return new RecognizeJarsInDir();
 	}
 
 }
