@@ -404,7 +404,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 	public OfflinePlayer[] getOfflinePlayers() {
 		ArrayList<OfflinePlayer> offlineList = new ArrayList<>();
 		
-		for (final File fileEntry : new File(nukkit.getFilePath() + File.separator + "players" + File.separator).listFiles()) {
+		for (final File fileEntry : new File(nukkit.getFilePath() + File.separator + "players").listFiles()) {
 			// Very hacky...
 			offlineList.add(PokkitOfflinePlayer.toBukkit(nukkit.getOfflinePlayer(fileEntry.getName())));
 	    }
