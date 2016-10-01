@@ -267,26 +267,22 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public Block getHighestBlockAt(int x, int z) {
-		throw Pokkit.unsupported();
-
+		return PokkitBlock.toBukkit(nukkit.getBlock(new Vector3(x, getHighestBlockYAt(x, z), z)));
 	}
 
 	@Override
 	public Block getHighestBlockAt(Location location) {
-		throw Pokkit.unsupported();
-
+		return PokkitBlock.toBukkit(nukkit.getBlock(new Vector3(location.getX(), getHighestBlockYAt(location.getBlockX(), location.getBlockZ()), location.getZ())));
 	}
 
 	@Override
 	public int getHighestBlockYAt(int x, int z) {
-		throw Pokkit.unsupported();
-
+		return nukkit.getHighestBlockAt(x, z);
 	}
 
 	@Override
 	public int getHighestBlockYAt(Location location) {
-		throw Pokkit.unsupported();
-
+		return nukkit.getHighestBlockAt(location.getBlockX(), location.getBlockZ());
 	}
 
 	@Override
@@ -359,8 +355,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean getPVP() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getServer().getPropertyBoolean("pvp");
 	}
 
 	@Override
@@ -466,20 +461,17 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean isChunkInUse(int x, int z) {
-		throw Pokkit.unsupported();
-
+		return nukkit.isChunkInUse(x, z);
 	}
 
 	@Override
 	public boolean isChunkLoaded(Chunk chunk) {
-		throw Pokkit.unsupported();
-
+		return nukkit.isChunkLoaded(chunk.getX(), chunk.getZ());
 	}
 
 	@Override
 	public boolean isChunkLoaded(int x, int z) {
-		throw Pokkit.unsupported();
-
+		return nukkit.isChunkLoaded(x, z);
 	}
 
 	@Override
@@ -495,20 +487,17 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void loadChunk(Chunk chunk) {
-		throw Pokkit.unsupported();
-
+		nukkit.loadChunk(chunk.getX(), chunk.getZ());
 	}
 
 	@Override
 	public void loadChunk(int x, int z) {
-		throw Pokkit.unsupported();
-
+		nukkit.loadChunk(x, z);
 	}
 
 	@Override
 	public boolean loadChunk(int x, int z, boolean generate) {
-		throw Pokkit.unsupported();
-
+		return nukkit.loadChunk(x, z, true);
 	}
 
 	@Override
@@ -569,8 +558,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean regenerateChunk(int x, int z) {
-		throw Pokkit.unsupported();
-
+		nukkit.regenerateChunk(x, z);
+		return true;
 	}
 
 	@Override
@@ -851,37 +840,33 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean unloadChunk(Chunk chunk) {
-		throw Pokkit.unsupported();
-
+		return nukkit.unloadChunk(chunk.getX(), chunk.getZ());
 	}
 
 	@Override
 	public boolean unloadChunk(int x, int z) {
-		throw Pokkit.unsupported();
-
+		return nukkit.unloadChunk(x, z);
 	}
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save) {
-		throw Pokkit.unsupported();
-
+		return nukkit.unloadChunk(x, z); // TODO: Save
 	}
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
-		throw Pokkit.unsupported();
-
+		return nukkit.unloadChunk(x, z, safe); // TODO: Save
 	}
 
 	@Override
 	public boolean unloadChunkRequest(int x, int z) {
-		throw Pokkit.unsupported();
+		return nukkit.unloadChunkRequest(x, z);
 
 	}
 
 	@Override
 	public boolean unloadChunkRequest(int x, int z, boolean safe) {
-		throw Pokkit.unsupported();
+		return nukkit.unloadChunkRequest(x, z, safe);
 
 	}
 
