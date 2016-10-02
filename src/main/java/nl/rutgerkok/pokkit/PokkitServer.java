@@ -403,12 +403,16 @@ public final class PokkitServer extends Server.Spigot implements Server {
 	@Override
 	public OfflinePlayer[] getOfflinePlayers() {
 		ArrayList<OfflinePlayer> offlineList = new ArrayList<>();
-		
-		for (final File fileEntry : new File(nukkit.getFilePath() + File.separator + "players").listFiles()) {
-			// Very hacky...
-			offlineList.add(PokkitOfflinePlayer.toBukkit(nukkit.getOfflinePlayer(fileEntry.getName())));
+
+		for (File fileEntry : new File(nukkit.getDataPath() + "players").listFiles()) {
+			String fileName = fileEntry.getName();
+			if (!fileName.endsWith(".dat")) {
+				continue;
+			}
+			String playerName = fileName.substring(0, fileName.length() - ".dat".length());
+			offlineList.add(PokkitOfflinePlayer.fromName(playerName));
 	    }
-		
+
 		// Now we convert the OfflinePlayer ArrayList to an array
 		OfflinePlayer[] array = offlineList.toArray(new OfflinePlayer[offlineList.size()]);
 
