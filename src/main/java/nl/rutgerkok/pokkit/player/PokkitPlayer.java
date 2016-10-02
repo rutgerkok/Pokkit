@@ -981,8 +981,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean isInsideVehicle() {
-		throw Pokkit.unsupported();
-
+		return false; // TODO: When vehicles are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
