@@ -54,6 +54,10 @@
 	</dependencies>
 	<repositories>
 		<repository>
+			<id>nukkit-repo</id>
+			<url>http://ci.regularbox.com/plugin/repository/everything/</url>
+		</repository>
+		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
