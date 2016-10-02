@@ -58,7 +58,7 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 		if (firstPlayed == null) {
 			return 0;
 		}
-		return firstPlayed.longValue();
+		return firstPlayed.longValue() * 1000;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 		if (lastPlayed == null) {
 			return 0;
 		}
-		return lastPlayed.longValue();
+		return lastPlayed.longValue() * 1000;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 
 	@Override
 	public Player getPlayer() {
-		return Bukkit.getPlayer(getName());
+		return Bukkit.getPlayerExact(getName());
 	}
 
 	@Override
