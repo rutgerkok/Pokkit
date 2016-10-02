@@ -51,19 +51,7 @@ public final class PlayerConnectEvents extends EventTranslator {
 
 		Player bukkitPlayer = PokkitPlayer.toBukkit(event.getPlayer());
 		InetAddress address = bukkitPlayer.getAddress().getAddress();
-		try {
-			// Due to some random... "bug", for some reason address is null.
-			// This tries to fix the issue by creating a InetAddress from the host string.
-			// However this has a problem, it uses the network IP if it is a local server.
-			// But again, it is better having a NPE error on plugins or having an almost perfect fix?
-			//
-			// Workaround for MaxBans' LoginListener error
-			InetAddress addr = InetAddress.getByName(bukkitPlayer.getAddress().getHostString());
-			address = addr;
-		} catch (UnknownHostException e) {
-			// If an exception is thrown, don't do anything, just keep the old address.
-			e.printStackTrace();
-		}
+		
 		PlayerLoginEvent bukkitEvent = new PlayerLoginEvent(bukkitPlayer, bukkitPlayer.getAddress().getHostName(),
 				address, event.isCancelled() ? Result.KICK_OTHER : Result.ALLOWED, event.getKickMessage(), address);
 		Bukkit.getPluginManager().callEvent(bukkitEvent);
