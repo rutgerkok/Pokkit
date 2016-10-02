@@ -2,6 +2,7 @@ package nl.rutgerkok.pokkit;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -401,8 +402,17 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
 	@Override
 	public OfflinePlayer[] getOfflinePlayers() {
-		throw Pokkit.unsupported();
+		ArrayList<OfflinePlayer> offlineList = new ArrayList<>();
+		
+		for (final File fileEntry : new File(nukkit.getFilePath() + File.separator + "players").listFiles()) {
+			// Very hacky...
+			offlineList.add(PokkitOfflinePlayer.toBukkit(nukkit.getOfflinePlayer(fileEntry.getName())));
+	    }
+		
+		// Now we convert the OfflinePlayer ArrayList to an array
+		OfflinePlayer[] array = offlineList.toArray(new OfflinePlayer[offlineList.size()]);
 
+		return array;
 	}
 
 	@Override
