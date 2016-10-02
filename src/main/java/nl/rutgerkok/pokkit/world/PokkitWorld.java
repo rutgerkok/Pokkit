@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.world;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +26,7 @@ import org.bukkit.Difficulty;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.TreeType;
@@ -49,6 +51,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.level.Level;
+import cn.nukkit.level.format.generic.BaseFullChunk;
 import cn.nukkit.math.Vector3;
 
 public final class PokkitWorld implements World {
@@ -311,8 +314,17 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public Chunk[] getLoadedChunks() {
-		throw Pokkit.unsupported();
+		ArrayList<Chunk> loadedChunks = new ArrayList<>();
+		
+		for (BaseFullChunk chunk : nukkit.getChunks().values()) {
+			if (chunk.isLoaded()) {
+				loadedChunks.add(new PokkitChunk(PokkitWorld.toBukkit(nukkit), chunk.getX(), chunk.getZ()));
+			}
+		}
 
+		Chunk[] array = loadedChunks.toArray(new Chunk[loadedChunks.size()]);
+
+		return array;
 	}
 
 	@Override
@@ -428,8 +440,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public File getWorldFolder() {
-		throw Pokkit.unsupported();
-
+		return new File(nukkit.getServer().getDataPath() + "worlds" + File.separator + nukkit.getFolderName());
 	}
 
 	private WorldMetadataStore getWorldMetadata() {
