@@ -653,8 +653,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public Entity getPassenger() {
-		throw Pokkit.unsupported();
-
+		return null; // TODO: When vehicles are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
