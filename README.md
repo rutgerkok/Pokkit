@@ -26,10 +26,8 @@ It is important to remember that you must **install Bukkit plugins in the `plugi
 
 ## Compiling instructions
 * Make sure you have installed [Maven](https://maven.apache.org/).
-* Download a copy of the source code of [Nukkit](https://github.com/Nukkit/Nukkit).
 * Download a copy of the source code of Pokkit (use one of the buttons on this page).
-* Run `mvn install` in the directory containing the Nukkit source code.
-* Then run `mvn install` in the directory containg the Pokkit source code.
+* Then run `mvn install` in the directory containing the Pokkit source code.
 * A JAR file will be placed in the newly created `target` directory.
 
 ## Bug reports
