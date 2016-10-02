@@ -359,8 +359,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean getPVP() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getServer().getPropertyBoolean("pvp");
 	}
 
 	@Override
