@@ -320,9 +320,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	@Override
 	public InetSocketAddress getAddress() {
 		InetSocketAddress address = this.address;
-		if (address == null) {
-			address = InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
-			;
+		if (address == null || address.getAddress() == null) {
+			address = new InetSocketAddress(nukkit.getAddress(), nukkit.getPort());
 			this.address = address;
 		}
 		return address;
