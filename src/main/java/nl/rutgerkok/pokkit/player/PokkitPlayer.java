@@ -960,8 +960,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean isFlying() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getAdventureSettings().canFly() && !nukkit.isOnGround();
 	}
 
 	@Override
