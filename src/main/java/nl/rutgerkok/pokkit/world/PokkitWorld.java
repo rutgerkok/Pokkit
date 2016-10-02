@@ -502,25 +502,22 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data) {
-		throw Pokkit.unsupported();
-
+		return; // TODO: Implement particles
 	}
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data, int radius) {
-		throw Pokkit.unsupported();
-
+		return; // TODO: Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data) {
-		throw Pokkit.unsupported();
-
+		return; // TODO: Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data, int radius) {
-		throw Pokkit.unsupported();
+		return; // TODO: Implement particles
 
 	}
 
