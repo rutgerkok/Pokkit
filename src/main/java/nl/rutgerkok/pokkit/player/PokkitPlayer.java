@@ -685,6 +685,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
+	public int getPortalCooldown() {
+		return 80;
+	}
+
+	@Override
 	public PotionEffect getPotionEffect(PotionEffectType type) {
 		throw Pokkit.unsupported();
 	}
@@ -968,6 +973,11 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean isGlowing() {
+		return false;
+	}
+
+	@Override
+	public boolean isHandRaised() {
 		return false;
 	}
 
@@ -1603,6 +1613,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
+	public void setPortalCooldown(int arg0) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
 	public void setRemainingAir(int arg0) {
 		throw Pokkit.unsupported();
 
@@ -1842,21 +1858,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	@Override
 	public void updateInventory() {
 		nukkit.getInventory().sendContents(nukkit);
-	}
-
-	@Override
-	public boolean isHandRaised() {
-		return false;
-	}
-
-	@Override
-	public int getPortalCooldown() {
-		return 0;
-	}
-
-	@Override
-	public void setPortalCooldown(int arg0) {
-
 	}
 
 }
