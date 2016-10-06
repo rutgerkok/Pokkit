@@ -3,6 +3,7 @@ package nl.rutgerkok.pokkit.world;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -56,12 +57,21 @@ import cn.nukkit.math.Vector3;
 public final class PokkitWorld implements World {
 
 	private static final int WORLD_HEIGHT = 128;
-
+	private static HashMap<Level, PokkitWorld> pokkitWorldCache = new HashMap<Level, PokkitWorld>();
+	
 	public static PokkitWorld toBukkit(Level level) {
 		if (level == null) {
 			return null;
 		}
-		return new PokkitWorld(level);
+		// Some plugins uses World as a reference, if we do new PokkitWorld(level), the references aren't going to be the same
+		// http://i.imgur.com/erAyiV8.png
+		// This caches the PokkitWorld so this issue doesn't happen
+		if (pokkitWorldCache.containsKey(level)) {
+			return pokkitWorldCache.get(level);
+		}
+		PokkitWorld pokkitWorld = new PokkitWorld(level);
+		pokkitWorldCache.put(level, pokkitWorld);
+		return pokkitWorld;
 	}
 
 	public static Level toNukkit(World world) {
