@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.math.Vector3;
@@ -48,6 +49,16 @@ public final class PlayerInteractEvents extends EventTranslator {
 
 		// The lines[] share a reference, so
 		// event.setLines(bukkitEvent.getLines()) is unnecessary
+	}
+
+	@EventHandler(ignoreCancelled = false)
+	public void onItemHeld(cn.nukkit.event.player.PlayerItemHeldEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(PokkitPlayer.toBukkit(event.getPlayer()), event.getInventorySlot(), event.getInventorySlot()); // TODO: Create a item cache so we can get the items properly, because Bukkit uses the previous and the on hand item, and Nukkit only has the on hand item
+		callCancellable(event, bukkitEvent);
 	}
 
 	private Action toBukkit(int nukkit) {
