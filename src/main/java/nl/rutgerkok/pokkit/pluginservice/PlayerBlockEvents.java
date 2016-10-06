@@ -82,6 +82,9 @@ public final class PlayerBlockEvents extends EventTranslator {
 		callCancellable(event, bukkitEvent);
 	}
 	
+	/*
+	 * TODO: getBlockState(...) is giving a error @ line 34
+	 */
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockForm(cn.nukkit.event.block.BlockFormEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
@@ -90,8 +93,8 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 		cn.nukkit.block.Block forming = event.getBlock();
 		
-		BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		callCancellable(event, bukkitEvent);
+		// BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		// callCancellable(event, bukkitEvent);
 	}
 	
 	@EventHandler(ignoreCancelled = false)
@@ -102,8 +105,8 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 		cn.nukkit.block.Block growing = event.getBlock();
 		
-		BlockGrowEvent bukkitEvent = new BlockGrowEvent(PokkitBlock.toBukkit(growing), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		callCancellable(event, bukkitEvent);
+		// BlockGrowEvent bukkitEvent = new BlockGrowEvent(PokkitBlock.toBukkit(growing), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		// callCancellable(event, bukkitEvent);
 	}
 	
 	@EventHandler(ignoreCancelled = false)
@@ -150,9 +153,9 @@ public final class PlayerBlockEvents extends EventTranslator {
 		}
 
 		cn.nukkit.block.Block spreading = event.getBlock();
-		
-		BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading), PokkitBlock.toBukkit(event.getNewState()), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		callCancellable(event, bukkitEvent);
+
+		// BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading), PokkitBlock.toBukkit(event.getNewState()), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		// callCancellable(event, bukkitEvent);
 	}
 	
 	@EventHandler(ignoreCancelled = false)
