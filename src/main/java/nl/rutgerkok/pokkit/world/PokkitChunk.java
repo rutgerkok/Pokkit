@@ -51,8 +51,7 @@ public final class PokkitChunk implements Chunk {
 	@Override
 	public ChunkSnapshot getChunkSnapshot(boolean includeMaxblocky, boolean includeBiome,
 			boolean includeBiomeTempRain) {
-		throw Pokkit.unsupported();
-
+		return new PokkitChunkSnapshot(chunkX, chunkZ, world.getName(), PokkitWorld.toNukkit(world).getChunk(chunkX, chunkZ));
 	}
 
 	@Override
