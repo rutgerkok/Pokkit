@@ -1,5 +1,7 @@
 package nl.rutgerkok.pokkit.world;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.Chunk;
@@ -10,7 +12,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 
+import cn.nukkit.level.Level;
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
 
 public final class PokkitChunk implements Chunk {
 
@@ -53,8 +57,13 @@ public final class PokkitChunk implements Chunk {
 
 	@Override
 	public Entity[] getEntities() {
-		throw Pokkit.unsupported();
-
+		Level level = PokkitWorld.toNukkit(world);
+		List<Entity> entitiesInChunk = new ArrayList<Entity>();
+		
+		for (cn.nukkit.entity.Entity entity : level.getChunk(chunkX, chunkZ).getEntities().values()) {
+			entitiesInChunk.add(PokkitEntity.toBukkit(entity));
+		}
+		return entitiesInChunk.toArray(new Entity[entitiesInChunk.size()]);
 	}
 
 	@Override
