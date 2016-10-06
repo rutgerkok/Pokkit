@@ -40,7 +40,7 @@ public class PokkitLivingEntity implements LivingEntity {
 		return new PokkitLivingEntity(nukkit);
 	}
 
-	public static cn.nukkit.entity.Entity toNukkit(Entity entity) {
+	public static cn.nukkit.entity.Entity toNukkit(LivingEntity entity) {
 		if (entity == null) {
 			return null;
 		}
