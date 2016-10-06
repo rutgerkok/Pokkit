@@ -3,7 +3,7 @@ package nl.rutgerkok.pokkit.world;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.block.Biome;
 
-import cn.nukkit.level.format.Chunk;
+import cn.nukkit.level.format.generic.BaseFullChunk;
 import nl.rutgerkok.pokkit.Pokkit;
 
 public class PokkitChunkSnapshot implements ChunkSnapshot {
@@ -14,8 +14,8 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
     private int[][][] blocksIds = new int[16][128][16];
     private int[][][] blocksData = new int[16][128][16];
     
-	public PokkitChunkSnapshot(final int x, final int z, final String wname, Chunk nukkitChunk) {
-		this.nukkit = nukkitChunk;
+	public PokkitChunkSnapshot(final int x, final int z, final String wname, BaseFullChunk baseFullChunk) {
+		this.nukkit = baseFullChunk;
 		this.x = x;
 		this.z = z;
 		this.worldname = wname;
@@ -25,14 +25,14 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 		for (int blockX = 0; blockX < 16; blockX++) {
 			for (int blockY = 0; blockY < 127; blockY++) {
 				for (int blockZ = 0; blockZ < 16; blockZ++) {
-					blocksIds[blockX][blockY][blockZ] = nukkitChunk.getBlockId(blockX, blockY, blockZ);
-					blocksData[blockX][blockY][blockZ] = nukkitChunk.getBlockData(blockX, blockY, blockZ);
+					blocksIds[blockX][blockY][blockZ] = baseFullChunk.getBlockId(blockX, blockY, blockZ);
+					blocksData[blockX][blockY][blockZ] = baseFullChunk.getBlockData(blockX, blockY, blockZ);
 				}
 			}
 		}
 	}
 	
-	Chunk nukkit;
+	BaseFullChunk nukkit;
 	
 	@Override
 	public int getX() {
@@ -100,6 +100,6 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 
 	@Override
 	public boolean isSectionEmpty(int sy) {
-	    return nukkit.getSection(sy) != null; // I think this will always return true
+		return true; // Always true due to reasons
 	}
 }
