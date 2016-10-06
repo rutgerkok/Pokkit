@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.item.Item;
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
@@ -71,6 +73,18 @@ public final class PlayerBlockEvents extends EventTranslator {
 		cn.nukkit.block.Block burning = event.getBlock();
 		
 		BlockBurnEvent bukkitEvent = new BlockBurnEvent(PokkitBlock.toBukkit(burning));
+		callCancellable(event, bukkitEvent);
+	}
+	
+	@EventHandler(ignoreCancelled = false)
+	public void onBlockForm(cn.nukkit.event.block.BlockFormEvent event) {
+		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+			return;
+		}
+
+		cn.nukkit.block.Block forming = event.getBlock();
+		
+		BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
 		callCancellable(event, bukkitEvent);
 	}
 }
