@@ -880,9 +880,13 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public boolean hasPotionEffect(PotionEffectType arg0) {
-		throw Pokkit.unsupported();
-
+	public boolean hasPotionEffect(PotionEffectType potionEffect) {
+		for (cn.nukkit.potion.Effect eff : nukkit.getEffects().values()) {
+			if (eff.getId() == potionEffect.getId()) { // TODO: Proper implementation of this
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
