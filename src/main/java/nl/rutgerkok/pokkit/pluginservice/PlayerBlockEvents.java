@@ -63,7 +63,7 @@ public final class PlayerBlockEvents extends EventTranslator {
 	}
 	
 	@EventHandler(ignoreCancelled = false)
-	public void onBlockPlace(cn.nukkit.event.block.BlockBurnEvent event) {
+	public void onBlockBurn(cn.nukkit.event.block.BlockBurnEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
 			return;
 		}
