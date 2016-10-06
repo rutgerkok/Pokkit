@@ -446,7 +446,7 @@ public class PokkitEntity implements Entity {
 	@Override
 	public int getPortalCooldown() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 80;
 	}
 
 	@Override
