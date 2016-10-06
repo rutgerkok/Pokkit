@@ -7,10 +7,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.math.Vector3;
+import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitBlockFace;
@@ -71,6 +73,16 @@ public final class PlayerInteractEvents extends EventTranslator {
 		}
 	}
 
+	@EventHandler(ignoreCancelled = false)
+	public void onMove(cn.nukkit.event.player.PlayerMoveEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
+		callCancellable(event, bukkitEvent);
+	}
+	
 	private Action toBukkit(int nukkit) {
 		switch (nukkit) {
 		case cn.nukkit.event.player.PlayerInteractEvent.LEFT_CLICK_AIR:
