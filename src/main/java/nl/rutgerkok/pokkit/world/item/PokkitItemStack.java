@@ -30,13 +30,12 @@ public final class PokkitItemStack {
 		if (nukkit == null) {
 			return null;
 		}
-		int combinedBukkitId = PokkitMaterialData.nukkitToBukkit(nukkit);
-		Material material = PokkitMaterialData.getMaterial(combinedBukkitId);
+		Material material = Material.getMaterial(nukkit.getId());
 		if (material == null) {
 			return null;
 		}
 		ItemStack bukkit = new ItemStack(material, nukkit.getCount(),
-				(short) PokkitMaterialData.getBlockData(combinedBukkitId));
+				(short) nukkit.getDamage());
 
 		// Convert item meta
 		CompoundTag extra = nukkit.getNamedTag();
