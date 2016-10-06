@@ -828,8 +828,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean hasAchievement(Achievement arg0) {
-		throw Pokkit.unsupported();
-
+		return true; // TODO: When achievements are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
@@ -1614,8 +1613,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setPortalCooldown(int arg0) {
-		throw Pokkit.unsupported();
-
+		return; // TODO: When portals are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
