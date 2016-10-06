@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -58,6 +59,18 @@ public final class PlayerBlockEvents extends EventTranslator {
 				PokkitBlock.toBukkit(event.getBlockAgainst()), PokkitItemStack.toBukkitCopy(event.getItem()),
 				PokkitPlayer.toBukkit(event.getPlayer()), true, EquipmentSlot.HAND);
 
+		callCancellable(event, bukkitEvent);
+	}
+	
+	@EventHandler(ignoreCancelled = false)
+	public void onBlockPlace(cn.nukkit.event.block.BlockBurnEvent event) {
+		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+			return;
+		}
+
+		cn.nukkit.block.Block burning = event.getBlock();
+		
+		BlockBurnEvent bukkitEvent = new BlockBurnEvent(PokkitBlock.toBukkit(burning));
 		callCancellable(event, bukkitEvent);
 	}
 }
