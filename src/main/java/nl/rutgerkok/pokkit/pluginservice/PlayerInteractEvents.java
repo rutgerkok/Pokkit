@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -80,6 +81,17 @@ public final class PlayerInteractEvents extends EventTranslator {
 		}
 
 		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
+		callCancellable(event, bukkitEvent);
+	}
+	
+	@EventHandler(ignoreCancelled = false)
+	public void onDrop(cn.nukkit.event.player.PlayerDropItemEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		// TODO: Implement PokkitItemEntity
+		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), null);
 		callCancellable(event, bukkitEvent);
 	}
 	
