@@ -1,11 +1,14 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
+import java.util.HashMap;
+
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
+import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.math.Vector3;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -15,7 +18,8 @@ import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PlayerInteractEvents extends EventTranslator {
-
+	HashMap<Player, Integer> lastSlot = new HashMap<Player, Integer>();
+	
 	@EventHandler(ignoreCancelled = false)
 	public void onPlayerInteract(cn.nukkit.event.player.PlayerInteractEvent event) {
 		if (canIgnore(PlayerInteractEvent.getHandlerList())) {
@@ -57,8 +61,14 @@ public final class PlayerInteractEvents extends EventTranslator {
 			return;
 		}
 
-		PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(PokkitPlayer.toBukkit(event.getPlayer()), event.getInventorySlot(), event.getInventorySlot()); // TODO: Create a item cache so we can get the items properly, because Bukkit uses the previous and the on hand item, and Nukkit only has the on hand item
-		callCancellable(event, bukkitEvent);
+		int previousSlot = lastSlot.getOrDefault(event.getPlayer(), event.getInventorySlot());
+		
+		lastSlot.put(event.getPlayer(), event.getInventorySlot());
+		
+		if (previousSlot != event.getInventorySlot()) {
+			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(PokkitPlayer.toBukkit(event.getPlayer()), previousSlot, event.getInventorySlot());
+			callCancellable(event, bukkitEvent);
+		}
 	}
 
 	private Action toBukkit(int nukkit) {
