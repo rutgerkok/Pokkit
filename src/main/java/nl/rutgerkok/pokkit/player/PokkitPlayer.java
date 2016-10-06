@@ -417,20 +417,25 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public double getEyeHeight() {
-		throw Pokkit.unsupported();
-
+		return this.getEyeHeight(false);
 	}
 
 	@Override
-	public double getEyeHeight(boolean arg0) {
-		throw Pokkit.unsupported();
-
+	public double getEyeHeight(boolean ignoreSneaking) {
+        if (ignoreSneaking) {
+            return 1.62;
+        }
+        if (this.isSneaking()) {
+            return 1.54;
+        }
+        return 1.62;
 	}
 
 	@Override
 	public Location getEyeLocation() {
-		throw Pokkit.unsupported();
-
+        final Location loc = this.getLocation();
+        loc.setY(loc.getY() + this.getEyeHeight());
+        return loc;
 	}
 
 	@Override
