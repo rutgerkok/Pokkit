@@ -1297,9 +1297,9 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 		int x = location.getBlockX();
 		int y = location.getBlockY();
 		int z = location.getBlockZ();
-		int combinedNukkitId = PokkitMaterialData.bukkitToNukkit(material, blockData);
-		int nukkitBlockId = PokkitMaterialData.getNukkitBlockId(combinedNukkitId);
-		int nukkitBlockData = PokkitMaterialData.getBlockData(combinedNukkitId);
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(material, blockData);
+		int nukkitBlockId = materialData.getNukkitId();
+		int nukkitBlockData = materialData.getNukkitDamage();
 		int flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
 
 		UpdateBlockPacket packet = new UpdateBlockPacket();

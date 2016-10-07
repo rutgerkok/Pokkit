@@ -30,12 +30,13 @@ public final class PokkitItemStack {
 		if (nukkit == null) {
 			return null;
 		}
-		Material material = Material.getMaterial(nukkit.getId());
+		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage());
+		Material material = materialData.getBukkitMaterial();
 		if (material == null) {
 			return null;
 		}
 		ItemStack bukkit = new ItemStack(material, nukkit.getCount(),
-				(short) nukkit.getDamage());
+				materialData.getBukkitDamage());
 
 		// Convert item meta
 		CompoundTag extra = nukkit.getNamedTag();
@@ -50,9 +51,9 @@ public final class PokkitItemStack {
 		if (bukkit == null) {
 			return null;
 		}
-		int combinedNukkitId = PokkitMaterialData.bukkitToNukkit(bukkit.getType(), bukkit.getDurability());
-		cn.nukkit.item.Item nukkit = Item.get(PokkitMaterialData.getNukkitBlockId(combinedNukkitId),
-				PokkitMaterialData.getBlockData(combinedNukkitId), bukkit.getAmount());
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(bukkit.getType(), bukkit.getDurability());
+		cn.nukkit.item.Item nukkit = Item.get(materialData.getNukkitId(), materialData.getNukkitDamage(),
+				bukkit.getAmount());
 
 		if (bukkit.hasItemMeta()) {
 			PokkitItemMeta meta = (PokkitItemMeta) bukkit.getItemMeta();

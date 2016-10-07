@@ -5,6 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitServer;
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -21,12 +28,6 @@ import org.bukkit.plugin.Plugin;
 
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.item.ItemBlock;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitServer;
-import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 /**
  * Converts between Nukkit and Bukkit blocks.
@@ -98,7 +99,8 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public byte getData() {
-		return (byte) PokkitMaterialData.getBlockData(PokkitMaterialData.nukkitToBukkit(nukkit));
+		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage());
+		return (byte) materialData.getBukkitDamage();
 	}
 
 	@Override
@@ -123,9 +125,8 @@ public final class PokkitBlock implements Block {
 		int[][] drops = nukkit.getDrops(item);
 		List<ItemStack> result = new ArrayList<>();
 		for (int[] drop : drops) {
-			int bukkitCombinedId = PokkitMaterialData.nukkitToBukkit(drop[0], drop[1]);
-			ItemStack stack = new ItemStack(PokkitMaterialData.getMaterial(bukkitCombinedId), drop[2],
-					(short) PokkitMaterialData.getBlockData(bukkitCombinedId));
+			PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(drop[0], drop[1]);
+			ItemStack stack = new ItemStack(materialData.getBukkitMaterial(), drop[2], materialData.getBukkitDamage());
 			result.add(stack);
 		}
 		this.drops = result;
@@ -223,20 +224,16 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public Material getType() {
-		int combinedBukkitId = PokkitMaterialData.nukkitToBukkit(nukkit);
-		return PokkitMaterialData.getMaterial(combinedBukkitId);
+		return PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage()).getBukkitMaterial();
 	}
 
 	/**
 	 * Gets the material data in one call.
-	 * 
+	 *
 	 * @return The material data.
 	 */
-	@SuppressWarnings("deprecation")
 	public MaterialData getTypeData() {
-		int combinedBukkitId = PokkitMaterialData.nukkitToBukkit(nukkit);
-		byte bukkitBlockData = (byte) PokkitMaterialData.getBlockData(combinedBukkitId);
-		return PokkitMaterialData.getMaterial(combinedBukkitId).getNewData(bukkitBlockData);
+		return PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage()).toBukkit();
 	}
 
 	@Override
@@ -325,8 +322,8 @@ public final class PokkitBlock implements Block {
 			return;
 		}
 
-		int combinedNukkitId = PokkitMaterialData.bukkitToNukkit(getType(), data);
-		setType0(combinedNukkitId, applyPhysics);
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(getType(), data);
+		setType0(materialData, applyPhysics);
 	}
 
 	@Override
@@ -348,13 +345,13 @@ public final class PokkitBlock implements Block {
 			type = Material.AIR;
 		}
 
-		int nukkitCombinedId = PokkitMaterialData.bukkitToNukkit(type, getData());
-		setType0(nukkitCombinedId, applyPhysics);
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(type, getData());
+		setType0(materialData, applyPhysics);
 	}
 
-	private void setType0(int nukkitCombinedId, boolean applyPhysics) {
-		int nukkitId = PokkitMaterialData.getNukkitBlockId(nukkitCombinedId);
-		int nukkitData = PokkitMaterialData.getBlockData(nukkitCombinedId);
+	private void setType0(PokkitMaterialData materialData, boolean applyPhysics) {
+		int nukkitId = materialData.getNukkitId();
+		int nukkitData = materialData.getNukkitDamage();
 		nukkit.level.setBlock(nukkit, cn.nukkit.block.Block.get(nukkitId, nukkitData), false, applyPhysics);
 
 		// Update block reference
@@ -363,15 +360,14 @@ public final class PokkitBlock implements Block {
 
 	/**
 	 * Sets a material and data at the same time.
-	 * 
+	 *
 	 * @param materialData
 	 *            The material and data.
 	 * @param applyPhysics
 	 *            Whether a physics update must be performed.
 	 */
 	public void setTypeAndData(MaterialData materialData, boolean applyPhysics) {
-		int nukkitCombinedId = PokkitMaterialData.bukkitToNukkit(materialData);
-		setType0(nukkitCombinedId, applyPhysics);
+		setType0(PokkitMaterialData.fromBukkit(materialData), applyPhysics);
 	}
 
 	@Override
@@ -399,8 +395,8 @@ public final class PokkitBlock implements Block {
 			return false;
 		}
 
-		int nukkitCombinedId = PokkitMaterialData.bukkitToNukkit(type, data);
-		setType0(nukkitCombinedId, applyPhysics);
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(type, data);
+		setType0(materialData, applyPhysics);
 		return true;
 	}
 

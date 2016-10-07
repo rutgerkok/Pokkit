@@ -34,7 +34,7 @@ public class PokkitUnsafe implements UnsafeValues {
 			return null;
 		}
 
-		return PokkitMaterialData.getMaterial(PokkitMaterialData.nukkitToBukkit(item));
+		return PokkitMaterialData.fromNukkit(item.getId(), item.getDamage()).getBukkitMaterial();
 	}
 
 	@Override

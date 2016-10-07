@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -13,10 +18,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.item.Item;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 /**
  * Inventory implementation that forwards changes directly to a Nukkit
@@ -151,7 +152,7 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 	@Override
 	public boolean contains(Material material, int amount) throws IllegalArgumentException {
 		Validate.notNull(material, "material");
-		int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
+		int nukkitTypeId = PokkitMaterialData.fromBukkit(material, 0).getNukkitId();
 
 		int remaining = amount;
 
@@ -194,7 +195,7 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 	@Override
 	public int first(Material material) throws IllegalArgumentException {
 		Validate.notNull(material, "material");
-		int nukkitTypeId = PokkitMaterialData.getNukkitBlockId(PokkitMaterialData.bukkitToNukkit(material, 0));
+		int nukkitTypeId = PokkitMaterialData.fromBukkit(material, 0).getNukkitId();
 
 		int size = getSize();
 		for (int i = 0; i < size; i++) {
