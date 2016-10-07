@@ -35,7 +35,7 @@ public final class PokkitCustomInventory extends PokkitLiveInventory implements 
 
 	private PokkitCustomInventory(cn.nukkit.inventory.Inventory inventory, InventoryHolder holder) {
 		super(inventory);
-		this.originalHolder = Objects.requireNonNull(holder, "holder");
+		this.originalHolder = holder;
 	}
 
 	@Override
