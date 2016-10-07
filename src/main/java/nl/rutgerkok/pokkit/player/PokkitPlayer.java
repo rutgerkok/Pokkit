@@ -19,6 +19,7 @@ import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
@@ -73,6 +74,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
+import cn.nukkit.level.particle.GenericParticle;
+import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 
@@ -1749,82 +1752,78 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4) {
-		throw Pokkit.unsupported();
+	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
+		spawnParticle(particle, x, y, z, count, 0, 0 , 0);
 
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5, double arg6,
-			double arg7) {
-		throw Pokkit.unsupported();
+	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY,
+			double offsetZ) {
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, 0);
 
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5, double arg6,
-			double arg7, double arg8) {
-		throw Pokkit.unsupported();
-
+	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY,
+			double offsetZ, double extra) {
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra, null);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5,
-			double arg6, double arg7, double arg8, T arg9) {
-		throw Pokkit.unsupported();
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
+			double offsetY, double offsetZ, double extra, T data) {
+		int id = 0;
 
+		id = PokkitParticle.toNukkit(particle);
+		
+		GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
+		
+		nukkit.getLevel().addParticle(nukkitParticle, nukkit);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, double arg5,
-			double arg6, double arg7, T arg8) {
-		throw Pokkit.unsupported();
-
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
+			double offsetY, double offsetZ, T data) {
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, 0, data);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, double arg1, double arg2, double arg3, int arg4, T arg5) {
-		throw Pokkit.unsupported();
-
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, T data) {
+		spawnParticle(particle, x, y, z, count, 0, 0, 0, 0, data);
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, Location arg1, int arg2) {
-		throw Pokkit.unsupported();
-
+	public void spawnParticle(Particle particle, Location location, int count) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count);
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5) {
-		throw Pokkit.unsupported();
-
+	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY, double offsetZ) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ);
 	}
 
 	@Override
-	public void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
-			double arg6) {
-		throw Pokkit.unsupported();
-
+	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY, double offsetZ,
+			double extra) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
-			double arg6, T arg7) {
-		throw Pokkit.unsupported();
-
+	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY, double offsetZ,
+			double extra, T data) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra, data);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, double arg3, double arg4, double arg5,
-			T arg6) {
-		throw Pokkit.unsupported();
-
+	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY, double offsetZ,
+			T data) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, data);
 	}
 
 	@Override
-	public <T> void spawnParticle(Particle arg0, Location arg1, int arg2, T arg3) {
-		throw Pokkit.unsupported();
-
+	public <T> void spawnParticle(Particle particle, Location location, int count, T data) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, data);
 	}
 
 	@Override
