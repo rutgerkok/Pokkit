@@ -82,7 +82,9 @@ import net.md_5.bungee.api.chat.BaseComponent;
 @DelegateDeserialization(PokkitOfflinePlayer.class)
 public class PokkitPlayer extends Player.Spigot implements Player {
 
-	public static Player toBukkit(cn.nukkit.Player nukkit) {
+	public static final int ITEM_SLOT_NOT_INITIALIZED = -999;
+
+	public static PokkitPlayer toBukkit(cn.nukkit.Player nukkit) {
 		if (nukkit == null) {
 			return null;
 		}
@@ -100,6 +102,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	private Scoreboard scoreboard;
 	private InetSocketAddress address;
+	public int lastItemSlot = ITEM_SLOT_NOT_INITIALIZED;
 
 	PokkitPlayer(cn.nukkit.Player player) {
 		this.nukkit = Objects.requireNonNull(player);
@@ -1776,9 +1779,9 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 		int id = 0;
 
 		id = PokkitParticle.toNukkit(particle);
-		
+
 		GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
-		
+
 		nukkit.getLevel().addParticle(nukkitParticle, nukkit);
 	}
 

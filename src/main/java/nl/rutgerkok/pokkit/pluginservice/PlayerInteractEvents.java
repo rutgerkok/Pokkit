@@ -1,6 +1,12 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
-import java.util.HashMap;
+
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
+import nl.rutgerkok.pokkit.world.PokkitBlockFace;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
@@ -10,19 +16,52 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.math.Vector3;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.PokkitBlockFace;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PlayerInteractEvents extends EventTranslator {
-	HashMap<Player, Integer> lastSlot = new HashMap<Player, Integer>();
-	
+
+	@EventHandler(ignoreCancelled = false)
+	public void onDrop(cn.nukkit.event.player.PlayerDropItemEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		// TODO: Implement PokkitItemEntity
+		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), null);
+		callCancellable(event, bukkitEvent);
+	}
+
+	@EventHandler(ignoreCancelled = false)
+	public void onItemHeld(cn.nukkit.event.player.PlayerItemHeldEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		PokkitPlayer player = PokkitPlayer.toBukkit(event.getPlayer());
+		int previousSlot = player.lastItemSlot;
+		if (previousSlot == PokkitPlayer.ITEM_SLOT_NOT_INITIALIZED) {
+			previousSlot = event.getInventorySlot();
+		}
+
+		player.lastItemSlot = event.getInventorySlot();
+
+		if (previousSlot != event.getInventorySlot()) {
+			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(player, previousSlot, event.getInventorySlot());
+			callCancellable(event, bukkitEvent);
+		}
+	}
+
+	@EventHandler(ignoreCancelled = false)
+	public void onMove(cn.nukkit.event.player.PlayerMoveEvent event) {
+		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+			return;
+		}
+
+		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
+		callCancellable(event, bukkitEvent);
+	}
+
 	@EventHandler(ignoreCancelled = false)
 	public void onPlayerInteract(cn.nukkit.event.player.PlayerInteractEvent event) {
 		if (canIgnore(PlayerInteractEvent.getHandlerList())) {
@@ -58,43 +97,6 @@ public final class PlayerInteractEvents extends EventTranslator {
 		// event.setLines(bukkitEvent.getLines()) is unnecessary
 	}
 
-	@EventHandler(ignoreCancelled = false)
-	public void onItemHeld(cn.nukkit.event.player.PlayerItemHeldEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
-			return;
-		}
-
-		int previousSlot = lastSlot.getOrDefault(event.getPlayer(), event.getInventorySlot());
-		
-		lastSlot.put(event.getPlayer(), event.getInventorySlot());
-		
-		if (previousSlot != event.getInventorySlot()) {
-			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(PokkitPlayer.toBukkit(event.getPlayer()), previousSlot, event.getInventorySlot());
-			callCancellable(event, bukkitEvent);
-		}
-	}
-
-	@EventHandler(ignoreCancelled = false)
-	public void onMove(cn.nukkit.event.player.PlayerMoveEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
-			return;
-		}
-
-		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
-		callCancellable(event, bukkitEvent);
-	}
-	
-	@EventHandler(ignoreCancelled = false)
-	public void onDrop(cn.nukkit.event.player.PlayerDropItemEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
-			return;
-		}
-
-		// TODO: Implement PokkitItemEntity
-		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), null);
-		callCancellable(event, bukkitEvent);
-	}
-	
 	private Action toBukkit(int nukkit) {
 		switch (nukkit) {
 		case cn.nukkit.event.player.PlayerInteractEvent.LEFT_CLICK_AIR:
