@@ -58,6 +58,11 @@ public final class PokkitItemFactory implements ItemFactory {
 
 	public ItemMeta getItemMeta(Material material, CompoundTag tag) {
 		switch (material) {
+		case POTION:
+		case SPLASH_POTION:
+		case LINGERING_POTION:
+		case TIPPED_ARROW:
+			return new PokkitPotionMeta(tag);
 		case SIGN:
 		case BANNER:
 		case CHEST:
