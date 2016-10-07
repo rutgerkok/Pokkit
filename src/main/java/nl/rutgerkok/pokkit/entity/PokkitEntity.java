@@ -18,6 +18,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.permissions.Permission;
@@ -108,7 +109,8 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public EntityDamageEvent getLastDamageCause() {
-		throw Pokkit.unsupported();
+		EntityDamageEvent e = new EntityDamageEvent(PokkitEntity.toBukkit(nukkit.getLastDamageCause().getEntity()), DamageCause.ENTITY_ATTACK, nukkit.getLastDamageCause().getDamage());
+		return e;
 	}
 
 	@Override
@@ -224,7 +226,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public boolean isDead() {
-		return !nukkit.isAlive();
+		return nukkit.getHealth() <= 0 || !nukkit.isAlive();
 	}
 
 	@Override
@@ -234,7 +236,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public boolean isGlowing() {
-		throw Pokkit.unsupported();
+		return false; // No glow support yet
 	}
 
 	@Override
@@ -244,7 +246,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public boolean isInvulnerable() {
-		return false; // Not supported in Nukkit
+		return nukkit.invulnerable;
 	}
 
 	@Override
@@ -384,7 +386,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public void setPortalCooldown(int cooldown) {
-		throw Pokkit.unsupported();
+		return; // TODO: When portals are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override

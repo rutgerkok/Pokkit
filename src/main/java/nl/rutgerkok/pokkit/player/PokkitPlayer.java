@@ -17,7 +17,6 @@ import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.PokkitVector;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
@@ -31,25 +30,21 @@ import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
-import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Particle;
-import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
-import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.Block;
@@ -61,9 +56,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Villager;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -497,18 +489,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public float getFallDistance() {
-		return nukkit.fallDistance;
-
-	}
-
-	@Override
-	public int getFireTicks() {
-		return nukkit.fireTicks;
-
-	}
-
-	@Override
 	public long getFirstPlayed() {
 		Long firstPlayed = nukkit.getFirstPlayed();
 		if (firstPlayed == null) {
@@ -574,12 +554,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public double getLastDamage() {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public EntityDamageEvent getLastDamageCause() {
-		EntityDamageEvent e = new EntityDamageEvent(PokkitEntity.toBukkit(nukkit.getLastDamageCause().getEntity()), DamageCause.ENTITY_ATTACK, nukkit.getLastDamageCause().getDamage());
-		return e;
 	}
 
 	@Override
@@ -656,25 +630,10 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		throw Pokkit.unsupported();
 
 	}
-	
-	@Override
-	public Location getLocation() {
-		return PokkitLocation.toBukkit(nukkit.getLocation());
-	}
-
-	@Override
-	public Location getLocation(Location toOverwrite) {
-		return PokkitLocation.toBukkit(nukkit.getLocation(), toOverwrite);
-	}
 
 	@Override
 	public MainHand getMainHand() {
 		return MainHand.LEFT;
-	}
-
-	@Override
-	public int getMaxFireTicks() {
-		return nukkit.maxFireTicks;
 	}
 
 	@Override
@@ -704,31 +663,14 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public String getName() {
-		return nukkit.getName();
-	}
-
-	@Override
-	public List<Entity> getNearbyEntities(double arg0, double arg1, double arg2) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public int getNoDamageTicks() {
 		return nukkit.noDamageTicks;
-
 	}
 
 	@Override
 	public InventoryView getOpenInventory() {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public Entity getPassenger() {
-		return null; // TODO: When vehicles are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
@@ -794,11 +736,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public Server getServer() {
-		return Bukkit.getServer();
-	}
-
-	@Override
 	public int getSleepTicks() {
 		throw Pokkit.unsupported();
 
@@ -856,12 +793,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public int getTicksLived() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public int getTotalExperience() {
 		throw Pokkit.unsupported();
 
@@ -878,24 +809,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public Entity getVehicle() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public Vector getVelocity() {
-		return PokkitVector.toBukkit(nukkit.getMotion());
-	}
-
-	@Override
 	public float getWalkSpeed() {
 		return nukkit.getMovementSpeed();
-	}
-
-	@Override
-	public World getWorld() {
-		return PokkitWorld.toBukkit(nukkit.getLevel());
 	}
 
 	@Override
@@ -1028,34 +943,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean isCustomNameVisible() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public boolean isDead() {
-		return nukkit.getHealth() <= 0;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public boolean isFlying() {
 		return nukkit.getAdventureSettings().canFly() && !nukkit.isOnGround();
 	}
 
 	@Override
 	public boolean isGliding() {
-		return false;
-	}
-
-	@Override
-	public boolean isGlowing() {
 		return false;
 	}
 
@@ -1071,25 +964,9 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean isInsideVehicle() {
-		return false; // TODO: When vehicles are properly implemented in Nukkit, change this to use Nukkit's API!
-	}
-
-	@Override
-	public boolean isInvulnerable() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public boolean isLeashed() {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public boolean isOnGround() {
-		return nukkit.isOnGround();
 	}
 
 	@Override
@@ -1114,12 +991,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean isPlayerTimeRelative() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public boolean isSilent() {
 		throw Pokkit.unsupported();
 
 	}
@@ -1173,12 +1044,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean leaveVehicle() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void loadData() {
 		throw Pokkit.unsupported();
 
@@ -1216,12 +1081,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean performCommand(String arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void playEffect(EntityEffect arg0) {
 		throw Pokkit.unsupported();
 
 	}
@@ -1279,12 +1138,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void recalculatePermissions() {
 		nukkit.recalculatePermissions();
-	}
-
-	@Override
-	public void remove() {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -1532,18 +1385,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setGlowing(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setGravity(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void setHealth(double arg0) {
 		nukkit.setHealth((float) arg0);
 	}
@@ -1561,12 +1402,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setInvulnerable(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void setItemInHand(ItemStack arg0) {
 		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
 	}
@@ -1579,12 +1414,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setLastDamage(double arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setLastDamageCause(EntityDamageEvent arg0) {
 		throw Pokkit.unsupported();
 
 	}
@@ -1634,12 +1463,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean setPassenger(Entity arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void setPlayerListName(String arg0) {
 		throw Pokkit.unsupported();
 
@@ -1655,11 +1478,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public void setPlayerWeather(WeatherType arg0) {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public void setPortalCooldown(int arg0) {
-		return; // TODO: When portals are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
 	@Override
@@ -1689,12 +1507,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException {
 		Validate.notNull(scoreboard);
 		this.scoreboard = scoreboard;
-	}
-
-	@Override
-	public void setSilent(boolean arg0) {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -1744,20 +1556,9 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setTicksLived(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void setTotalExperience(int arg0) {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public void setVelocity(Vector arg0) {
-		nukkit.setMotion(PokkitVector.toNukkit(arg0));
 	}
 
 	@Override
@@ -1891,26 +1692,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void stopSound(String sound) {
 		// Silently unsupported!
-	}
-
-	@Override
-	public boolean teleport(Entity entity) {
-		return teleport(entity.getLocation());
-	}
-
-	@Override
-	public boolean teleport(Entity entity, TeleportCause cause) {
-		return teleport(entity.getLocation(), cause);
-	}
-
-	@Override
-	public boolean teleport(Location location) {
-		return nukkit.teleport(PokkitLocation.toNukkit(location));
-	}
-
-	@Override
-	public boolean teleport(Location location, TeleportCause cause) {
-		return nukkit.teleport(PokkitLocation.toNukkit(location), PokkitTeleportCause.toNukkit(cause));
 	}
 
 	@Override
