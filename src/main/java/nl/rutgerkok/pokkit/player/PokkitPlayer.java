@@ -1,9 +1,7 @@
 package nl.rutgerkok.pokkit.player;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +16,6 @@ import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitInventory;
 import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
@@ -31,7 +28,6 @@ import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.apache.commons.lang.Validate;
@@ -49,14 +45,12 @@ import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
@@ -72,10 +66,7 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.util.Vector;
-
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
@@ -176,50 +167,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void _INVALID_damage(int arg0) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
-	public void _INVALID_damage(int arg0, Entity arg1) {
-		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
-	public int _INVALID_getHealth() {
-		return nukkit.getHealth();
-	}
-
-	@Override
-	public int _INVALID_getLastDamage() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public int _INVALID_getMaxHealth() {
-		return nukkit.getMaxHealth();
-	}
-
-	@Override
-	public void _INVALID_setHealth(int arg0) {
-		nukkit.setHealth(arg0);
-	}
-
-	@Override
-	public void _INVALID_setLastDamage(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void _INVALID_setMaxHealth(int arg0) {
-		nukkit.setMaxHealth(arg0);
-	}
-
-	@Override
 	public void abandonConversation(Conversation arg0) {
 		throw Pokkit.unsupported();
 	}
@@ -305,18 +252,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void damage(double arg0) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
-	public void damage(double arg0, Entity arg1) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
 	public void decrementStatistic(Statistic arg0) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 
@@ -370,12 +305,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		if (!getName().equals(other.getName()))
 			return false;
 		return true;
-	}
-
-	@Override
-	public Collection<PotionEffect> getActivePotionEffects() {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -542,22 +471,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		throw Pokkit.unsupported();
 
 	}
-
-	@Override
-	public Player getKiller() {
-		cn.nukkit.entity.Entity entity = nukkit.getKiller();
-		if (entity instanceof cn.nukkit.Player) {
-			return PokkitPlayer.toBukkit((cn.nukkit.Player) entity);
-		}
-		return null;
-	}
-
-	@Override
-	public double getLastDamage() {
-		throw Pokkit.unsupported();
-
-	}
-
 	@Override
 	public long getLastPlayed() {
 		Long lastPlayed = nukkit.getLastPlayed();
@@ -568,63 +481,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public List<Block> getLastTwoTargetBlocks(HashSet<Byte> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public List<Block> getLastTwoTargetBlocks(Set<Material> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public Entity getLeashHolder() throws IllegalStateException {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public int getLevel() {
 		return nukkit.getExperienceLevel();
-	}
-
-	@Override
-	public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
-		List<Block> bukkitBlocks = new ArrayList<>();
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		for (byte b : arg0) {
-			transparentBlocks.add((int) b);
-		}
-		
-		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-		
-		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
-			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
-		}
-		
-		return bukkitBlocks;
-	}
-
-	@Override
-	public List<Block> getLineOfSight(Set<Material> arg0, int arg1) {
-		List<Block> bukkitBlocks = new ArrayList<>();
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		while (arg0.iterator().hasNext()) {
-			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add(bukkitMaterial.getId());
-		}
-		
-		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-		
-		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
-			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
-		}
-		
-		return bukkitBlocks;
 	}
 
 	@Override
@@ -639,34 +497,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public double getMaxHealth() {
-		return nukkit.getMaxHealth();
-	}
-
-	@Override
-	public int getMaximumAir() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public int getMaximumNoDamageTicks() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public List<MetadataValue> getMetadata(String metadataKey) {
 		return getMetadataStore().getMetadata(this, metadataKey);
 	}
 
 	private PlayerMetadataStore getMetadataStore() {
 		return ((PokkitServer) Bukkit.getServer()).getMetadata().getPlayerMetadata();
-	}
-
-	@Override
-	public int getNoDamageTicks() {
-		return nukkit.noDamageTicks;
 	}
 
 	@Override
@@ -710,23 +546,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public PotionEffect getPotionEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public int getRemainingAir() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public boolean getRemoveWhenFarAway() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public float getSaturation() {
 		return nukkit.getFoodData().getFoodSaturationLevel();
 
@@ -765,33 +584,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public int getStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		for (byte b : arg0) {
-			transparentBlocks.add((int) b);
-		}
-		
-		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-				
-		return PokkitBlock.toBukkit(nukkitBlock);
-	}
-
-	@Override
-	public Block getTargetBlock(Set<Material> arg0, int arg1) {
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		while (arg0.iterator().hasNext()) {
-			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add(bukkitMaterial.getId());
-		}
-		
-		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-				
-		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
@@ -848,11 +640,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean hasLineOfSight(Entity arg0) {
-		return nukkit.hasLineOfSight(PokkitEntity.toNukkit(arg0));
-	}
-
-	@Override
 	public boolean hasMetadata(String metadataKey) {
 		return getMetadataStore().hasMetadata(this, metadataKey);
 	}
@@ -870,16 +657,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public boolean hasPlayedBefore() {
 		return nukkit.hasPlayedBefore();
-	}
-
-	@Override
-	public boolean hasPotionEffect(PotionEffectType potionEffect) {
-		for (cn.nukkit.potion.Effect eff : nukkit.getEffects().values()) {
-			if (eff.getId() == potionEffect.getId()) { // TODO: Proper implementation of this
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -934,11 +711,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean isCollidable() {
-		return true;
-	}
-
-	@Override
 	public boolean isConversing() {
 		throw Pokkit.unsupported();
 
@@ -950,23 +722,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean isGliding() {
-		return false;
-	}
-
-	@Override
 	public boolean isHandRaised() {
 		return false;
 	}
 
 	@Override
 	public boolean isHealthScaled() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public boolean isLeashed() {
 		throw Pokkit.unsupported();
 
 	}
@@ -1031,18 +792,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void kickPlayer(String reason) {
 		nukkit.kick(reason);
-	}
-
-	@Override
-	public <T extends Projectile> T launchProjectile(Class<? extends T> arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public <T extends Projectile> T launchProjectile(Class<? extends T> arg0, Vector arg1) {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -1159,18 +908,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void removePotionEffect(PotionEffectType arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void resetMaxHealth() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void resetPlayerTime() {
 		throw Pokkit.unsupported();
 
@@ -1273,15 +1010,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setAI(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
 	public void setAllowFlight(boolean value) {
-		nukkit.setAllowFlight(value);
+		nukkit.getAdventureSettings().setCanFly(value);
 	}
 
 	@Override
@@ -1297,18 +1027,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setBedSpawnLocation(Location arg0, boolean arg1) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setCanPickupItems(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setCollidable(boolean arg0) {
 		throw Pokkit.unsupported();
 
 	}
@@ -1381,17 +1099,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setGliding(boolean arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setHealth(double arg0) {
-		nukkit.setHealth((float) arg0);
-	}
-
-	@Override
 	public void setHealthScale(double arg0) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 
@@ -1415,36 +1122,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setLastDamage(double arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public boolean setLeashHolder(Entity arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public void setLevel(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setMaxHealth(double maxHealth) {
-		nukkit.setMaxHealth((int) Math.ceil(maxHealth));
-	}
-
-	@Override
-	public void setMaximumAir(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setMaximumNoDamageTicks(int arg0) {
 		throw Pokkit.unsupported();
 
 	}
@@ -1478,18 +1156,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setPlayerWeather(WeatherType arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setRemainingAir(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void setRemoveWhenFarAway(boolean arg0) {
 		throw Pokkit.unsupported();
 
 	}

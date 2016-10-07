@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Set;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,15 +53,15 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public void _INVALID_damage(int amount) {
-		throw Pokkit.unsupported();
-
+	public void _INVALID_damage(int arg0) {
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
-	public void _INVALID_damage(int amount, Entity source) {
-		throw Pokkit.unsupported();
-
+	public void _INVALID_damage(int arg0, Entity arg1) {
+		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
@@ -68,7 +71,8 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public int _INVALID_getLastDamage() {
-		return (int) nukkit.getLastDamageCause().getFinalDamage();
+		throw Pokkit.unsupported();
+
 	}
 
 	@Override
@@ -77,46 +81,50 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public void _INVALID_setHealth(int health) {
-		nukkit.setHealth(health);
+	public void _INVALID_setHealth(int arg0) {
+		nukkit.setHealth(arg0);
 	}
 
 	@Override
-	public void _INVALID_setLastDamage(int damage) {
+	public void _INVALID_setLastDamage(int arg0) {
 		throw Pokkit.unsupported();
 
 	}
 
 	@Override
-	public void _INVALID_setMaxHealth(int health) {
-		nukkit.setMaxHealth(health);
+	public void _INVALID_setMaxHealth(int arg0) {
+		nukkit.setMaxHealth(arg0);
 	}
 
 	@Override
-	public boolean addPotionEffect(PotionEffect effect) {
-		throw Pokkit.unsupported();
+	public boolean addPotionEffect(PotionEffect bukkitEffect) {
+		return addPotionEffect(bukkitEffect, false);
 	}
 
 	@Override
-	public boolean addPotionEffect(PotionEffect effect, boolean force) {
-		throw Pokkit.unsupported();
+	public boolean addPotionEffect(PotionEffect bukkitEffect, boolean force) {
+		nukkit.addEffect(PokkitPotionEffect.toNukkit(bukkitEffect));
+		return true;
 	}
 
 	@Override
-	public boolean addPotionEffects(Collection<PotionEffect> effects) {
-		throw Pokkit.unsupported();
+	public boolean addPotionEffects(Collection<PotionEffect> bukkitEffects) {
+		for (PotionEffect bukkitEffect : bukkitEffects) {
+			nukkit.addEffect(PokkitPotionEffect.toNukkit(bukkitEffect));
+		}
+		return true;
 	}
 
 	@Override
-	public void damage(double amount) {
-		throw Pokkit.unsupported();
-
+	public void damage(double arg0) {
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
-	public void damage(double amount, Entity source) {
-		throw Pokkit.unsupported();
-
+	public void damage(double arg0, Entity arg1) {
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
@@ -185,13 +193,40 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance) {
-		throw Pokkit.unsupported();
+	public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
+		List<Block> bukkitBlocks = new ArrayList<>();
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		for (byte b : arg0) {
+			transparentBlocks.add((int) b);
+		}
+		
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+		
+		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
+			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
+		}
+		
+		return bukkitBlocks;
 	}
 
 	@Override
-	public List<Block> getLineOfSight(Set<Material> transparent, int maxDistance) {
-		throw Pokkit.unsupported();
+	public List<Block> getLineOfSight(Set<Material> arg0, int arg1) {
+		List<Block> bukkitBlocks = new ArrayList<>();
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		while (arg0.iterator().hasNext()) {
+			Material bukkitMaterial = arg0.iterator().next();
+			transparentBlocks.add(bukkitMaterial.getId());
+		}
+		
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+		
+		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
+			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
+		}
+		
+		return bukkitBlocks;
 	}
 
 	@Override
@@ -230,13 +265,30 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance) {
-		throw Pokkit.unsupported();
+	public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		for (byte b : arg0) {
+			transparentBlocks.add((int) b);
+		}
+		
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+				
+		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
-	public Block getTargetBlock(Set<Material> transparent, int maxDistance) {
-		throw Pokkit.unsupported();
+	public Block getTargetBlock(Set<Material> arg0, int arg1) {
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		while (arg0.iterator().hasNext()) {
+			Material bukkitMaterial = arg0.iterator().next();
+			transparentBlocks.add(bukkitMaterial.getId());
+		}
+		
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+				
+		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
@@ -250,8 +302,13 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public boolean hasPotionEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
+	public boolean hasPotionEffect(PotionEffectType potionEffect) {
+		for (cn.nukkit.potion.Effect eff : nukkit.getEffects().values()) {
+			if (eff.getId() == potionEffect.getId()) { // TODO: Proper implementation of this
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -261,7 +318,7 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public boolean isGliding() {
-		throw Pokkit.unsupported();
+		return false;
 	}
 
 	@Override
