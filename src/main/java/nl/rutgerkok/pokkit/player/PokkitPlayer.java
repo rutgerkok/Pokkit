@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -1780,9 +1781,31 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 		id = PokkitParticle.toNukkit(particle);
 
-		GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
-
-		nukkit.getLevel().addParticle(nukkitParticle, nukkit);
+		SplittableRandom random = new SplittableRandom();
+				
+		int index = 0;
+		while (count > index) {
+			double realOffsetX = 0;
+			double realOffsetY = 0;
+			double realOffsetZ = 0;
+			if (offsetX != 0) {
+				realOffsetX = offsetX / 2;
+				x = x + random.nextDouble(-realOffsetX, realOffsetX);
+			}
+			if (offsetX != 0) {
+				realOffsetY = offsetY / 2;
+				y = y + random.nextDouble(-realOffsetY, realOffsetY);
+			}
+			if (offsetX != 0) {
+				realOffsetZ = offsetZ / 2;
+				z = z + random.nextDouble(-realOffsetZ, realOffsetZ);
+			}
+			
+			GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
+	
+			nukkit.getLevel().addParticle(nukkitParticle, nukkit);
+			index++;
+		}
 	}
 
 	@Override
