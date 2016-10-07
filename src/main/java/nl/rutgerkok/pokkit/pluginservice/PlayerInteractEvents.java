@@ -60,6 +60,10 @@ public final class PlayerInteractEvents extends EventTranslator {
 
 		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
 		callCancellable(event, bukkitEvent);
+		
+		// Apply setFrom(...) and setTo(...)
+		event.setFrom(PokkitLocation.toNukkit(bukkitEvent.getFrom()));
+		event.setTo(PokkitLocation.toNukkit(bukkitEvent.getTo()));
 	}
 
 	@EventHandler(ignoreCancelled = false)
