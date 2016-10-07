@@ -385,8 +385,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public float getFlySpeed() {
-		throw Pokkit.unsupported();
-
+		return 1F;
 	}
 
 	@Override
