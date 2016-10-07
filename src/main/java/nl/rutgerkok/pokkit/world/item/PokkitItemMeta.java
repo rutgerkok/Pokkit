@@ -18,6 +18,8 @@ import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 
 import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.nbt.tag.Tag;
 
 public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
@@ -121,7 +123,16 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public boolean hasEnchants() {
-		throw Pokkit.unsupported();
+        CompoundTag tag = this.tag;
+
+        if (tag.contains("ench")) {
+            Tag enchTag = tag.get("ench");
+            if (enchTag instanceof ListTag) {
+                return true;
+            }
+        }
+
+        return false;
 	}
 
 	@Override
