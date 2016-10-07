@@ -72,7 +72,9 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
 		@Override
 		public PluginDescriptionFile getDescription() {
-			throw Pokkit.unsupported();
+			String pluginName = getName();
+			String mainClass = this.getClass().getName();
+			return new PluginDescriptionFile(pluginName, "v1.0.0", mainClass); // TODO: Version?
 		}
 
 		@Override
