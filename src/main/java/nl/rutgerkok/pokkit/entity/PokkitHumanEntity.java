@@ -18,15 +18,15 @@ import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity {
 
-	private final cn.nukkit.entity.EntityHumanType nukkit;
+	private final cn.nukkit.entity.EntityHuman nukkit;
 	
-	public PokkitHumanEntity(cn.nukkit.entity.EntityHumanType nukkitEntity) {
+	public PokkitHumanEntity(cn.nukkit.entity.EntityHuman nukkitEntity) {
 		super(nukkitEntity);
 		
 		this.nukkit = nukkitEntity;
 	}
 
-	public static HumanEntity toBukkit(cn.nukkit.entity.EntityHumanType human) {
+	public static HumanEntity toBukkit(cn.nukkit.entity.EntityHuman human) {
 		if (human == null) {
 			return null;
 		}
