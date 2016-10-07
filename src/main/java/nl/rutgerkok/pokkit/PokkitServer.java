@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.command.PokkitCommandMap;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
+import nl.rutgerkok.pokkit.inventory.custom.PokkitCustomInventory;
 import nl.rutgerkok.pokkit.metadata.AllMetadataStore;
 import nl.rutgerkok.pokkit.player.OnlinePlayerData;
 import nl.rutgerkok.pokkit.player.PokkitOfflinePlayer;
@@ -177,27 +178,24 @@ public final class PokkitServer extends Server.Spigot implements Server {
 	}
 
 	@Override
-	public Inventory createInventory(InventoryHolder arg0, int arg1) throws IllegalArgumentException {
-		throw Pokkit.unsupported();
-
+	public Inventory createInventory(InventoryHolder holder, int size) throws IllegalArgumentException {
+		return createInventory(holder, size, "Chest");
 	}
 
 	@Override
-	public Inventory createInventory(InventoryHolder arg0, int arg1, String arg2) throws IllegalArgumentException {
-		throw Pokkit.unsupported();
-
+	public Inventory createInventory(InventoryHolder holder, int size, String title) throws IllegalArgumentException {
+		return PokkitCustomInventory.create(holder, InventoryType.CHEST, title, 27);
 	}
 
 	@Override
-	public Inventory createInventory(InventoryHolder arg0, InventoryType arg1) {
-		throw Pokkit.unsupported();
-
+	public Inventory createInventory(InventoryHolder holder, InventoryType type) {
+		String title = (type == InventoryType.ENDER_CHEST) ? "Ender Chest" : "Chest";
+		return createInventory(holder, type, title);
 	}
 
 	@Override
-	public Inventory createInventory(InventoryHolder arg0, InventoryType arg1, String arg2) {
-		throw Pokkit.unsupported();
-
+	public Inventory createInventory(InventoryHolder holder, InventoryType type, String title) {
+		return PokkitCustomInventory.create(holder, type, title, 27);
 	}
 
 	@Override

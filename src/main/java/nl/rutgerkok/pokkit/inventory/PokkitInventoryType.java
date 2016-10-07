@@ -21,7 +21,6 @@ public final class PokkitInventoryType {
 		twoWay(cn.nukkit.inventory.InventoryType.DISPENSER, InventoryType.DISPENSER);
 		twoWay(cn.nukkit.inventory.InventoryType.DROPPER, InventoryType.DROPPER);
 		twoWay(cn.nukkit.inventory.InventoryType.ENCHANT_TABLE, InventoryType.ENCHANTING);
-		twoWay(cn.nukkit.inventory.InventoryType.CHEST, InventoryType.ENDER_CHEST);
 		twoWay(cn.nukkit.inventory.InventoryType.FURNACE, InventoryType.FURNACE);
 		twoWay(cn.nukkit.inventory.InventoryType.HOPPER, InventoryType.HOPPER);
 		twoWay(cn.nukkit.inventory.InventoryType.PLAYER, InventoryType.PLAYER);
@@ -30,6 +29,7 @@ public final class PokkitInventoryType {
 		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
 		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);
 		bukkitToNukkit.put(InventoryType.CREATIVE, cn.nukkit.inventory.InventoryType.PLAYER);
+		bukkitToNukkit.put(InventoryType.ENDER_CHEST, cn.nukkit.inventory.InventoryType.CHEST);
 	}
 
 	/**
