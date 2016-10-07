@@ -21,6 +21,8 @@ import nl.rutgerkok.pokkit.PokkitVector;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
+import nl.rutgerkok.pokkit.inventory.PokkitInventory;
+import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
@@ -92,21 +94,21 @@ import net.md_5.bungee.api.chat.BaseComponent;
 public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	public static final int ITEM_SLOT_NOT_INITIALIZED = -999;
-	private final Player.Spigot spigot;
-	
 	public static PokkitPlayer toBukkit(cn.nukkit.Player nukkit) {
 		if (nukkit == null) {
 			return null;
 		}
 		return ((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().getPlayer(nukkit);
 	}
-
+	
 	public static cn.nukkit.Player toNukkit(Player player) {
 		if (player == null) {
 			return null;
 		}
 		return ((PokkitPlayer) player).nukkit;
 	}
+
+	private final Player.Spigot spigot;
 
 	private final cn.nukkit.Player nukkit;
 
@@ -121,27 +123,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		PokkitPlayer instance = this;
 		this.spigot = new Player.Spigot() {
             @Override
-            public InetSocketAddress getRawAddress() {
-            	return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
-            }
-            
-            @Override
             public boolean getCollidesWithEntities() {
             	return nukkit.canCollide();
             }
             
             @Override
-            public void setCollidesWithEntities(final boolean collides) {
-            	throw Pokkit.unsupported();
-            }
-            
-            @Override
-            public void respawn() {
-            	throw Pokkit.unsupported();
-            }
-            
-            @Override
-            public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, int radius) {
+            public Set<Player> getHiddenPlayers() {
             	throw Pokkit.unsupported();
             }
             
@@ -151,7 +138,17 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
             }
             
             @Override
-            public Set<Player> getHiddenPlayers() {
+            public InetSocketAddress getRawAddress() {
+            	return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
+            }
+            
+            @Override
+            public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, int radius) {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public void respawn() {
             	throw Pokkit.unsupported();
             }
             
@@ -159,8 +156,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
         	public void sendMessage(BaseComponent component) {
             	instance.sendMessage(component.toLegacyText());
         	}
-
-        	@Override
+            
+            @Override
         	public void sendMessage(BaseComponent... components) {
         		StringBuilder text = new StringBuilder();
         		for (BaseComponent component : components) {
@@ -168,14 +165,19 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
         		}
         		instance.sendMessage(text.toString());
         	}
-            
-            @Override
+
+        	@Override
             public void sendMessage(final ChatMessageType position, final BaseComponent component) {
             	throw Pokkit.unsupported();
             }
             
             @Override
             public void sendMessage(final ChatMessageType position, final BaseComponent... components) {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public void setCollidesWithEntities(final boolean collides) {
             	throw Pokkit.unsupported();
             }
         };
@@ -639,7 +641,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		
 		while (arg0.iterator().hasNext()) {
 			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add((int) bukkitMaterial.getId());
+			transparentBlocks.add(bukkitMaterial.getId());
 		}
 		
 		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
@@ -847,7 +849,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		
 		while (arg0.iterator().hasNext()) {
 			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add((int) bukkitMaterial.getId());
+			transparentBlocks.add(bukkitMaterial.getId());
 		}
 		
 		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
@@ -1191,9 +1193,9 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public InventoryView openInventory(Inventory arg0) {
-		throw Pokkit.unsupported();
-
+	public InventoryView openInventory(Inventory inventory) {
+		nukkit.addWindow(PokkitInventory.toNukkit(inventory));
+		return new PokkitInventoryView(inventory, this.getInventory(), this, inventory.getType());
 	}
 
 	@Override
@@ -1808,7 +1810,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		id = PokkitParticle.toNukkit(particle);
 
 		SplittableRandom random = new SplittableRandom();
-				
+
 		int index = 0;
 		while (count > index) {
 			double realOffsetX = 0;
@@ -1826,9 +1828,9 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 				realOffsetZ = offsetZ / 2;
 				z = z + random.nextDouble(-realOffsetZ, realOffsetZ);
 			}
-			
+
 			GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
-	
+
 			nukkit.getLevel().addParticle(nukkitParticle, nukkit);
 			index++;
 		}
