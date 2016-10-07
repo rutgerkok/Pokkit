@@ -77,7 +77,7 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
 		@Override
 		public Logger getLogger() {
-			throw Pokkit.unsupported();
+			return Logger.getLogger(getName());
 		}
 
 		@Override
