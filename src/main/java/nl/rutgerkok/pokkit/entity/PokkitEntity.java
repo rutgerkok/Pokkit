@@ -1,9 +1,16 @@
 package nl.rutgerkok.pokkit.entity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.player.PokkitTeleportCause;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+
+import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -19,12 +26,20 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
+import com.google.common.base.Strings;
+
+import cn.nukkit.math.Vector3;
+
 public class PokkitEntity implements Entity {
-	public static PokkitEntity toBukkit(cn.nukkit.entity.Entity nukkit) {
+	public static Entity toBukkit(cn.nukkit.entity.Entity nukkit) {
 		if (nukkit == null) {
 			return null;
 		}
-		
+
+		if (nukkit instanceof cn.nukkit.entity.EntityLiving) {
+			// Return more specific type
+			return PokkitLivingEntity.toBukkit((cn.nukkit.entity.EntityLiving) nukkit);
+		}
 		return new PokkitEntity(nukkit);
 	}
 
@@ -35,428 +50,386 @@ public class PokkitEntity implements Entity {
 		return ((PokkitEntity) entity).nukkit;
 	}
 
-	public PokkitEntity(cn.nukkit.entity.Entity nukkitEntity) {
-		this.nukkit = nukkitEntity;
-	}
-	
 	private final cn.nukkit.entity.Entity nukkit;
-	
-	@Override
-	public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public List<MetadataValue> getMetadata(String metadataKey) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasMetadata(String metadataKey) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void removeMetadata(String metadataKey, Plugin owningPlugin) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendMessage(String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendMessage(String[] messages) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isPermissionSet(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPermissionSet(Permission perm) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasPermission(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasPermission(Permission perm) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-		// TODO Auto-generated method stub
-		return null;
+	PokkitEntity(cn.nukkit.entity.Entity nukkitEntity) {
+		this.nukkit = nukkitEntity;
 	}
 
 	@Override
 	public PermissionAttachment addAttachment(Plugin plugin) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public void removeAttachment(PermissionAttachment attachment) {
-		// TODO Auto-generated method stub
-		
+	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public void recalculatePermissions() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isOp() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setOp(boolean value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Location getLocation(Location loc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setVelocity(Vector velocity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Vector getVelocity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isOnGround() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public World getWorld() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean teleport(Location location) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean teleport(Location location, TeleportCause cause) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean teleport(Entity destination) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean teleport(Entity destination, TeleportCause cause) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Entity> getNearbyEntities(double x, double y, double z) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getEntityId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getFireTicks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getMaxFireTicks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setFireTicks(int ticks) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void remove() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isDead() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Server getServer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Entity getPassenger() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean setPassenger(Entity passenger) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public boolean eject() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public float getFallDistance() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setFallDistance(float distance) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setLastDamageCause(EntityDamageEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public EntityDamageEvent getLastDamageCause() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public UUID getUniqueId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getTicksLived() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setTicksLived(int value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void playEffect(EntityEffect type) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public EntityType getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isInsideVehicle() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean leaveVehicle() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Entity getVehicle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCustomName(String name) {
-		// TODO Auto-generated method stub
-		
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public String getCustomName() {
-		// TODO Auto-generated method stub
-		return null;
+		return Strings.emptyToNull(nukkit.getNameTag());
 	}
 
 	@Override
-	public void setCustomNameVisible(boolean flag) {
-		// TODO Auto-generated method stub
-		
+	public Set<PermissionAttachmentInfo> getEffectivePermissions() {
+		return new HashSet<>();
 	}
 
 	@Override
-	public boolean isCustomNameVisible() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getEntityId() {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public void setGlowing(boolean flag) {
-		// TODO Auto-generated method stub
-		
+	public float getFallDistance() {
+		return nukkit.fallDistance;
 	}
 
 	@Override
-	public boolean isGlowing() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getFireTicks() {
+		return nukkit.fireTicks;
 	}
 
 	@Override
-	public void setInvulnerable(boolean flag) {
-		// TODO Auto-generated method stub
-		
+	public EntityDamageEvent getLastDamageCause() {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public boolean isInvulnerable() {
-		// TODO Auto-generated method stub
-		return false;
+	public Location getLocation() {
+		return PokkitLocation.toBukkit(nukkit.getLocation());
 	}
 
 	@Override
-	public boolean isSilent() {
-		// TODO Auto-generated method stub
-		return false;
+	public Location getLocation(Location toOverwrite) {
+		return PokkitLocation.toBukkit(nukkit.getLocation(), toOverwrite);
 	}
 
 	@Override
-	public void setSilent(boolean flag) {
-		// TODO Auto-generated method stub
-		
+	public int getMaxFireTicks() {
+		return nukkit.maxFireTicks;
 	}
 
 	@Override
-	public boolean hasGravity() {
-		// TODO Auto-generated method stub
-		return false;
+	public List<MetadataValue> getMetadata(String metadataKey) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public void setGravity(boolean gravity) {
-		// TODO Auto-generated method stub
-		
+	public String getName() {
+		return nukkit.getName();
+	}
+
+	@Override
+	public List<Entity> getNearbyEntities(double x, double y, double z) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Entity getPassenger() {
+		return PokkitEntity.toBukkit(nukkit.rider);
 	}
 
 	@Override
 	public int getPortalCooldown() {
-		// TODO Auto-generated method stub
 		return 80;
 	}
 
 	@Override
-	public void setPortalCooldown(int cooldown) {
-		// TODO Auto-generated method stub
+	public Server getServer() {
+		return Bukkit.getServer();
 	}
 
 	@Override
-	public Spigot spigot() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getTicksLived() {
+		return nukkit.ticksLived;
+	}
+
+	@Override
+	public EntityType getType() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public UUID getUniqueId() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Entity getVehicle() {
+		return PokkitEntity.toBukkit(nukkit.riding);
+	}
+
+	@Override
+	public Vector getVelocity() {
+		return new Vector(nukkit.motionX, nukkit.motionY, nukkit.motionZ);
+	}
+
+	@Override
+	public World getWorld() {
+		return PokkitWorld.toBukkit(nukkit.getLevel());
+	}
+
+	@Override
+	public boolean hasGravity() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean hasMetadata(String metadataKey) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean hasPermission(Permission perm) {
+		switch (perm.getDefault()) {
+			case FALSE:
+				return false;
+			case NOT_OP:
+				return !isOp();
+			case OP:
+				return isOp();
+			case TRUE:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	@Override
+	public boolean hasPermission(String name) {
+		return false;
+	}
+
+	@Override
+	public boolean isCustomNameVisible() {
+		return nukkit.isNameTagVisible();
+	}
+
+	@Override
+	public boolean isDead() {
+		return !nukkit.isAlive();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false; // No vehicle support yet
+	}
+
+	@Override
+	public boolean isGlowing() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean isInsideVehicle() {
+		return false; // No vehicle support yet
+	}
+
+	@Override
+	public boolean isInvulnerable() {
+		return false; // Not supported in Nukkit
+	}
+
+	@Override
+	public boolean isOnGround() {
+		return nukkit.isOnGround();
+	}
+
+	@Override
+	public boolean isOp() {
+		return false; // Entities cannot be OP in Nukkit
+	}
+
+	@Override
+	public boolean isPermissionSet(Permission perm) {
+		return false; // Permissions cannot be set for entities in Nukkit
+	}
+
+	@Override
+	public boolean isPermissionSet(String name) {
+		return false; // Permissions cannot be set for entities in Nukkit
+	}
+
+	@Override
+	public boolean isSilent() {
+		return false; // No silence support yet
+	}
+
+	@Override
+	public boolean isValid() {
+		return nukkit.isAlive() && nukkit.isValid();
+	}
+
+	@Override
+	public boolean leaveVehicle() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void playEffect(EntityEffect type) {
+		// Not supported yet. As effects are usually unimportant, it's not worth
+		// to crash a plugin over this, so let this method fail silently
+	}
+
+	@Override
+	public void recalculatePermissions() {
+		// No permission support for entities in Nukkit, so nothing to
+		// recalculate.
+	}
+
+	@Override
+	public void remove() {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void removeAttachment(PermissionAttachment attachment) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void sendMessage(String message) {
+		// Ignore, entities don't record messages in Nukkit
+	}
+
+	@Override
+	public void sendMessage(String[] messages) {
+		// Ignore, entities don't record messages in Nukkit
+	}
+
+	@Override
+	public void setCustomName(String name) {
+		nukkit.setNameTag(name);
+	}
+
+	@Override
+	public void setCustomNameVisible(boolean visible) {
+		nukkit.setNameTagVisible(visible);
+	}
+
+	@Override
+	public void setFallDistance(float distance) {
+		nukkit.fallDistance = distance;
+	}
+
+	@Override
+	public void setFireTicks(int ticks) {
+		nukkit.fireTicks = ticks;
+	}
+
+	@Override
+	public void setGlowing(boolean flag) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void setGravity(boolean gravity) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void setInvulnerable(boolean flag) {
+		nukkit.invulnerable = flag;
+	}
+
+	@Override
+	public void setLastDamageCause(EntityDamageEvent event) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void setOp(boolean value) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public boolean setPassenger(Entity passenger) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setPortalCooldown(int cooldown) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setSilent(boolean flag) {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public void setTicksLived(int value) {
+		nukkit.ticksLived = value;
+	}
+
+	@Override
+	public void setVelocity(Vector velocity) {
+		nukkit.setMotion(new Vector3(velocity.getX(), velocity.getY(), velocity.getZ()));
+	}
+
+	@Override
+	public Entity.Spigot spigot() {
+		return new Entity.Spigot() {
+			@Override
+			public boolean isInvulnerable() {
+				return PokkitEntity.this.isInvulnerable();
+			}
+		};
+	}
+
+	@Override
+	public boolean teleport(Entity entity) {
+		return teleport(entity.getLocation());
+	}
+
+	@Override
+	public boolean teleport(Entity entity, TeleportCause cause) {
+		return teleport(entity.getLocation(), cause);
+	}
+
+	@Override
+	public boolean teleport(Location location) {
+		return nukkit.teleport(PokkitLocation.toNukkit(location));
+	}
+
+	@Override
+	public boolean teleport(Location location, TeleportCause cause) {
+		return nukkit.teleport(PokkitLocation.toNukkit(location), PokkitTeleportCause.toNukkit(cause));
 	}
 }
