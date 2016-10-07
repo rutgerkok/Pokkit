@@ -60,8 +60,13 @@ import cn.nukkit.math.Vector3;
 public final class PokkitWorld implements World {
 
 	private static final int WORLD_HEIGHT = 128;
+
+	/**
+	 * World cache. If Nukkit ever adds world unload support, we'll need to
+	 * remove the corresponding PokkitWorld instance from here too.
+	 */
 	private static HashMap<Level, PokkitWorld> pokkitWorldCache = new HashMap<Level, PokkitWorld>();
-	
+
 	public static PokkitWorld toBukkit(Level level) {
 		if (level == null) {
 			return null;
@@ -232,7 +237,7 @@ public final class PokkitWorld implements World {
 	@Override
 	public List<Entity> getEntities() {
 		List<Entity> entitiesInChunk = new ArrayList<Entity>();
-		
+
 		for (cn.nukkit.entity.Entity entity : nukkit.getEntities()) {
 			entitiesInChunk.add(PokkitEntity.toBukkit(entity));
 		}
@@ -331,7 +336,7 @@ public final class PokkitWorld implements World {
 	@Override
 	public Chunk[] getLoadedChunks() {
 		ArrayList<Chunk> loadedChunks = new ArrayList<>();
-		
+
 		for (BaseFullChunk chunk : nukkit.getChunks().values()) {
 			if (chunk.isLoaded()) {
 				loadedChunks.add(new PokkitChunk(PokkitWorld.toBukkit(nukkit), chunk.getX(), chunk.getZ()));
@@ -787,9 +792,9 @@ public final class PokkitWorld implements World {
 		int id = 0;
 
 		id = PokkitParticle.toNukkit(particle);
-		
+
 		GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
-		
+
 		nukkit.addParticle(nukkitParticle);
 	}
 
