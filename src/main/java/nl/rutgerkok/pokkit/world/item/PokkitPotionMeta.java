@@ -1,14 +1,14 @@
 package nl.rutgerkok.pokkit.world.item;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import nl.rutgerkok.pokkit.Pokkit;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 
@@ -20,37 +20,37 @@ final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 
 	@Override
 	public boolean addCustomEffect(PotionEffect effect, boolean overwrite) {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 	@Override
 	public boolean clearCustomEffects() {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 	@Override
 	public PotionMeta clone() {
-		throw Pokkit.unsupported();
+		return this;
 	}
 
 	@Override
 	public PotionData getBasePotionData() {
-		throw Pokkit.unsupported();
+		return new PotionData(PotionType.AWKWARD);
 	}
 
 	@Override
 	public List<PotionEffect> getCustomEffects() {
-		throw Pokkit.unsupported();
+		return new ArrayList<PotionEffect>();
 	}
 
 	@Override
 	public boolean hasCustomEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 	@Override
 	public boolean hasCustomEffects() {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 	@Override
@@ -61,17 +61,17 @@ final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 
 	@Override
 	public boolean removeCustomEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 	@Override
 	public void setBasePotionData(PotionData data) {
-		throw Pokkit.unsupported();
+		return;
 	}
 
 	@Override
 	public boolean setMainEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
+		return true;
 	}
 
 }
