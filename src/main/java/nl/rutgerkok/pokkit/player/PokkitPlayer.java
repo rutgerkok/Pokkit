@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.player;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +17,9 @@ import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.PokkitVector;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
@@ -25,6 +28,8 @@ import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
 import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
@@ -56,6 +61,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
@@ -112,20 +118,19 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void _INVALID_damage(int arg0) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
 	public void _INVALID_damage(int arg0, Entity arg1) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
 	public int _INVALID_getHealth() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getHealth();
 	}
 
 	@Override
@@ -136,14 +141,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int _INVALID_getMaxHealth() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getMaxHealth();
 	}
 
 	@Override
 	public void _INVALID_setHealth(int arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.setHealth(arg0);
 	}
 
 	@Override
@@ -154,26 +157,22 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void _INVALID_setMaxHealth(int arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.setMaxHealth(arg0);
 	}
 
 	@Override
 	public void abandonConversation(Conversation arg0) {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
 	public void abandonConversation(Conversation arg0, ConversationAbandonedEvent arg1) {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
 	public void acceptConversationInput(String arg0) {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -203,63 +202,59 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public boolean addPotionEffect(PotionEffect arg0) {
-		throw Pokkit.unsupported();
-
+	public boolean addPotionEffect(PotionEffect bukkitEffect) {
+		return addPotionEffect(bukkitEffect, false);
 	}
 
 	@Override
-	public boolean addPotionEffect(PotionEffect arg0, boolean arg1) {
-		throw Pokkit.unsupported();
-
+	public boolean addPotionEffect(PotionEffect bukkitEffect, boolean force) {
+		nukkit.addEffect(PokkitPotionEffect.toNukkit(bukkitEffect));
+		return true;
 	}
 
 	@Override
-	public boolean addPotionEffects(Collection<PotionEffect> arg0) {
-		throw Pokkit.unsupported();
-
+	public boolean addPotionEffects(Collection<PotionEffect> bukkitEffects) {
+		for (PotionEffect bukkitEffect : bukkitEffects) {
+			nukkit.addEffect(PokkitPotionEffect.toNukkit(bukkitEffect));
+		}
+		return true;
 	}
 
 	@Override
 	public void awardAchievement(Achievement arg0) {
-		throw Pokkit.unsupported();
-
+		// Silently unsupported!
 	}
 
 	@Override
 	public boolean beginConversation(Conversation arg0) {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
 	public boolean canSee(Player arg0) {
-		throw Pokkit.unsupported();
-
+		return nukkit.canSee(PokkitPlayer.toNukkit(arg0));
 	}
 
 	@Override
 	public void chat(String arg0) {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
 	public void closeInventory() {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
 	public void damage(double arg0) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
 	public void damage(double arg0, Entity arg1) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		nukkit.attack(e);
 	}
 
 	@Override
@@ -336,8 +331,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean getAllowFlight() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getAdventureSettings().canFly();
 	}
 
 	@Override
@@ -348,8 +342,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public Location getBedSpawnLocation() {
-		throw Pokkit.unsupported();
-
+		return PokkitLocation.toBukkit(nukkit.getSpawn());
 	}
 
 	@Override
@@ -360,7 +353,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean getCollidesWithEntities() {
-		throw Pokkit.unsupported();
+		return nukkit.canCollide();
 	}
 
 	@Override
@@ -371,8 +364,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public String getCustomName() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getNameTag();
 	}
 
 	@Override
@@ -394,8 +386,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int getEntityId() {
-		throw Pokkit.unsupported();
-
+		return (int) nukkit.getId();
 	}
 
 	@Override
@@ -412,7 +403,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public float getExp() {
-		throw Pokkit.unsupported();
+		return nukkit.getExperience();
 
 	}
 
@@ -447,13 +438,13 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public float getFallDistance() {
-		throw Pokkit.unsupported();
+		return nukkit.fallDistance;
 
 	}
 
 	@Override
 	public int getFireTicks() {
-		throw Pokkit.unsupported();
+		return nukkit.fireTicks;
 
 	}
 
@@ -474,7 +465,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int getFoodLevel() {
-		throw Pokkit.unsupported();
+		return nukkit.getFoodData().getLevel();
 
 	}
 
@@ -532,8 +523,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public EntityDamageEvent getLastDamageCause() {
-		throw Pokkit.unsupported();
-
+		EntityDamageEvent e = new EntityDamageEvent(PokkitEntity.toBukkit(nukkit.getLastDamageCause().getEntity()), DamageCause.ENTITY_ATTACK, nukkit.getLastDamageCause().getDamage());
+		return e;
 	}
 
 	@Override
@@ -565,20 +556,44 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int getLevel() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getExperienceLevel();
 	}
 
 	@Override
 	public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
+		List<Block> bukkitBlocks = new ArrayList<>();
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		for (byte b : arg0) {
+			transparentBlocks.add((int) b);
+		}
+		
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+		
+		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
+			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
+		}
+		
+		return bukkitBlocks;
 	}
 
 	@Override
 	public List<Block> getLineOfSight(Set<Material> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
+		List<Block> bukkitBlocks = new ArrayList<>();
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		while (arg0.iterator().hasNext()) {
+			Material bukkitMaterial = arg0.iterator().next();
+			transparentBlocks.add((int) bukkitMaterial.getId());
+		}
+		
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+		
+		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
+			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
+		}
+		
+		return bukkitBlocks;
 	}
 
 	@Override
@@ -609,8 +624,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int getMaxFireTicks() {
-		throw Pokkit.unsupported();
-
+		return nukkit.maxFireTicks;
 	}
 
 	@Override
@@ -652,7 +666,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public int getNoDamageTicks() {
-		throw Pokkit.unsupported();
+		return nukkit.noDamageTicks;
 
 	}
 
@@ -674,7 +688,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public String getPlayerListName() {
-		throw Pokkit.unsupported();
+		return nukkit.getDisplayName(); // In Nukkit, if you change the player's display name, it also changes in the player list, so...
 
 	}
 
@@ -725,7 +739,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public float getSaturation() {
-		throw Pokkit.unsupported();
+		return nukkit.getFoodData().getFoodSaturationLevel();
 
 	}
 
@@ -771,14 +785,29 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		for (byte b : arg0) {
+			transparentBlocks.add((int) b);
+		}
+		
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+				
+		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
 	public Block getTargetBlock(Set<Material> arg0, int arg1) {
-		throw Pokkit.unsupported();
-
+		List<Integer> transparentBlocks = new ArrayList<>();
+		
+		while (arg0.iterator().hasNext()) {
+			Material bukkitMaterial = arg0.iterator().next();
+			transparentBlocks.add((int) bukkitMaterial.getId());
+		}
+		
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
+				
+		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
@@ -811,14 +840,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public Vector getVelocity() {
-		throw Pokkit.unsupported();
-
+		return PokkitVector.toBukkit(nukkit.getMotion());
 	}
 
 	@Override
 	public float getWalkSpeed() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getMovementSpeed();
 	}
 
 	@Override
@@ -845,14 +872,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean hasAI() {
-		throw Pokkit.unsupported();
-
+		return true; // I think it is a bit difficult a player to not have AI...
 	}
 
 	@Override
 	public boolean hasGravity() {
-		throw Pokkit.unsupported();
-
+		return true; // I think it is a bit difficult a player to not have gravity...
 	}
 
 	@Override
@@ -862,8 +887,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean hasLineOfSight(Entity arg0) {
-		throw Pokkit.unsupported();
-
+		return nukkit.hasLineOfSight(PokkitEntity.toNukkit(arg0));
 	}
 
 	@Override
@@ -898,8 +922,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void hidePlayer(Player arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.hidePlayer(PokkitPlayer.toNukkit(arg0));
 	}
 
 	@Override
@@ -1058,8 +1081,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public boolean isSleeping() {
-		throw Pokkit.unsupported();
-
+		return nukkit.isSleeping();
 	}
 
 	@Override
@@ -1366,8 +1388,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void sendTitle(String arg0, String arg1) {
-		throw Pokkit.unsupported();
-
+		nukkit.sendPopup(arg0, arg1);
 	}
 
 	@Override
@@ -1453,20 +1474,18 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setExp(float arg0) {
-		throw Pokkit.unsupported();
+		nukkit.setExperience((int) arg0);
 
 	}
 
 	@Override
 	public void setFallDistance(float arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.fallDistance = arg0;
 	}
 
 	@Override
 	public void setFireTicks(int arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.fireTicks = arg0;
 	}
 
 	@Override
@@ -1483,8 +1502,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setFoodLevel(int arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.getFoodData().setLevel(arg0);
 	}
 
 	@Override
@@ -1512,8 +1530,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setHealth(double arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.setHealth((float) arg0);
 	}
 
 	@Override
@@ -1536,8 +1553,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setItemInHand(ItemStack arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
 	}
 
 	@Override
@@ -1594,8 +1610,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setNoDamageTicks(int arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.noDamageTicks = arg0;
 	}
 
 	@Override
@@ -1652,8 +1667,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setSaturation(float arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.getFoodData().setFoodSaturationLevel(arg0);
 	}
 
 	@Override
@@ -1728,14 +1742,12 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void setVelocity(Vector arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.setMotion(PokkitVector.toNukkit(arg0));
 	}
 
 	@Override
 	public void setWalkSpeed(float arg0) throws IllegalArgumentException {
-		throw Pokkit.unsupported();
-
+		nukkit.setMovementSpeed(arg0);
 	}
 
 	@Override
@@ -1751,8 +1763,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 
 	@Override
 	public void showPlayer(Player arg0) {
-		throw Pokkit.unsupported();
-
+		nukkit.showPlayer(PokkitPlayer.toNukkit(arg0));
 	}
 
 	@Override

@@ -153,14 +153,12 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public byte getLightFromBlocks() {
-		throw Pokkit.unsupported();
-
+		return (byte) nukkit.getLightLevel(); // TODO: I think this is wrong, but there isn't any way to get the light emitted from blocks
 	}
 
 	@Override
 	public byte getLightFromSky() {
-		throw Pokkit.unsupported();
-
+		return (byte) nukkit.getLightLevel(); // TODO: Same thing as above
 	}
 
 	@Override
