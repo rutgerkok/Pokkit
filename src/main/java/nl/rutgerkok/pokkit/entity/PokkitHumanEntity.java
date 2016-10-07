@@ -12,19 +12,21 @@ import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.PlayerInventory;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity {
 
-	private final cn.nukkit.entity.EntityLiving nukkit;
+	private final cn.nukkit.entity.EntityHumanType nukkit;
 	
-	public PokkitHumanEntity(cn.nukkit.entity.EntityLiving nukkitEntity) {
+	public PokkitHumanEntity(cn.nukkit.entity.EntityHumanType nukkitEntity) {
 		super(nukkitEntity);
 		
 		this.nukkit = nukkitEntity;
 	}
 
-	public static HumanEntity toBukkit(cn.nukkit.entity.EntityHuman human) {
+	public static HumanEntity toBukkit(cn.nukkit.entity.EntityHumanType human) {
 		if (human == null) {
 			return null;
 		}
@@ -36,133 +38,111 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 
 	@Override
 	public PlayerInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PokkitPlayerInventory(nukkit.getInventory());
 	}
-
+	
 	@Override
 	public Inventory getEnderChest() {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public MainHand getMainHand() {
-		// TODO Auto-generated method stub
-		return null;
+		return MainHand.LEFT;
 	}
 
 	@Override
 	public boolean setWindowProperty(Property prop, int value) {
-		// TODO Auto-generated method stub
-		return false;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public InventoryView getOpenInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public InventoryView openInventory(Inventory inventory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public InventoryView openWorkbench(Location location, boolean force) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public InventoryView openEnchanting(Location location, boolean force) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public void openInventory(InventoryView inventory) {
-		// TODO Auto-generated method stub
-		
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public InventoryView openMerchant(Villager trader, boolean force) {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public ItemStack getItemInHand() {
-		// TODO Auto-generated method stub
-		return null;
+		return PokkitItemStack.toBukkitCopy(nukkit.getInventory().getItemInHand());
 	}
 
 	@Override
-	public void setItemInHand(ItemStack item) {
-		// TODO Auto-generated method stub
-		
+	public void setItemInHand(ItemStack arg0) {
+		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
 	}
 
 	@Override
 	public ItemStack getItemOnCursor() {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public void setItemOnCursor(ItemStack item) {
-		// TODO Auto-generated method stub
-		
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public boolean isSleeping() {
-		// TODO Auto-generated method stub
-		return false;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public int getSleepTicks() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public GameMode getGameMode() {
-		// TODO Auto-generated method stub
-		return null;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public void setGameMode(GameMode mode) {
-		// TODO Auto-generated method stub
-		
+		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public boolean isBlocking() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isHandRaised() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int getExpToLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw Pokkit.unsupported();
 	}
 }

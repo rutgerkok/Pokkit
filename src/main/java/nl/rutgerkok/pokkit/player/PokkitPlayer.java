@@ -182,32 +182,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public PermissionAttachment addAttachment(Plugin plugin) {
-		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)));
-	}
-
-	@Override
-	public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
-		cn.nukkit.plugin.Plugin nukkitPlugin = PokkitPlugin.toNukkit(plugin);
-		cn.nukkit.permission.PermissionAttachment nukkitAttachment = nukkit.addAttachment(nukkitPlugin);
-		nukkit.getServer().getScheduler().scheduleDelayedTask(() -> {
-			nukkit.removeAttachment(nukkitAttachment);
-		}, ticks);
-
-		return PokkitPermissionAttachment.toBukkit(nukkitAttachment);
-	}
-
-	@Override
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
-	}
-
-	@Override
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
-	}
-
-	@Override
 	public boolean addPotionEffect(PotionEffect bukkitEffect) {
 		return addPotionEffect(bukkitEffect, false);
 	}
@@ -362,12 +336,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public Inventory getEnderChest() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
 	public int getEntityId() {
 		return (int) nukkit.getId();
 	}
@@ -387,12 +355,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public float getExp() {
 		return nukkit.getExperience();
-
-	}
-
-	@Override
-	public int getExpToLevel() {
-		throw Pokkit.unsupported();
 
 	}
 
@@ -455,22 +417,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		throw Pokkit.unsupported();
 
 	}
-
-	@Override
-	public PlayerInventory getInventory() {
-		return new PokkitPlayerInventory(nukkit.getInventory());
-	}
-
-	@Override
-	public ItemStack getItemInHand() {
-		return PokkitItemStack.toBukkitCopy(nukkit.getInventory().getItemInHand());
-	}
-
-	@Override
-	public ItemStack getItemOnCursor() {
-		throw Pokkit.unsupported();
-
-	}
+	
 	@Override
 	public long getLastPlayed() {
 		Long lastPlayed = nukkit.getLastPlayed();
@@ -492,23 +439,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public MainHand getMainHand() {
-		return MainHand.LEFT;
-	}
-
-	@Override
 	public List<MetadataValue> getMetadata(String metadataKey) {
 		return getMetadataStore().getMetadata(this, metadataKey);
 	}
 
 	private PlayerMetadataStore getMetadataStore() {
 		return ((PokkitServer) Bukkit.getServer()).getMetadata().getPlayerMetadata();
-	}
-
-	@Override
-	public InventoryView getOpenInventory() {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -706,11 +642,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean isBlocking() {
-		return false;
-	}
-
-	@Override
 	public boolean isConversing() {
 		throw Pokkit.unsupported();
 
@@ -756,11 +687,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public boolean isPlayerTimeRelative() {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public boolean isSleeping() {
-		return nukkit.isSleeping();
 	}
 
 	@Override
@@ -1111,11 +1037,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setItemInHand(ItemStack arg0) {
-		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
-	}
-
-	@Override
 	public void setItemOnCursor(ItemStack arg0) {
 		throw Pokkit.unsupported();
 
@@ -1237,12 +1158,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void setWhitelisted(boolean value) {
 		nukkit.setWhitelisted(value);
-	}
-
-	@Override
-	public boolean setWindowProperty(Property arg0, int arg1) {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override
