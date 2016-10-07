@@ -41,9 +41,11 @@ Sometimes you want to implement one method in a class, but are not interested in
     }
 ```
 
-Sometimes Nukkit simply doesn't support a feature. Using `throw Pokkit.unsupported()` is always an option. However, there are more options.
+Sometimes Nukkit simply doesn't support a feature. In this case, we have to be clever. Keep in mind that the goal of Pokkit is to get Bukkit plugins working. We have to look at each method on a case-by-case basis.
 
-In the case of chat, [I decided to send the message anyway](https://github.com/rutgerkok/Pokkit/blob/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/PokkitServer.java#L130), and simply leave out everything that Pocket Edition doesn't understand.
+For unimportant stuff, you can simply let the method silently fail. For example, a previous version of Pokkit would simply do nothing if a Bukkit plugin tried to spawn a particle. Particles are usually just fluff; not throwing an error at least means that the rest of the Bukkit plugin can still keep working.
+
+In the case of chat, [I decided to send the message anyway](https://github.com/rutgerkok/Pokkit/blob/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/PokkitServer.java#L130), and simply leave out links, tooltips and everything else that Pocket Edition doesn't understand.
 
 ```java
     @Override
@@ -52,7 +54,9 @@ In the case of chat, [I decided to send the message anyway](https://github.com/r
     }
 ```
 
-[In the case of `server.createWorld`](https://github.com/rutgerkok/Pokkit/blob/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/PokkitServer.java#L208-230), an error is thrown when Nukkit can't handle the given settings. Otherwise, the world is created normally.
+Sometimes, you have no choice but to break plugins. Imagine that Nukkit would not have multiworld support; then how would you implement `server.createWorld()`? In that case, "implementing" the method using `throw Pokkit.unsupported()` may be the best option after all, as any multiworld plugin would break anyways. `Pokkit.unsupported()` at least provides a clear error message.
+
+In reality, Nukkit does provide multiworld support. However, it cannot handle all possible Bukkit configurations (like a Nether world). In this case, I have decided to let the [implementation of `server.createWorld`](https://github.com/rutgerkok/Pokkit/blob/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/PokkitServer.java#L208-230) throw an error if Nukkit can't handle the given settings. Otherwise, the world is created normally.
 
 ```java
  @Override
@@ -76,6 +80,8 @@ In the case of chat, [I decided to send the message anyway](https://github.com/r
         return world;
     }
 ```
+
+If you're wondering what the best implementation of a particular method would be, do not hesitate to contact us.
 
 ## Implementing events
 Events are implemented in a `PokkitService`. Take a look at [this package](https://github.com/rutgerkok/Pokkit/tree/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/pluginservice). `PokkitService`s are [registered](https://github.com/rutgerkok/Pokkit/blob/0f5365012a11ef18a4ccc97f766fec8ff0168773/src/main/java/nl/rutgerkok/pokkit/Pokkit.java#L68-70) in the `Pokkit` class.
