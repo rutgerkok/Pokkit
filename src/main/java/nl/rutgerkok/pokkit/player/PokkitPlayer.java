@@ -683,6 +683,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
+	public boolean isSleeping() {
+		return nukkit.isSleeping();
+	}
+	
+	@Override
 	public boolean isSleepingIgnored() {
 		throw Pokkit.unsupported();
 
