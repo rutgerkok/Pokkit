@@ -8,7 +8,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import cn.nukkit.item.Item;
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.player.PokkitHumanEntity;
+import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PokkitPlayerInventory extends PokkitLiveInventory implements PlayerInventory {

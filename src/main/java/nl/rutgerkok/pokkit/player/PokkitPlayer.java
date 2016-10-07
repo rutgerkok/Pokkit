@@ -20,6 +20,7 @@ import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.PokkitVector;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
@@ -84,13 +85,15 @@ import org.bukkit.util.Vector;
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 @DelegateDeserialization(PokkitOfflinePlayer.class)
-public class PokkitPlayer extends Player.Spigot implements Player {
+public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	public static final int ITEM_SLOT_NOT_INITIALIZED = -999;
-
+	private final Player.Spigot spigot;
+	
 	public static PokkitPlayer toBukkit(cn.nukkit.Player nukkit) {
 		if (nukkit == null) {
 			return null;
@@ -111,9 +114,71 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	private InetSocketAddress address;
 	public int lastItemSlot = ITEM_SLOT_NOT_INITIALIZED;
 
-	PokkitPlayer(cn.nukkit.Player player) {
+	public PokkitPlayer(cn.nukkit.Player player) {
+		super(player);
 		this.nukkit = Objects.requireNonNull(player);
 		this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+		PokkitPlayer instance = this;
+		this.spigot = new Player.Spigot() {
+            @Override
+            public InetSocketAddress getRawAddress() {
+            	return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
+            }
+            
+            @Override
+            public boolean getCollidesWithEntities() {
+            	return nukkit.canCollide();
+            }
+            
+            @Override
+            public void setCollidesWithEntities(final boolean collides) {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public void respawn() {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, int radius) {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public String getLocale() {
+            	return nukkit.getLocale().toString();
+            }
+            
+            @Override
+            public Set<Player> getHiddenPlayers() {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+        	public void sendMessage(BaseComponent component) {
+            	instance.sendMessage(component.toLegacyText());
+        	}
+
+        	@Override
+        	public void sendMessage(BaseComponent... components) {
+        		StringBuilder text = new StringBuilder();
+        		for (BaseComponent component : components) {
+        			text.append(component.toLegacyText());
+        		}
+        		instance.sendMessage(text.toString());
+        	}
+            
+            @Override
+            public void sendMessage(final ChatMessageType position, final BaseComponent component) {
+            	throw Pokkit.unsupported();
+            }
+            
+            @Override
+            public void sendMessage(final ChatMessageType position, final BaseComponent... components) {
+            	throw Pokkit.unsupported();
+            }
+        };
 	}
 
 	@Override
@@ -352,11 +417,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public boolean getCollidesWithEntities() {
-		return nukkit.canCollide();
-	}
-
-	@Override
 	public Location getCompassTarget() {
 		throw Pokkit.unsupported();
 
@@ -486,11 +546,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public Set<Player> getHiddenPlayers() {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
 	public PlayerInventory getInventory() {
 		return new PokkitPlayerInventory(nukkit.getInventory());
 	}
@@ -601,12 +656,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 		throw Pokkit.unsupported();
 
 	}
-
-	@Override
-	public String getLocale() {
-		return nukkit.getLocale().toString();
-	}
-
+	
 	@Override
 	public Location getLocation() {
 		return PokkitLocation.toBukkit(nukkit.getLocation());
@@ -718,11 +768,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	@Override
 	public PotionEffect getPotionEffect(PotionEffectType type) {
 		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InetSocketAddress getRawAddress() {
-		return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
 	}
 
 	@Override
@@ -1188,12 +1233,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
-			float offsetZ, float speed, int particleCount, int radius) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
 	public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
 		throw Pokkit.unsupported();
 
@@ -1295,11 +1334,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public void respawn() {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
 	public void saveData() {
 		throw Pokkit.unsupported();
 
@@ -1341,20 +1375,6 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	public void sendMap(MapView arg0) {
 		throw Pokkit.unsupported();
 
-	}
-
-	@Override
-	public void sendMessage(BaseComponent component) {
-		sendMessage(component.toLegacyText());
-	}
-
-	@Override
-	public void sendMessage(BaseComponent... components) {
-		StringBuilder text = new StringBuilder();
-		for (BaseComponent component : components) {
-			text.append(component.toLegacyText());
-		}
-		sendMessage(text.toString());
 	}
 
 	@Override
@@ -1437,12 +1457,7 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 		throw Pokkit.unsupported();
 
 	}
-
-	@Override
-	public void setCollidesWithEntities(boolean collides) {
-		throw Pokkit.unsupported();
-	}
-
+	
 	@Override
 	public void setCompassTarget(Location arg0) {
 		throw Pokkit.unsupported();
@@ -1864,8 +1879,8 @@ public class PokkitPlayer extends Player.Spigot implements Player {
 	}
 
 	@Override
-	public Spigot spigot() {
-		return this;
+	public Player.Spigot spigot() {
+		return spigot;
 	}
 
 	@Override
