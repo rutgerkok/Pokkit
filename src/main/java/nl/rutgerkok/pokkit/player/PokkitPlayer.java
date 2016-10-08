@@ -727,8 +727,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean isPlayerTimeRelative() {
-		throw Pokkit.unsupported();
-
+		return true; // You can't change the player's time with Nukkit, so this will be always true.
 	}
 
 	@Override
