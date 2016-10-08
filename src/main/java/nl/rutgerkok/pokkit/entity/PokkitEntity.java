@@ -18,7 +18,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.permissions.Permission;
@@ -109,9 +108,11 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public EntityDamageEvent getLastDamageCause() {
+		cn.nukkit.event.entity.EntityDamageEvent nukkitEvent = nukkit.getLastDamageCause();
 		@SuppressWarnings("deprecation")
-		EntityDamageEvent e = new EntityDamageEvent(PokkitEntity.toBukkit(nukkit.getLastDamageCause().getEntity()), DamageCause.ENTITY_ATTACK, nukkit.getLastDamageCause().getDamage());
-		return e;
+		EntityDamageEvent bukkitEvent = new EntityDamageEvent(PokkitEntity.toBukkit(nukkitEvent.getEntity()),
+				PokkitDamageCause.toBukkit(nukkitEvent.getCause()), nukkitEvent.getDamage());
+		return bukkitEvent;
 	}
 
 	@Override
