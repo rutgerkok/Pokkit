@@ -1,7 +1,5 @@
 package nl.rutgerkok.pokkit.inventory.custom;
 
-import java.util.Objects;
-
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.inventory.PokkitLiveInventory;
 
@@ -16,7 +14,21 @@ import org.bukkit.inventory.InventoryHolder;
  */
 public final class PokkitCustomInventory extends PokkitLiveInventory implements Inventory {
 
-	public static Inventory create(InventoryHolder holder, InventoryType type, String title, int size) {
+	/**
+	 * Creates a new custom inventory.
+	 *
+	 * @param holderOrNull
+	 *            Holder of the inventory, may be null.
+	 * @param type
+	 *            Type of the inventory (only {@link InventoryType#CHEST} and
+	 *            {@link InventoryType#ENDER_CHEST} are permitted for now).
+	 * @param title
+	 *            The title, may not be null.
+	 * @param size
+	 *            The size of the inventory, must be positive.
+	 * @return The inventory.
+	 */
+	public static Inventory create(InventoryHolder holderOrNull, InventoryType type, String title, int size) {
 		if (type != InventoryType.CHEST && type != InventoryType.ENDER_CHEST) {
 			throw new UnsupportedOperationException(
 					Pokkit.NAME + " doesn't support custom inventories of type " + type);
@@ -25,22 +37,19 @@ public final class PokkitCustomInventory extends PokkitLiveInventory implements 
 			throw new IllegalArgumentException("Invalid inventory size: " + size);
 		}
 
-		NukkitCustomInventory nukkit = new NukkitCustomInventory(title);
+		NukkitCustomInventory nukkit = new NukkitCustomInventory(title, holderOrNull);
 		nukkit.setSize(size);
 
-		return new PokkitCustomInventory(nukkit, holder);
+		return new PokkitCustomInventory(nukkit);
 	}
 
-	private final InventoryHolder originalHolder;
-
-	private PokkitCustomInventory(cn.nukkit.inventory.Inventory inventory, InventoryHolder holder) {
+	public PokkitCustomInventory(NukkitCustomInventory inventory) {
 		super(inventory);
-		this.originalHolder = holder;
 	}
 
 	@Override
 	public InventoryHolder getHolder() {
-		return originalHolder;
+		return ((NukkitCustomInventory) nukkit).getHolder().bukkitHolderOrNull;
 	}
 
 }

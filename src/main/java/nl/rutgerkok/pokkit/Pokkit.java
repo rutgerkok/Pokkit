@@ -10,6 +10,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import nl.rutgerkok.pokkit.pluginservice.EntityEvents;
+import nl.rutgerkok.pokkit.pluginservice.InventoryEvents;
 import nl.rutgerkok.pokkit.pluginservice.MainScoreboardService;
 import nl.rutgerkok.pokkit.pluginservice.PermissionsYml;
 import nl.rutgerkok.pokkit.pluginservice.PlayerBlockEvents;
@@ -38,7 +39,7 @@ public final class Pokkit {
 	/**
 	 * Makes sure that the given expression is true. If not, an exception is
 	 * thrown.
-	 * 
+	 *
 	 * @param expression
 	 *            The expression that must be true.
 	 * @param errorMessage
@@ -68,7 +69,7 @@ public final class Pokkit {
 
 	private final List<PokkitService> services = ImmutableList.of(new MainScoreboardService(), new PermissionsYml(),
 			new PluginService(), new PlayerBlockEvents(), new PlayerConnectEvents(), new PlayerChatEvents(),
-			new PlayerInteractEvents(), new EntityEvents());
+			new PlayerInteractEvents(), new EntityEvents(), new InventoryEvents());
 
 	public Pokkit() {
 		// Created using reflection

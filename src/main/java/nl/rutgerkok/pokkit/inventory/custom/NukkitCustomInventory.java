@@ -35,15 +35,15 @@ public class NukkitCustomInventory extends BaseInventory {
 
 	public final String customName;
 
-	public NukkitCustomInventory(String customName) {
-		super(new NukkitCustomInventoryHolder(), InventoryType.CHEST);
+	public NukkitCustomInventory(String customName, org.bukkit.inventory.InventoryHolder holder) {
+		super(new BukkitToNukkitInventoryHolder(holder), InventoryType.CHEST);
 		getHolder().setInventory(this);
 		this.customName = Objects.requireNonNull(customName, "customName");
 	}
 
 	@Override
-	public NukkitCustomInventoryHolder getHolder() {
-		return (NukkitCustomInventoryHolder) this.holder;
+	public BukkitToNukkitInventoryHolder getHolder() {
+		return (BukkitToNukkitInventoryHolder) this.holder;
 	}
 
 	private CompoundTag getSpawnCompound(Vector3 position) {

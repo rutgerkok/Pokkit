@@ -20,7 +20,40 @@ public final class PokkitItemStack {
 	}
 
 	/**
-	 * Creates a Bukkit copy of the item stack.
+	 * Overwrites a Nukkit item with the data of a Bukkit item. Useful in case
+	 * you want the changes to a Bukkit item show up in a Nukkit item.
+	 *
+	 * <p>
+	 * If the stacks are of a different material, this method print a warning
+	 * and do nothing to the item stack.
+	 *
+	 * @param bukkit
+	 *            The Bukkit item.
+	 * @param nukkit
+	 *            The Nukkit item.
+	 */
+	public static void overwriteNukkit(ItemStack bukkit, cn.nukkit.item.Item nukkit) {
+		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(bukkit.getType(), bukkit.getDurability());
+
+		if (materialData.getNukkitId() != nukkit.getId()) {
+			Bukkit.getLogger().info("Cannot change item material from " + bukkit.getType() + " to "
+					+ cn.nukkit.item.Item.get(nukkit.getId()));
+			return;
+		}
+
+		nukkit.setDamage(materialData.getNukkitDamage());
+		nukkit.setCount(bukkit.getAmount());
+
+		if (bukkit.hasItemMeta()) {
+			PokkitItemMeta meta = (PokkitItemMeta) bukkit.getItemMeta();
+			nukkit.setNamedTag(meta.getTag());
+		} else {
+			nukkit.clearNamedTag();
+		}
+	}
+
+	/**
+	 * Creates a Bukkit copy of the item stack. Changes to the returned item stack are not mirrored in the original Nukkit stack.
 	 *
 	 * @param nukkit
 	 *            The Nukkit stack.

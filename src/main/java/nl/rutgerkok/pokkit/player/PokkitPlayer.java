@@ -2,6 +2,7 @@ package nl.rutgerkok.pokkit.player;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -79,7 +80,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		}
 		return ((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().getPlayer(nukkit);
 	}
-	
+
 	public static cn.nukkit.Player toNukkit(Player player) {
 		if (player == null) {
 			return null;
@@ -88,9 +89,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	private final Player.Spigot spigot;
-
 	private final cn.nukkit.Player nukkit;
-
 	private Scoreboard scoreboard;
 	private InetSocketAddress address;
 	public int lastItemSlot = ITEM_SLOT_NOT_INITIALIZED;
@@ -105,37 +104,44 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
             public boolean getCollidesWithEntities() {
             	return nukkit.canCollide();
             }
-            
+
             @Override
             public Set<Player> getHiddenPlayers() {
-            	throw Pokkit.unsupported();
+				Set<Player> hiddenPlayers = new HashSet<>();
+				for (Player player : getServer().getOnlinePlayers()) {
+					if (!canSee(player)) {
+						hiddenPlayers.add(player);
+					}
+				}
+				return hiddenPlayers;
             }
-            
+
             @Override
             public String getLocale() {
             	return nukkit.getLocale().toString();
             }
-            
+
             @Override
             public InetSocketAddress getRawAddress() {
             	return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
             }
-            
+
             @Override
-            public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, int radius) {
+			public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
+					float offsetZ, float speed, int particleCount, int radius) {
             	throw Pokkit.unsupported();
             }
-            
+
             @Override
             public void respawn() {
             	throw Pokkit.unsupported();
             }
-            
+
             @Override
         	public void sendMessage(BaseComponent component) {
             	instance.sendMessage(component.toLegacyText());
         	}
-            
+
             @Override
         	public void sendMessage(BaseComponent... components) {
         		StringBuilder text = new StringBuilder();
@@ -146,18 +152,34 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
         	}
 
         	@Override
-            public void sendMessage(final ChatMessageType position, final BaseComponent component) {
-            	throw Pokkit.unsupported();
+			public void sendMessage(ChatMessageType position, BaseComponent component) {
+				switch (position) {
+					case CHAT:
+					case SYSTEM:
+						sendMessage(component);
+						break;
+					case ACTION_BAR:
+					default:
+						throw Pokkit.unsupported();
+				}
             }
-            
+
             @Override
-            public void sendMessage(final ChatMessageType position, final BaseComponent... components) {
-            	throw Pokkit.unsupported();
+			public void sendMessage(ChatMessageType position, BaseComponent... components) {
+				switch (position) {
+					case CHAT:
+					case SYSTEM:
+						sendMessage(components);
+						break;
+					case ACTION_BAR:
+					default:
+						throw Pokkit.unsupported();
+				}
             }
-            
+
             @Override
-            public void setCollidesWithEntities(final boolean collides) {
-            	throw Pokkit.unsupported();
+			public void setCollidesWithEntities(boolean collides) {
+				setCollidable(collides);
             }
         };
 	}
@@ -233,8 +255,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean canSee(Player arg0) {
-		return nukkit.canSee(PokkitPlayer.toNukkit(arg0));
+	public boolean canSee(Player other) {
+		return nukkit.canSee(PokkitPlayer.toNukkit(other));
 	}
 
 	@Override
@@ -331,14 +353,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean getCanPickupItems() {
-		throw Pokkit.unsupported();
-
+		return isValid();
 	}
 
 	@Override
 	public Location getCompassTarget() {
-		throw Pokkit.unsupported();
-
+		// Revise if Nukkit adds custom compass locations
+		return PokkitLocation.toBukkit(nukkit.getLevel().getSpawnLocation());
 	}
 
 	@Override
@@ -438,7 +459,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		throw Pokkit.unsupported();
 
 	}
-	
+
 	@Override
 	public long getLastPlayed() {
 		Long lastPlayed = nukkit.getLastPlayed();
@@ -617,8 +638,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void hidePlayer(Player arg0) {
-		nukkit.hidePlayer(PokkitPlayer.toNukkit(arg0));
+	public void hidePlayer(Player player) {
+		nukkit.hidePlayer(PokkitPlayer.toNukkit(player));
 	}
 
 	@Override
@@ -714,7 +735,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public boolean isSleeping() {
 		return nukkit.isSleeping();
 	}
-	
+
 	@Override
 	public boolean isSleepingIgnored() {
 		throw Pokkit.unsupported();
@@ -761,13 +782,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public InventoryView openInventory(Inventory inventory) {
 		nukkit.addWindow(PokkitInventory.toNukkit(inventory));
-		return new PokkitInventoryView(inventory, this.getInventory(), this, inventory.getType());
+		return new PokkitInventoryView(inventory, this);
 	}
 
 	@Override
-	public void openInventory(InventoryView arg0) {
-		throw Pokkit.unsupported();
-
+	public void openInventory(InventoryView inventoryView) {
+		openInventory(inventoryView.getTopInventory());
 	}
 
 	@Override
@@ -982,7 +1002,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		throw Pokkit.unsupported();
 
 	}
-	
+
 	@Override
 	public void setCompassTarget(Location arg0) {
 		throw Pokkit.unsupported();

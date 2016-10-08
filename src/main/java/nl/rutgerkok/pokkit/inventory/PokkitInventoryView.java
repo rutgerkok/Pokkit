@@ -2,6 +2,7 @@ package nl.rutgerkok.pokkit.inventory;
 
 import java.util.Objects;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -10,20 +11,16 @@ import org.bukkit.inventory.InventoryView;
 public final class PokkitInventoryView extends InventoryView {
 
 	private final Inventory topInventory;
-	private final Inventory bottomInventory;
 	private final HumanEntity player;
-	private final InventoryType type;
 
-	public PokkitInventoryView(Inventory top, Inventory bottom, HumanEntity player, InventoryType type) {
+	public PokkitInventoryView(Inventory top, HumanEntity player) {
 		this.topInventory = Objects.requireNonNull(top, "top");
-		this.bottomInventory = Objects.requireNonNull(bottom, "bottom");
 		this.player = Objects.requireNonNull(player, "player");
-		this.type = Objects.requireNonNull(type, "type");
 	}
 
 	@Override
 	public Inventory getBottomInventory() {
-		return bottomInventory;
+		return player.getInventory();
 	}
 
 	@Override
@@ -38,6 +35,11 @@ public final class PokkitInventoryView extends InventoryView {
 
 	@Override
 	public InventoryType getType() {
+		// Copied from CraftBukkit
+		InventoryType type = topInventory.getType();
+		if (type == InventoryType.CRAFTING && player.getGameMode() == GameMode.CREATIVE) {
+			return InventoryType.CREATIVE;
+		}
 		return type;
 	}
 

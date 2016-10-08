@@ -11,7 +11,6 @@ import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -19,38 +18,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.math.Vector3;
 
+/**
+ * Events triggered by the player interacting with the world, like walking
+ * around and clicking on something. Block place and break events can be found
+ * in {@link PlayerBlockEvents}, however.
+ */
 public final class PlayerInteractEvents extends EventTranslator {
-
-	@EventHandler(ignoreCancelled = false)
-	public void onDrop(cn.nukkit.event.player.PlayerDropItemEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
-			return;
-		}
-
-		// TODO: Implement PokkitItemEntity
-		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), null);
-		callCancellable(event, bukkitEvent);
-	}
-
-	@EventHandler(ignoreCancelled = false)
-	public void onItemHeld(cn.nukkit.event.player.PlayerItemHeldEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
-			return;
-		}
-
-		PokkitPlayer player = PokkitPlayer.toBukkit(event.getPlayer());
-		int previousSlot = player.lastItemSlot;
-		if (previousSlot == PokkitPlayer.ITEM_SLOT_NOT_INITIALIZED) {
-			previousSlot = event.getInventorySlot();
-		}
-
-		player.lastItemSlot = event.getInventorySlot();
-
-		if (previousSlot != event.getInventorySlot()) {
-			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(player, previousSlot, event.getInventorySlot());
-			callCancellable(event, bukkitEvent);
-		}
-	}
 
 	@EventHandler(ignoreCancelled = false)
 	public void onMove(cn.nukkit.event.player.PlayerMoveEvent event) {
@@ -60,7 +33,7 @@ public final class PlayerInteractEvents extends EventTranslator {
 
 		PlayerMoveEvent bukkitEvent = new PlayerMoveEvent(PokkitPlayer.toBukkit(event.getPlayer()), PokkitLocation.toBukkit(event.getFrom()), PokkitLocation.toBukkit(event.getTo()));
 		callCancellable(event, bukkitEvent);
-		
+
 		// Apply setFrom(...) and setTo(...)
 		event.setFrom(PokkitLocation.toNukkit(bukkitEvent.getFrom()));
 		event.setTo(PokkitLocation.toNukkit(bukkitEvent.getTo()));
