@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
@@ -38,6 +37,7 @@ import org.bukkit.WorldBorder;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -466,7 +466,7 @@ public final class PokkitWorld implements World {
 	}
 
 	private WorldMetadataStore getWorldMetadata() {
-		return ((PokkitServer) Bukkit.getServer()).getMetadata().getWorldMetadata();
+		return ((CraftServer) Bukkit.getServer()).getMetadata().getWorldMetadata();
 	}
 
 	@Override

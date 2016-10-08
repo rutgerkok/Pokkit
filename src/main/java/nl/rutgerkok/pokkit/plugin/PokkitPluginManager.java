@@ -15,6 +15,7 @@ import nl.rutgerkok.pokkit.permission.PokkitPermissible;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.plugin.PokkitPluginLoader.RecognizeJarsInDir;
 
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -39,8 +40,26 @@ public final class PokkitPluginManager implements PluginManager {
 	private final PokkitPluginLoader pluginLoader;
 	private final BukkitEventManager eventManager;
 
-	public PokkitPluginManager(cn.nukkit.plugin.PluginManager nukkit) {
+	/**
+	 * WorldEdit expects this field to be here. It is accessed by them using
+	 * reflection. We do not use this field ourselves.
+	 */
+	@SuppressWarnings("unused")
+	private final SimpleCommandMap commandMap;
+
+	/**
+	 * Creates the Bukkit plugin manager.
+	 *
+	 * @param nukkit
+	 *            The Nukkit plugin manager.
+	 * @param commandRegistryHack
+	 *            A SimpleCommandMap instance that we are NOT going to use, and
+	 *            is here only because WorldEdit expects it to be present in
+	 *            this class...
+	 */
+	public PokkitPluginManager(cn.nukkit.plugin.PluginManager nukkit, SimpleCommandMap commandRegistryHack) {
 		this.nukkit = Objects.requireNonNull(nukkit);
+		this.commandMap = Objects.requireNonNull(commandRegistryHack, "commandRegistryHack");
 		this.eventManager = new BukkitEventManager();
 
 		// Register plugin loader, then retrieve it back

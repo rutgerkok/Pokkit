@@ -16,26 +16,31 @@ import org.bukkit.plugin.Plugin;
 import cn.nukkit.command.PluginIdentifiableCommand;
 
 /**
- * Class that transforms Nukkit commands into Bukkit commands.
+ * Retrieves commands of Bukkit plugins. Nukkit directly reads the plugin.yml of
+ * Bukkit plugins, so the commands of Bukkit plugins end up in the Nukkit
+ * command map. This class provides programmatic access to them for Bukkit
+ * plugins, for example to support
+ * {@link PluginCommand#setExecutor(CommandExecutor) changing the command
+ * executor}.
  * <p>
  * It is important that only one instance of each {@link PluginCommand Bukkit
  * command} exists, so that changes to
  * {@link PluginCommand#setExecutor(CommandExecutor) the command executor} are
- * still present when calling {@link #getPluginCommand(String)} for a second
- * time.
+ * still present when calling {@link #getBukkitPluginCommand(String)} for a
+ * second time.
  */
-public final class PokkitCommandMap {
+public final class PokkitCommandFetcher {
 
 	private final Function<String, PluginIdentifiableCommand> nukkitCommandMap;
 	private final Map<PluginIdentifiableCommand, PluginCommand> toBukkitCommand = new IdentityHashMap<>();
 
-	public PokkitCommandMap(Function<String, PluginIdentifiableCommand> nukkitCommandMap) {
+	public PokkitCommandFetcher(Function<String, PluginIdentifiableCommand> nukkitCommandMap) {
 		this.nukkitCommandMap = Objects.requireNonNull(nukkitCommandMap, "nukkitCommandMap");
 	}
 
 	/**
 	 * Creates a new Bukkit command.
-	 * 
+	 *
 	 * @param nukkitCommand
 	 *            The Nukkit command.
 	 * @return The plugin command.
@@ -43,7 +48,7 @@ public final class PokkitCommandMap {
 	 *             If the nukkitCommand is not provided by a Bukkit plugin.
 	 */
 	private PluginCommand createNewBukkitCommand(cn.nukkit.command.PluginCommand<?> nukkitCommand) {
-		Plugin bukkitPlugin = PokkitPlugin.toBukkit((PokkitPlugin) nukkitCommand.getPlugin());
+		Plugin bukkitPlugin = PokkitPlugin.toBukkit(nukkitCommand.getPlugin());
 		try {
 			Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class,
 					Plugin.class);
@@ -63,7 +68,17 @@ public final class PokkitCommandMap {
 		}
 	}
 
-	public PluginCommand getPluginCommand(String name) {
+	/**
+	 * Gets a command of a Bukkit plugin.
+	 * <p>
+	 * Multple invocations of this method with the same name will return the
+	 * same command instance.
+	 *
+	 * @param name
+	 *            The command name.
+	 * @return The command.
+	 */
+	public PluginCommand getBukkitPluginCommand(String name) {
 		cn.nukkit.command.PluginCommand<?> nukkitCommand = (cn.nukkit.command.PluginCommand<?>) nukkitCommandMap
 				.apply(name);
 

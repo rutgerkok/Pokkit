@@ -3,10 +3,10 @@ package nl.rutgerkok.pokkit.pluginservice;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -73,7 +73,7 @@ public final class PlayerConnectEvents extends EventTranslator {
 	}
 
 	private void removeFromOnlinePlayers(cn.nukkit.Player player) {
-		((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().logsOut(player);
+		((CraftServer) Bukkit.getServer()).getOnlinePlayerData().logsOut(player);
 	}
 
 	private TextContainer toNukkit(TextContainer originalMessage, String message,

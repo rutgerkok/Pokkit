@@ -9,12 +9,12 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -193,7 +193,7 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 	 * @return The Nukkit wrapper.
 	 */
 	public static cn.nukkit.plugin.Plugin toNukkit(Plugin plugin) {
-		return PokkitServer.toNukkit(Bukkit.getServer()).getPluginManager().getPlugin(plugin.getName());
+		return CraftServer.toNukkit(Bukkit.getServer()).getPluginManager().getPlugin(plugin.getName());
 	}
 
 	private final JavaPlugin bukkit;
@@ -259,7 +259,7 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
 	@Override
 	public Server getServer() {
-		return PokkitServer.toNukkit(Bukkit.getServer());
+		return CraftServer.toNukkit(Bukkit.getServer());
 	}
 
 	@Override

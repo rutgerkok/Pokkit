@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
@@ -21,6 +20,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.PistonMoveReaction;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
@@ -77,7 +77,7 @@ public final class PokkitBlock implements Block {
 	}
 
 	private BlockMetadataStore getBlockMetadata() {
-		return ((PokkitServer) Bukkit.getServer()).getMetadata().getBlockMetadata();
+		return ((CraftServer) Bukkit.getServer()).getMetadata().getBlockMetadata();
 	}
 
 	@Override

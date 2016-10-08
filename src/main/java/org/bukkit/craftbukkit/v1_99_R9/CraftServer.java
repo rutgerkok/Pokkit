@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit;
+package org.bukkit.craftbukkit.v1_99_R9;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +16,13 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.command.PokkitCommandMap;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitHelpMap;
+import nl.rutgerkok.pokkit.PokkitPluginMessenger;
+import nl.rutgerkok.pokkit.PokkitUnsafe;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.command.PokkitCommandFetcher;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.inventory.custom.PokkitCustomInventory;
 import nl.rutgerkok.pokkit.metadata.AllMetadataStore;
@@ -48,6 +54,7 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -75,16 +82,16 @@ import cn.nukkit.level.Level;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 @SuppressWarnings("deprecation")
-public final class PokkitServer extends Server.Spigot implements Server {
+public final class CraftServer extends Server.Spigot implements Server {
 
 	public static cn.nukkit.Server toNukkit(Server server) {
-		return ((PokkitServer) server).nukkit;
+		return ((CraftServer) server).nukkit;
 	}
 
 	private final cn.nukkit.Server nukkit;
 	private final PokkitScheduler scheduler;
 	private final PokkitPluginManager pluginManager;
-	private final PokkitCommandMap commandMap;
+	private final PokkitCommandFetcher commandFetcher;
 	private final File pluginFolder;
 	private final SimpleServicesManager servicesManager;
 	private final ScoreboardManager scoreboardManager;
@@ -94,17 +101,26 @@ public final class PokkitServer extends Server.Spigot implements Server {
 	private final PokkitItemFactory itemFactory;
 	private final PokkitHelpMap helpMap;
 	private final Messenger messenger;
-	private Logger logger;
+	private final Logger logger;
 
-	public PokkitServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
+	/**
+	 * Bukkit doesn't offer a way to dynamically register commands, so a lot of
+	 * plugins resort to accessing this field using reflection. This field is
+	 * the reason this class is called CraftServer, and is stored in a
+	 * CraftBukkit package.
+	 */
+	private final SimpleCommandMap commandMap;
+
+	public CraftServer(cn.nukkit.Server nukkitServer, Logger logger, File pluginFolder) {
 		this.nukkit = Objects.requireNonNull(nukkitServer, "nukkitServer");
 		this.pluginFolder = Objects.requireNonNull(pluginFolder, "pluginFolder");
 		this.logger = Objects.requireNonNull(logger, "logger");
 
+		this.commandMap = new NotSoSimpleCommandMap(this);
 		this.scheduler = new PokkitScheduler(nukkitServer.getScheduler());
-		this.pluginManager = new PokkitPluginManager(nukkitServer.getPluginManager());
+		this.pluginManager = new PokkitPluginManager(nukkitServer.getPluginManager(), this.commandMap);
 		this.servicesManager = new SimpleServicesManager();
-		this.commandMap = new PokkitCommandMap(nukkitServer::getPluginCommand);
+		this.commandFetcher = new PokkitCommandFetcher(nukkitServer::getPluginCommand);
 		this.scoreboardManager = new PokkitScoreboardManager();
 		this.onlinePlayerData = new OnlinePlayerData();
 		this.metadataOverview = new AllMetadataStore();
@@ -274,7 +290,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
 	@Override
 	public String getBukkitVersion() {
-		return Pokkit.BUKKIT_VERSION;
+		return Pokkit.getBukkitVersion();
 	}
 
 	@Override
@@ -459,7 +475,7 @@ public final class PokkitServer extends Server.Spigot implements Server {
 
 	@Override
 	public PluginCommand getPluginCommand(String name) {
-		return commandMap.getPluginCommand(name);
+		return commandFetcher.getBukkitPluginCommand(name);
 	}
 
 	@Override

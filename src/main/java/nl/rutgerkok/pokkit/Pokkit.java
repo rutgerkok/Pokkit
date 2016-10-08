@@ -21,6 +21,7 @@ import nl.rutgerkok.pokkit.pluginservice.PluginService;
 import nl.rutgerkok.pokkit.pluginservice.PokkitService;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 
 import com.google.common.collect.ImmutableList;
 
@@ -32,8 +33,11 @@ import cn.nukkit.plugin.PluginBase;
  */
 public final class Pokkit {
 
-	public static String NAME = "Pokkit";
+	public static final String NAME = "Pokkit";
 	static String VERSION = "?";
+	/**
+	 * Bukkit version. Mutable, so exposed through {@link #getBukkitVersion()}.
+	 */
 	static String BUKKIT_VERSION = "?";
 
 	/**
@@ -51,6 +55,16 @@ public final class Pokkit {
 		if (!expression) {
 			throw new UnsupportedOperationException("Error in " + NAME + " " + VERSION + ": " + errorMessage);
 		}
+	}
+
+	/**
+	 * Gets the supported Bukkit API version. This number is decided upon by the
+	 * Spigot team, and is currently based no the Minecraft PC version.
+	 *
+	 * @return The Bukkit API version.
+	 */
+	public static String getBukkitVersion() {
+		return BUKKIT_VERSION;
 	}
 
 	/**
@@ -111,7 +125,7 @@ public final class Pokkit {
 
 		loadVersionNumbers(logger);
 
-		PokkitServer server = new PokkitServer(plugin.getServer(), logger, pluginFolder);
+		CraftServer server = new CraftServer(plugin.getServer(), logger, pluginFolder);
 		Bukkit.setServer(server);
 
 		// Load the services

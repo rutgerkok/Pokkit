@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableList;
  * methods in this class don't do anything interesting.
  *
  */
-final class PokkitHelpMap implements HelpMap {
+public final class PokkitHelpMap implements HelpMap {
 
 	private final Map<String, HelpTopic> helpTopics = new HashMap<>();
 

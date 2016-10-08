@@ -13,7 +13,7 @@ import org.bukkit.plugin.messaging.PluginMessageListenerRegistration;
  * Dummy class that implements {@link Messenger}.
  *
  */
-final class PokkitPluginMessenger implements Messenger {
+public final class PokkitPluginMessenger implements Messenger {
 
 	@Override
 	public void dispatchIncomingMessage(Player source, String channel, byte[] message) {

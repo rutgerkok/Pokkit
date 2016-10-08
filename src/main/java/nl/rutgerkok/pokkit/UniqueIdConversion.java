@@ -39,7 +39,7 @@ public final class UniqueIdConversion {
 	 *            The UUID.
 	 * @return The name, always lowercase.
 	 */
-	static String playerIdToName(UUID uuid) {
+	public static String playerIdToName(UUID uuid) {
 		long leastSigBits = uuid.getLeastSignificantBits();
 		long mostSigBits = uuid.getMostSignificantBits();
 
@@ -51,7 +51,7 @@ public final class UniqueIdConversion {
 
 	/**
 	 * Converts a name to an UUID.
-	 * 
+	 *
 	 * @param name
 	 *            The name, case insensitive.
 	 * @return The UUID.

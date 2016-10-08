@@ -1,10 +1,11 @@
 package nl.rutgerkok.pokkit.world;
 
+import nl.rutgerkok.pokkit.Pokkit;
+
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.block.Biome;
 
 import cn.nukkit.level.format.generic.BaseFullChunk;
-import nl.rutgerkok.pokkit.Pokkit;
 
 public class PokkitChunkSnapshot implements ChunkSnapshot {
     private final int x;

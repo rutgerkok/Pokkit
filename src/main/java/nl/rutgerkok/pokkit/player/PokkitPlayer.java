@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitGameMode;
 import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitServer;
 import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
@@ -47,6 +46,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -78,7 +78,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		if (nukkit == null) {
 			return null;
 		}
-		return ((PokkitServer) Bukkit.getServer()).getOnlinePlayerData().getPlayer(nukkit);
+		return ((CraftServer) Bukkit.getServer()).getOnlinePlayerData().getPlayer(nukkit);
 	}
 
 	public static cn.nukkit.Player toNukkit(Player player) {
@@ -486,7 +486,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	private PlayerMetadataStore getMetadataStore() {
-		return ((PokkitServer) Bukkit.getServer()).getMetadata().getPlayerMetadata();
+		return ((CraftServer) Bukkit.getServer()).getMetadata().getPlayerMetadata();
 	}
 
 	@Override
