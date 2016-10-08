@@ -25,7 +25,9 @@ import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.permission.PokkitPermission;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
 import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
@@ -60,6 +62,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
+
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
@@ -172,6 +175,32 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void acceptConversationInput(String arg0) {
 		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin) {
+		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin)));
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
+		cn.nukkit.plugin.Plugin nukkitPlugin = PokkitPlugin.toNukkit(plugin);
+		cn.nukkit.permission.PermissionAttachment nukkitAttachment = nukkit.addAttachment(nukkitPlugin);
+		nukkit.getServer().getScheduler().scheduleDelayedTask(() -> {
+			nukkit.removeAttachment(nukkitAttachment);
+		}, ticks);
+
+		return PokkitPermissionAttachment.toBukkit(nukkitAttachment);
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
+		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+		return PokkitPermissionAttachment.toBukkit(nukkit.addAttachment(PokkitPlugin.toNukkit(plugin), name, value));
 	}
 
 	@Override
