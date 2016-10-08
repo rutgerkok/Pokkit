@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
@@ -193,39 +195,28 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public List<Block> getLineOfSight(HashSet<Byte> arg0, int arg1) {
-		List<Block> bukkitBlocks = new ArrayList<>();
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		for (byte b : arg0) {
-			transparentBlocks.add((int) b);
-		}
-		
-		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-		
+	public List<Block> getLineOfSight(HashSet<Byte> bukkitTransparent, int maxDistance) {
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(maxDistance, 0,
+				toNukkitBlockIds(bukkitTransparent));
+
+		List<Block> bukkitBlocks = new ArrayList<>(nukkitBlocks.length);
 		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
 			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
 		}
-		
+
 		return bukkitBlocks;
 	}
 
 	@Override
-	public List<Block> getLineOfSight(Set<Material> arg0, int arg1) {
-		List<Block> bukkitBlocks = new ArrayList<>();
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		while (arg0.iterator().hasNext()) {
-			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add(bukkitMaterial.getId());
-		}
-		
-		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(arg1, 0, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-		
+	public List<Block> getLineOfSight(Set<Material> bukkitTransparent, int maxDistance) {
+		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(maxDistance, 0,
+				toNukkitBlockIds(bukkitTransparent));
+
+		List<Block> bukkitBlocks = new ArrayList<>(nukkitBlocks.length);
 		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
 			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
 		}
-		
+
 		return bukkitBlocks;
 	}
 
@@ -265,29 +256,16 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public Block getTargetBlock(HashSet<Byte> arg0, int arg1) {
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		for (byte b : arg0) {
-			transparentBlocks.add((int) b);
-		}
-		
-		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-				
+	public Block getTargetBlock(HashSet<Byte> bukkitTransparent, int maxDistance) {
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(maxDistance, toNukkitBlockIds(bukkitTransparent));
+
 		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
 	@Override
-	public Block getTargetBlock(Set<Material> arg0, int arg1) {
-		List<Integer> transparentBlocks = new ArrayList<>();
-		
-		while (arg0.iterator().hasNext()) {
-			Material bukkitMaterial = arg0.iterator().next();
-			transparentBlocks.add(bukkitMaterial.getId());
-		}
-		
-		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(arg1, transparentBlocks.toArray(new Integer[transparentBlocks.size()]));
-				
+	public Block getTargetBlock(Set<Material> bukkitTransparent, int maxDistance) {
+		cn.nukkit.block.Block nukkitBlock = nukkit.getTargetBlock(maxDistance, toNukkitBlockIds(bukkitTransparent));
+
 		return PokkitBlock.toBukkit(nukkitBlock);
 	}
 
@@ -417,6 +395,28 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	@Override
 	public void setRemoveWhenFarAway(boolean remove) {
 		throw Pokkit.unsupported();
+	}
+
+	@SuppressWarnings("deprecation")
+	private Integer[] toNukkitBlockIds(HashSet<Byte> bukkitMaterials) {
+		if (bukkitMaterials == null) {
+			// Bukkit JavaDocs: "set to null for only air"
+			return new Integer[cn.nukkit.block.Block.AIR];
+		}
+		return bukkitMaterials.stream()
+				.map(id -> Material.getMaterial(id))
+				.filter(Objects::nonNull)
+				.map(material -> Integer.valueOf(PokkitMaterialData.fromBukkit(material, 0).getNukkitId()))
+				.toArray(Integer[]::new);
+	}
+
+	private Integer[] toNukkitBlockIds(Set<Material> bukkitMaterials) {
+		if (bukkitMaterials == null) {
+			return new Integer[cn.nukkit.block.Block.AIR];
+		}
+		return bukkitMaterials.stream()
+				.map(material -> Integer.valueOf(PokkitMaterialData.fromBukkit(material, 0).getNukkitId()))
+				.toArray(Integer[]::new);
 	}
 
 }

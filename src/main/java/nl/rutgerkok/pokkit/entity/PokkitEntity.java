@@ -109,6 +109,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public EntityDamageEvent getLastDamageCause() {
+		@SuppressWarnings("deprecation")
 		EntityDamageEvent e = new EntityDamageEvent(PokkitEntity.toBukkit(nukkit.getLastDamageCause().getEntity()), DamageCause.ENTITY_ATTACK, nukkit.getLastDamageCause().getDamage());
 		return e;
 	}
