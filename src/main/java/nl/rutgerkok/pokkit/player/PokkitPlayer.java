@@ -508,8 +508,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public long getPlayerTimeOffset() {
-		throw Pokkit.unsupported();
-
+		return 0; // The player time will be always the same as the level's time.
 	}
 
 	@Override
