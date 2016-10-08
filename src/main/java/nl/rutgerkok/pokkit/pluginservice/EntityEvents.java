@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -28,6 +27,7 @@ import cn.nukkit.entity.EntityLiving;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.item.Item;
 import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.entity.PokkitDamageCause;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitLivingEntity;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
@@ -80,9 +80,6 @@ public final class EntityEvents extends EventTranslator {
 		callCancellable(event, bukkitEvent);
 	}
 	
-	/*
-	 * TODO: Add proper DamageCauses for events!
-	 */
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockDamage(cn.nukkit.event.entity.EntityDamageByBlockEvent event) {
 		if (canIgnore(PlayerInteractEvent.getHandlerList())) {
@@ -90,7 +87,7 @@ public final class EntityEvents extends EventTranslator {
 		}
 
 		// TODO: Do this the proper way... not the "let's use deprecated methods!" way
-		EntityDamageByBlockEvent bukkitEvent = new EntityDamageByBlockEvent(PokkitBlock.toBukkit(event.getDamager()), PokkitEntity.toBukkit(event.getEntity()), DamageCause.CONTACT, event.getDamage()); // I don't know what is the damage cause for this event
+		EntityDamageByBlockEvent bukkitEvent = new EntityDamageByBlockEvent(PokkitBlock.toBukkit(event.getDamager()), PokkitEntity.toBukkit(event.getEntity()), PokkitDamageCause.toBukkit(event.getCause()), event.getDamage());
 
 		callCancellable(event, bukkitEvent);
 	}
@@ -102,7 +99,7 @@ public final class EntityEvents extends EventTranslator {
 		}
 
 		// TODO: Do this the proper way... not the "let's use deprecated methods!" way
-		EntityDamageByEntityEvent bukkitEvent = new EntityDamageByEntityEvent(PokkitEntity.toBukkit(event.getDamager()), PokkitEntity.toBukkit(event.getEntity()), DamageCause.ENTITY_ATTACK, event.getDamage()); // I don't know what is the damage cause for this event
+		EntityDamageByEntityEvent bukkitEvent = new EntityDamageByEntityEvent(PokkitEntity.toBukkit(event.getDamager()), PokkitEntity.toBukkit(event.getEntity()), PokkitDamageCause.toBukkit(event.getCause()), event.getDamage());
 
 		callCancellable(event, bukkitEvent);
 	}
@@ -114,7 +111,7 @@ public final class EntityEvents extends EventTranslator {
 		}
 
 		// TODO: Do this the proper way... not the "let's use deprecated methods!" way
-		EntityDamageEvent bukkitEvent = new EntityDamageEvent(PokkitEntity.toBukkit(event.getEntity()), DamageCause.ENTITY_ATTACK, event.getCause()); // I don't know what is the damage cause for this event
+		EntityDamageEvent bukkitEvent = new EntityDamageEvent(PokkitEntity.toBukkit(event.getEntity()), PokkitDamageCause.toBukkit(event.getCause()), event.getCause());
 
 		callCancellable(event, bukkitEvent);
 	}
