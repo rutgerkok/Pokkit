@@ -29,8 +29,8 @@ final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 	}
 
 	@Override
-	public PotionMeta clone() {
-		return this;
+	public PokkitPotionMeta clone() {
+		return (PokkitPotionMeta) super.clone();
 	}
 
 	@Override
