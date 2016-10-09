@@ -34,7 +34,7 @@ public final class NukkitHook extends PluginBase {
 		try {
 			PluginClassLoader nukkitLoader = (PluginClassLoader) getClass().getClassLoader();
 			@SuppressWarnings("resource")
-			UrlFirstClassLoader classLoader = new UrlFirstClassLoader(nukkitLoader.getURLs(), nukkitLoader.getParent());
+			UrlFirstClassLoader classLoader = new UrlFirstClassLoader(nukkitLoader.getURLs(), nukkitLoader);
 
 			pokkit = classLoader.loadClass("nl.rutgerkok.pokkit.Pokkit").newInstance();
 			pokkit.getClass().getMethod("onLoad", PluginBase.class).invoke(pokkit, this);
