@@ -11,16 +11,6 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
-import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
-
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -53,10 +43,25 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
+import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.generic.BaseFullChunk;
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
+import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.DoubleTag;
+import cn.nukkit.nbt.tag.FloatTag;
+import cn.nukkit.nbt.tag.ListTag;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
+import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PokkitWorld implements World {
 
@@ -514,8 +519,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean isThundering() {
-		throw Pokkit.unsupported();
-
+		return nukkit.isThundering();
 	}
 
 	@Override
@@ -679,8 +683,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean setSpawnLocation(int x, int y, int z) {
-		throw Pokkit.unsupported();
-
+		nukkit.setSpawnLocation(new Vector3(x, y, z));
+		return true;
 	}
 
 	@Override
@@ -697,8 +701,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setThundering(boolean thundering) {
-		throw Pokkit.unsupported();
-
+		nukkit.setThundering(thundering);
 	}
 
 	@Override
@@ -715,8 +718,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setTime(long time) {
-		throw Pokkit.unsupported();
-
+		nukkit.setTime((int)time);
 	}
 
 	@Override
@@ -727,8 +729,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setWeatherDuration(int duration) {
-		throw Pokkit.unsupported();
-
+		nukkit.setRainTime(duration);
 	}
 
 	@Override
@@ -767,7 +768,6 @@ public final class PokkitWorld implements World {
 	public FallingBlock spawnFallingBlock(Location location, Material material, byte data)
 			throws IllegalArgumentException {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -872,17 +872,37 @@ public final class PokkitWorld implements World {
 		throw Pokkit.unsupported();
 
 	}
+	
+	public LightningStrike strike(Location loc, boolean effect) {
+		BaseFullChunk chunk = nukkit.getChunk(loc.getChunk().getX(), loc.getChunk().getZ());
+        int x = loc.getBlockX();
+        int z = loc.getBlockZ();
+        int y = loc.getBlockY();
+        int bId = nukkit.getBlockIdAt(x, y, z);
+        if (bId != cn.nukkit.block.Block.TALL_GRASS && bId != cn.nukkit.block.Block.WATER)
+            y += 1;
+        CompoundTag nbt = new CompoundTag()
+                .putList(new ListTag<DoubleTag>("Pos").add(new DoubleTag("", x))
+                        .add(new DoubleTag("", y)).add(new DoubleTag("", z)))
+                .putList(new ListTag<DoubleTag>("Motion").add(new DoubleTag("", 0))
+                        .add(new DoubleTag("", 0)).add(new DoubleTag("", 0)))
+                .putList(new ListTag<FloatTag>("Rotation").add(new FloatTag("", 0))
+                        .add(new FloatTag("", 0)));
+
+        EntityLightning bolt = new EntityLightning(chunk, nbt);
+        bolt.setEffect(effect);
+        bolt.spawnToAll();
+        return PokkitEntityLightningStrike.toBukkit(bolt);
+	}
 
 	@Override
 	public LightningStrike strikeLightning(Location loc) {
-		throw Pokkit.unsupported();
-
+		return strike(loc, true);
 	}
 
 	@Override
 	public LightningStrike strikeLightningEffect(Location loc) {
-		throw Pokkit.unsupported();
-
+		return strike(loc, false);
 	}
 
 	@Override
