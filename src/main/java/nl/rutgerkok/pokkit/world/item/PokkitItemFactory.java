@@ -86,6 +86,11 @@ public final class PokkitItemFactory implements ItemFactory {
 		case FLOWER_POT:
 		case REDSTONE_COMPARATOR:
 			return new PokkitBlockStateMeta(tag, material);
+		case LEATHER_BOOTS:
+		case LEATHER_CHESTPLATE:
+		case LEATHER_HELMET:
+		case LEATHER_LEGGINGS:
+			return new PokkitLeatherArmorMeta(tag);
 		default:
 			return new PokkitItemMeta(tag);
 		}
