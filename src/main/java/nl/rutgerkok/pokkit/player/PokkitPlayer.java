@@ -11,23 +11,6 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitGameMode;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
-import nl.rutgerkok.pokkit.inventory.PokkitInventory;
-import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.permission.PokkitPermission;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
-import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
-import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
@@ -64,11 +47,29 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
 
+import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
+import cn.nukkit.utils.TextFormat;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
+import nl.rutgerkok.pokkit.inventory.PokkitInventory;
+import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 
 @DelegateDeserialization(PokkitOfflinePlayer.class)
 public class PokkitPlayer extends PokkitHumanEntity implements Player {
@@ -260,8 +261,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void chat(String arg0) {
-		throw Pokkit.unsupported();
+	public void chat(String message) {
+		 String msg = message = nukkit.getRemoveFormat() ? TextFormat.clean(message) : message;
+		 PlayerChatEvent chatEvent = new PlayerChatEvent(toNukkit(this), msg);
+         nukkit.getServer().getPluginManager().callEvent(chatEvent);
+         if (!chatEvent.isCancelled()) {
+        	 nukkit.getServer().broadcastMessage(nukkit.getServer().getLanguage().translateString(chatEvent.getFormat(), new String[]{chatEvent.getPlayer().getDisplayName(), chatEvent.getMessage()}), chatEvent.getRecipients());
+         }
 	}
 
 	@Override
@@ -1008,15 +1014,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setCustomName(String arg0) {
-		throw Pokkit.unsupported();
-
+	public void setCustomName(String customName) {
+		nukkit.setNameTag(customName);
 	}
 
 	@Override
-	public void setCustomNameVisible(boolean arg0) {
-		throw Pokkit.unsupported();
-
+	public void setCustomNameVisible(boolean customNameVisible) {
+		nukkit.setNameTagVisible(customNameVisible);
 	}
 
 	@Override
