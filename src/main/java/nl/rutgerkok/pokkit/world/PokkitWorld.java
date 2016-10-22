@@ -58,6 +58,7 @@ import nl.rutgerkok.pokkit.PokkitSound;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
+import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -292,7 +293,7 @@ public final class PokkitWorld implements World {
 	@Override
 	public ChunkGenerator getGenerator() {
 		throw Pokkit.unsupported();
-
+		
 	}
 
 	@Override
@@ -750,11 +751,25 @@ public final class PokkitWorld implements World {
 		throw Pokkit.unsupported();
 
 	}
-
+	
 	@Override
 	public Entity spawnEntity(Location loc, EntityType type) {
-		throw Pokkit.unsupported();
-
+		try {
+			BaseFullChunk chunk = nukkit.getChunk(loc.getChunk().getX(), loc.getChunk().getZ());
+			CompoundTag nbt = new CompoundTag();
+			nbt.putList(new ListTag<DoubleTag>("Pos").add(new DoubleTag("", loc.getX() + 0.5))
+                    .add(new DoubleTag("", loc.getY())).add(new DoubleTag("", loc.getZ() + 0.5)))
+            .putList(new ListTag<DoubleTag>("Motion").add(new DoubleTag("", 0))
+                    .add(new DoubleTag("", 0)).add(new DoubleTag("", 0)))
+            .putList(new ListTag<FloatTag>("Rotation").add(new FloatTag("", 0))
+                    .add(new FloatTag("", 0)));
+			cn.nukkit.entity.Entity ent = cn.nukkit.entity.Entity.createEntity(PokkitEntityTranslator.getEntityNetworkID(type), chunk, nbt);
+			ent.spawnToAll();
+			return PokkitEntity.toBukkit(ent);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
