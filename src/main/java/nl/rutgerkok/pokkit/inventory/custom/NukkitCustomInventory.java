@@ -2,10 +2,7 @@ package nl.rutgerkok.pokkit.inventory.custom;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 import com.google.common.base.Throwables;
@@ -80,14 +77,16 @@ public class NukkitCustomInventory extends BaseInventory {
         super.onOpen(who);
 
         UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
-        List<UpdateBlockPacket.Entry> list = new ArrayList<>();
-        Collections.addAll(list, updateBlockPacket.records);
 
 		// Place a chest block
         Vector3 v = new Vector3(who.getFloorX(), who.getFloorY() + 5, who.getFloorZ());
 		spawnedFakeChestBlocks.put(who.getName().toLowerCase(), v.clone());
-        list.add(new UpdateBlockPacket.Entry((int) v.x, (int) v.z, (int) v.y, Item.CHEST, 0, UpdateBlockPacket.FLAG_ALL_PRIORITY));
-        updateBlockPacket.records = list.stream().toArray(UpdateBlockPacket.Entry[]::new);
+        updateBlockPacket.x = (int) v.x;
+        updateBlockPacket.y = (int) v.y;
+        updateBlockPacket.z = (int) v.z;
+        updateBlockPacket.blockId = Item.CHEST;
+        updateBlockPacket.blockData = 0;
+        updateBlockPacket.flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
         who.dataPacket(updateBlockPacket);
 
 		// Place chest data packet

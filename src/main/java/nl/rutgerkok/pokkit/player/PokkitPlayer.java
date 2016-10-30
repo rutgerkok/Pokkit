@@ -928,8 +928,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		int flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
 
 		UpdateBlockPacket packet = new UpdateBlockPacket();
-		packet.records = new UpdateBlockPacket.Entry[] {
-				new UpdateBlockPacket.Entry(x, z, y, nukkitBlockId, nukkitBlockData, flags) };
+		packet.x = x;
+		packet.y = y;
+		packet.z = z;
+		packet.blockId = nukkitBlockId;
+		packet.blockData = nukkitBlockData;
+        packet.flags = flags;
 		nukkit.dataPacket(packet, false);
 	}
 
