@@ -175,14 +175,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public int getAmbientSpawnLimit() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getServer().getConfig().getInt("spawn-limits.ambient");
 	}
 
 	@Override
 	public int getAnimalSpawnLimit() {
-		throw Pokkit.unsupported();
-
+	    return nukkit.getServer().getConfig().getInt("spawn-limits.animals");
 	}
 
 	@Override
