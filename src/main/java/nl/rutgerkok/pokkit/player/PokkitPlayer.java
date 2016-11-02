@@ -553,8 +553,16 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public int getStatistic(Statistic arg0) throws IllegalArgumentException {
+	    switch (arg0) {
+	    case PLAY_ONE_TICK:
+	        long first = nukkit.getFirstPlayed();
+	        long diff = System.currentTimeMillis() - first; // This is the difference in millis
+	        int seconds = (int) (diff / 1000) % 60; // And this is the difference in seconds
+	        return seconds * 20; // And this is in ticks
+	    default:
+	        break;
+	    }
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
