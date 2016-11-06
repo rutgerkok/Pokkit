@@ -41,5 +41,9 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 ## License
 License is MIT, except for the files that were derived from the Bukkit project. See the [license](./LICENSE.md) file for details.
 
-## Authors
-MrPowerGamerBR, ZINGDING, Rutger Kok
+## Contributors
+<!-- Feel free to change your name or link here -->
+* [Langsdorf](//github.com/Langsdorf)
+* [MrPowerGamerBR](//github.com/MrPowerGamerBR)
+* [ZINGDING](//github.com/ZINGDING)
+* [Rutger Kok](//github.com/rutgerkok)
