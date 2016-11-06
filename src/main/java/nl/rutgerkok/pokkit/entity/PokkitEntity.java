@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.entity;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -73,6 +74,11 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean addScoreboardTag(String tag) {
 		throw Pokkit.unsupported();
 	}
 
@@ -153,6 +159,11 @@ public class PokkitEntity implements Entity {
 	@Override
 	public int getPortalCooldown() {
 		return 80;
+	}
+
+	@Override
+	public Set<String> getScoreboardTags() {
+		return Collections.emptySet();
 	}
 
 	@Override
@@ -314,6 +325,11 @@ public class PokkitEntity implements Entity {
 	public void removeMetadata(String metadataKey, Plugin owningPlugin) {
 		throw Pokkit.unsupported();
 
+	}
+
+	@Override
+	public boolean removeScoreboardTag(String tag) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
