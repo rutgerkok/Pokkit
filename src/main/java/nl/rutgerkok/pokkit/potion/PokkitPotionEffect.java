@@ -5,8 +5,9 @@ import org.bukkit.potion.PotionEffect;
 import cn.nukkit.potion.Effect;
 
 public class PokkitPotionEffect {
+
 	public static Effect toNukkit(PotionEffect bukkitEffect) {
-		cn.nukkit.potion.Effect nukkitEffect = cn.nukkit.potion.Effect.getEffect(bukkitEffect.getType().getId());
+		cn.nukkit.potion.Effect nukkitEffect = PokkitPotionEffectType.toNukkit(bukkitEffect.getType());
 		nukkitEffect.setAmbient(bukkitEffect.isAmbient());
 		nukkitEffect.setAmplifier(bukkitEffect.getAmplifier());
 		nukkitEffect.setDuration(bukkitEffect.getDuration());
@@ -14,4 +15,5 @@ public class PokkitPotionEffect {
 		nukkitEffect.setVisible(bukkitEffect.hasParticles());
 		return nukkitEffect;
 	}
+
 }

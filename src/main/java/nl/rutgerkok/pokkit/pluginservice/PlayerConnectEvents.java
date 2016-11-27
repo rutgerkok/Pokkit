@@ -1,7 +1,6 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 

@@ -5,7 +5,7 @@ import org.bukkit.Particle;
 public class PokkitParticle {
 	public static int toNukkit(Particle particle) {
 		int id = 0;
-		
+
 		switch(particle) {
 		case BARRIER:
 			break;
@@ -40,7 +40,7 @@ public class PokkitParticle {
 			id = cn.nukkit.level.particle.Particle.TYPE_HUGE_EXPLODE;
 			break;
 		case EXPLOSION_LARGE:
-			id = cn.nukkit.level.particle.Particle.TYPE_LARGE_EXPLODE;
+			id = cn.nukkit.level.particle.Particle.TYPE_HUGE_EXPLODE;
 			break;
 		case EXPLOSION_NORMAL:
 			id = cn.nukkit.level.particle.Particle.TYPE_EXPLODE;
@@ -133,7 +133,7 @@ public class PokkitParticle {
 		default:
 			break;
 		}
-		
+
 		return id;
 	}
 }

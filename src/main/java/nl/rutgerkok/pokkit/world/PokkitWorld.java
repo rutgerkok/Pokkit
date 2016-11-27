@@ -11,6 +11,18 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
+import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
+import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -21,6 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -39,6 +52,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -52,17 +66,6 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
-import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
-import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
-import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PokkitWorld implements World {
 
@@ -291,7 +294,7 @@ public final class PokkitWorld implements World {
 	@Override
 	public ChunkGenerator getGenerator() {
 		throw Pokkit.unsupported();
-		
+
 	}
 
 	@Override
@@ -571,6 +574,12 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
+	public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void playSound(Location location, String soundString, float volume, float pitch) {
 		if (location == null || soundString == null) {
 			return;
@@ -581,6 +590,12 @@ public final class PokkitWorld implements World {
 		} catch (IllegalArgumentException e) {
 			// Ignore non-existing sound
 		}
+	}
+
+	@Override
+	public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -749,7 +764,7 @@ public final class PokkitWorld implements World {
 		throw Pokkit.unsupported();
 
 	}
-	
+
 	@Override
 	public Entity spawnEntity(Location loc, EntityType type) {
 		try {
@@ -784,6 +799,11 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
+	public FallingBlock spawnFallingBlock(Location location, MaterialData materialData) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
 		spawnParticle(particle, x, y, z, count);
 	}
@@ -808,7 +828,7 @@ public final class PokkitWorld implements World {
 		id = PokkitParticle.toNukkit(particle);
 
 		SplittableRandom random = new SplittableRandom();
-		
+
 		int index = 0;
 		while (count > index) {
 			double realOffsetX = 0;
@@ -826,9 +846,9 @@ public final class PokkitWorld implements World {
 				realOffsetZ = offsetZ / 2;
 				z = z + random.nextDouble(-realOffsetZ, realOffsetZ);
 			}
-			
+
 			GenericParticle nukkitParticle = new GenericParticle(new Vector3(x, y, z), id);
-	
+
 			nukkit.addParticle(nukkitParticle);
 			index++;
 		}
@@ -885,7 +905,7 @@ public final class PokkitWorld implements World {
 		throw Pokkit.unsupported();
 
 	}
-	
+
 	public LightningStrike strike(Location loc, boolean effect) {
 		BaseFullChunk chunk = nukkit.getChunk(loc.getChunk().getX(), loc.getChunk().getZ());
         int x = loc.getBlockX();

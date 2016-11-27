@@ -428,8 +428,6 @@ public final class PokkitSound {
 			break;
 		case ENTITY_EXPERIENCE_ORB_PICKUP:
 			return new ExperienceOrbSound(vector, pitch);
-		case ENTITY_EXPERIENCE_ORB_TOUCH:
-			break;
 		case ENTITY_FIREWORK_BLAST:
 			break;
 		case ENTITY_FIREWORK_BLAST_FAR:
@@ -961,6 +959,69 @@ public final class PokkitSound {
 		case WEATHER_RAIN:
 			break;
 		case WEATHER_RAIN_ABOVE:
+			break;
+		// Added in Minecraft 1.11:
+		case BLOCK_SHULKER_BOX_CLOSE:
+			break;
+		case BLOCK_SHULKER_BOX_OPEN:
+			break;
+		case ENTITY_ELDER_GUARDIAN_FLOP:
+			break;
+		case ENTITY_EVOCATION_FANGS_ATTACK:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_AMBIENT:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_CAST_SPELL:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_DEATH:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_HURT:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_PREPARE_ATTACK:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_PREPARE_SUMMON:
+			break;
+		case ENTITY_EVOCATION_ILLAGER_PREPARE_WOLOLO:
+			break;
+		case ENTITY_LLAMA_AMBIENT:
+			break;
+		case ENTITY_LLAMA_ANGRY:
+			break;
+		case ENTITY_LLAMA_CHEST:
+			break;
+		case ENTITY_LLAMA_DEATH:
+			break;
+		case ENTITY_LLAMA_EAT:
+			break;
+		case ENTITY_LLAMA_HURT:
+			break;
+		case ENTITY_LLAMA_SPIT:
+			break;
+		case ENTITY_LLAMA_STEP:
+			break;
+		case ENTITY_LLAMA_SWAG:
+			break;
+		case ENTITY_MULE_CHEST:
+			break;
+		case ENTITY_VEX_AMBIENT:
+			break;
+		case ENTITY_VEX_CHARGE:
+			break;
+		case ENTITY_VEX_DEATH:
+			break;
+		case ENTITY_VEX_HURT:
+			break;
+		case ENTITY_VINDICATION_ILLAGER_AMBIENT:
+			break;
+		case ENTITY_VINDICATION_ILLAGER_DEATH:
+			break;
+		case ENTITY_VINDICATION_ILLAGER_HURT:
+			break;
+		case ITEM_ARMOR_EQUIP_ELYTRA:
+			break;
+		case ITEM_BOTTLE_EMPTY:
+			break;
+		case ITEM_TOTEM_USE:
 			break;
 		default:
 			break;

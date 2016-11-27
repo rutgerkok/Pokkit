@@ -64,6 +64,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
@@ -218,6 +219,11 @@ public final class CraftServer extends Server.Spigot implements Server {
 	public MapView createMap(World arg0) {
 		throw Pokkit.unsupported();
 
+	}
+
+	@Override
+	public Merchant createMerchant(String arg0) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
@@ -761,12 +767,6 @@ public final class CraftServer extends Server.Spigot implements Server {
 			level.save(true);
 		}
 		return nukkit.unloadLevel(level, true);
-	}
-
-	@Override
-	public boolean useExactLoginLocation() {
-		throw Pokkit.unsupported();
-
 	}
 
 }

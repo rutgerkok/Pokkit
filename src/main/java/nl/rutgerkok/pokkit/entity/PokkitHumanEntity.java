@@ -1,5 +1,10 @@
 package nl.rutgerkok.pokkit.entity;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
@@ -9,22 +14,10 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.InventoryView.Property;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
+import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.PlayerInventory;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
-
 public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity {
-
-	private final cn.nukkit.entity.EntityHuman nukkit;
-	
-	public PokkitHumanEntity(cn.nukkit.entity.EntityHuman nukkitEntity) {
-		super(nukkitEntity);
-		
-		this.nukkit = nukkitEntity;
-	}
 
 	public static HumanEntity toBukkit(cn.nukkit.entity.EntityHuman human) {
 		if (human == null) {
@@ -36,54 +29,12 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 		throw Pokkit.unsupported();
 	}
 
-	@Override
-	public PlayerInventory getInventory() {
-		return new PokkitPlayerInventory(nukkit.getInventory());
-	}
-	
-	@Override
-	public Inventory getEnderChest() {
-		throw Pokkit.unsupported();
-	}
+	private final cn.nukkit.entity.EntityHuman nukkit;
 
-	@Override
-	public MainHand getMainHand() {
-		return MainHand.LEFT;
-	}
+	public PokkitHumanEntity(cn.nukkit.entity.EntityHuman nukkitEntity) {
+		super(nukkitEntity);
 
-	@Override
-	public boolean setWindowProperty(Property prop, int value) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InventoryView getOpenInventory() {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InventoryView openInventory(Inventory inventory) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InventoryView openWorkbench(Location location, boolean force) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InventoryView openEnchanting(Location location, boolean force) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public void openInventory(InventoryView inventory) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public InventoryView openMerchant(Villager trader, boolean force) {
-		throw Pokkit.unsupported();
+		this.nukkit = nukkitEntity;
 	}
 
 	@Override
@@ -92,32 +43,12 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 	}
 
 	@Override
-	public ItemStack getItemInHand() {
-		return PokkitItemStack.toBukkitCopy(nukkit.getInventory().getItemInHand());
-	}
-
-	@Override
-	public void setItemInHand(ItemStack arg0) {
-		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
-	}
-
-	@Override
-	public ItemStack getItemOnCursor() {
+	public Inventory getEnderChest() {
 		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public void setItemOnCursor(ItemStack item) {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public boolean isSleeping() {
-		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public int getSleepTicks() {
+	public int getExpToLevel() {
 		throw Pokkit.unsupported();
 	}
 
@@ -127,7 +58,32 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 	}
 
 	@Override
-	public void setGameMode(GameMode mode) {
+	public PlayerInventory getInventory() {
+		return new PokkitPlayerInventory(nukkit.getInventory());
+	}
+
+	@Override
+	public ItemStack getItemInHand() {
+		return PokkitItemStack.toBukkitCopy(nukkit.getInventory().getItemInHand());
+	}
+
+	@Override
+	public ItemStack getItemOnCursor() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public MainHand getMainHand() {
+		return MainHand.LEFT;
+	}
+
+	@Override
+	public InventoryView getOpenInventory() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public int getSleepTicks() {
 		throw Pokkit.unsupported();
 	}
 
@@ -142,7 +98,57 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 	}
 
 	@Override
-	public int getExpToLevel() {
+	public boolean isSleeping() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public InventoryView openEnchanting(Location location, boolean force) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public InventoryView openInventory(Inventory inventory) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void openInventory(InventoryView inventory) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public InventoryView openMerchant(Merchant arg0, boolean arg1) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public InventoryView openMerchant(Villager trader, boolean force) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public InventoryView openWorkbench(Location location, boolean force) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setGameMode(GameMode mode) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setItemInHand(ItemStack arg0) {
+		nukkit.getInventory().setItemInHand(PokkitItemStack.toNukkitCopy(arg0));
+	}
+
+	@Override
+	public void setItemOnCursor(ItemStack item) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean setWindowProperty(Property prop, int value) {
 		throw Pokkit.unsupported();
 	}
 }

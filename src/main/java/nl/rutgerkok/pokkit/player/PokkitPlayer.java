@@ -11,6 +11,23 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
+import nl.rutgerkok.pokkit.inventory.PokkitInventory;
+import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
+import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
@@ -22,6 +39,7 @@ import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
 import org.bukkit.attribute.Attribute;
@@ -54,22 +72,6 @@ import cn.nukkit.network.protocol.UpdateBlockPacket;
 import cn.nukkit.utils.TextFormat;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitGameMode;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
-import nl.rutgerkok.pokkit.inventory.PokkitInventory;
-import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.permission.PokkitPermission;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
-import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
-import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 
 @DelegateDeserialization(PokkitOfflinePlayer.class)
 public class PokkitPlayer extends PokkitHumanEntity implements Player {
@@ -846,6 +848,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void playSound(Location location, Sound sound, float volume, float pitch) {
+		playSound(location, sound, SoundCategory.NEUTRAL, volume, pitch);
+	}
+
+	@Override
+	public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
 		if (location == null || sound == null) {
 			return;
 		}
@@ -859,6 +866,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void playSound(Location location, String soundString, float volume, float pitch) {
+		playSound(location, soundString, SoundCategory.NEUTRAL, volume, pitch);
+	}
+
+	@Override
+	public void playSound(Location location, String soundString, SoundCategory category, float volume, float pitch) {
 		if (location == null || soundString == null) {
 			return;
 		}
@@ -1333,7 +1345,17 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
+	public void stopSound(Sound sound, SoundCategory category) {
+		// Silently unsupported!
+	}
+
+	@Override
 	public void stopSound(String sound) {
+		// Silently unsupported!
+	}
+
+	@Override
+	public void stopSound(String sound, SoundCategory category) {
 		// Silently unsupported!
 	}
 

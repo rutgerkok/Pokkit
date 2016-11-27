@@ -4,27 +4,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockFormEvent;
-import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.item.Item;
-import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class PlayerBlockEvents extends EventTranslator {
 
@@ -55,33 +52,17 @@ public final class PlayerBlockEvents extends EventTranslator {
 	}
 
 	@EventHandler(ignoreCancelled = false)
-	public void onBlockPlace(cn.nukkit.event.block.BlockPlaceEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
-			return;
-		}
-
-		cn.nukkit.block.Block placed = event.getBlock();
-		BlockState replacedBlockState = PokkitWorld.toBukkit(placed.level)
-				.getBlockAt((int) placed.x, (int) placed.y, (int) placed.z).getState();
-		BlockPlaceEvent bukkitEvent = new BlockPlaceEvent(PokkitBlock.toBukkit(placed), replacedBlockState,
-				PokkitBlock.toBukkit(event.getBlockAgainst()), PokkitItemStack.toBukkitCopy(event.getItem()),
-				PokkitPlayer.toBukkit(event.getPlayer()), true, EquipmentSlot.HAND);
-
-		callCancellable(event, bukkitEvent);
-	}
-	
-	@EventHandler(ignoreCancelled = false)
 	public void onBlockBurn(cn.nukkit.event.block.BlockBurnEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
 			return;
 		}
 
 		cn.nukkit.block.Block burning = event.getBlock();
-		
+
 		BlockBurnEvent bukkitEvent = new BlockBurnEvent(PokkitBlock.toBukkit(burning));
 		callCancellable(event, bukkitEvent);
 	}
-	
+
 	/*
 	 * TODO: getBlockState(...) is giving a error @ line 34
 	 */
@@ -92,11 +73,11 @@ public final class PlayerBlockEvents extends EventTranslator {
 		}
 
 		cn.nukkit.block.Block forming = event.getBlock();
-		
+
 		// BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
 		// callCancellable(event, bukkitEvent);
 	}
-	
+
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockGrowing(cn.nukkit.event.block.BlockGrowEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
@@ -104,11 +85,11 @@ public final class PlayerBlockEvents extends EventTranslator {
 		}
 
 		cn.nukkit.block.Block growing = event.getBlock();
-		
+
 		// BlockGrowEvent bukkitEvent = new BlockGrowEvent(PokkitBlock.toBukkit(growing), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
 		// callCancellable(event, bukkitEvent);
 	}
-	
+
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockIgnite(cn.nukkit.event.block.BlockIgniteEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
@@ -117,7 +98,7 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 		cn.nukkit.block.Block ignited = event.getBlock();
 		IgniteCause cause = IgniteCause.FLINT_AND_STEEL;
-		
+
 		switch (event.getCause()) {
 		case EXPLOSION:
 			cause = IgniteCause.EXPLOSION;
@@ -141,11 +122,27 @@ public final class PlayerBlockEvents extends EventTranslator {
 			cause = IgniteCause.FLINT_AND_STEEL; // Default to Flint and Steel
 			break;
 		}
-		
+
 		BlockIgniteEvent bukkitEvent = new BlockIgniteEvent(PokkitBlock.toBukkit(ignited), cause, PokkitEntity.toBukkit(event.getEntity()));
 		callCancellable(event, bukkitEvent);
 	}
-	
+
+	@EventHandler(ignoreCancelled = false)
+	public void onBlockPlace(cn.nukkit.event.block.BlockPlaceEvent event) {
+		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+			return;
+		}
+
+		cn.nukkit.block.Block placed = event.getBlock();
+		BlockState replacedBlockState = PokkitWorld.toBukkit(placed.level)
+				.getBlockAt((int) placed.x, (int) placed.y, (int) placed.z).getState();
+		BlockPlaceEvent bukkitEvent = new BlockPlaceEvent(PokkitBlock.toBukkit(placed), replacedBlockState,
+				PokkitBlock.toBukkit(event.getBlockAgainst()), PokkitItemStack.toBukkitCopy(event.getItem()),
+				PokkitPlayer.toBukkit(event.getPlayer()), true, EquipmentSlot.HAND);
+
+		callCancellable(event, bukkitEvent);
+	}
+
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockSpread(cn.nukkit.event.block.BlockSpreadEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
@@ -157,7 +154,7 @@ public final class PlayerBlockEvents extends EventTranslator {
 		// BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading), PokkitBlock.toBukkit(event.getNewState()), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
 		// callCancellable(event, bukkitEvent);
 	}
-	
+
 	@EventHandler(ignoreCancelled = false)
 	public void onLeavesDecay(cn.nukkit.event.block.LeavesDecayEvent event) {
 		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
@@ -165,7 +162,7 @@ public final class PlayerBlockEvents extends EventTranslator {
 		}
 
 		cn.nukkit.block.Block leaves = event.getBlock();
-		
+
 		LeavesDecayEvent bukkitEvent = new LeavesDecayEvent(PokkitBlock.toBukkit(leaves));
 		callCancellable(event, bukkitEvent);
 	}

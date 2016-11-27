@@ -11,7 +11,7 @@ import org.bukkit.command.SimpleCommandMap;
  * In Bukkit, commands cannot be registered dynamically: registration is only
  * allowed through the plugin.yml. Some Bukkit plugins need to hack around this,
  * so they access the SimpleCommandMap in CraftServer, and call its
- * {@link #register(String, String, Command)} method. To support this pattern,
+ * {@code #register(String, String, Command)} method. To support this pattern,
  * we create a class extending SimpleCommandMap (this class) that forwards all
  * registrations to Nukkit.
  * <p>

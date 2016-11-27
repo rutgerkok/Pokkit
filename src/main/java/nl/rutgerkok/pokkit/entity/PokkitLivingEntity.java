@@ -11,6 +11,7 @@ import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffectType;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 
 import org.bukkit.Location;
@@ -26,6 +27,8 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import cn.nukkit.potion.Effect;
 
 public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	public static LivingEntity toBukkit(cn.nukkit.entity.EntityLiving nukkit) {
@@ -281,8 +284,9 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public boolean hasPotionEffect(PotionEffectType potionEffect) {
+		Effect nukkitEffect = PokkitPotionEffectType.toNukkit(potionEffect);
 		for (cn.nukkit.potion.Effect eff : nukkit.getEffects().values()) {
-			if (eff.getId() == potionEffect.getId()) { // TODO: Proper implementation of this
+			if (eff.getId() == nukkitEffect.getId()) {
 				return true;
 			}
 		}

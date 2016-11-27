@@ -3,6 +3,9 @@ package nl.rutgerkok.pokkit.world.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.rutgerkok.pokkit.Pokkit;
+
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
@@ -39,8 +42,18 @@ final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 	}
 
 	@Override
+	public Color getColor() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
 	public List<PotionEffect> getCustomEffects() {
 		return new ArrayList<PotionEffect>();
+	}
+
+	@Override
+	public boolean hasColor() {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
@@ -67,6 +80,11 @@ final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 	@Override
 	public void setBasePotionData(PotionData data) {
 		return;
+	}
+
+	@Override
+	public void setColor(Color arg0) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
