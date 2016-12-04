@@ -20,6 +20,8 @@ public final class PokkitBlockFace {
 			return BlockFace.SOUTH;
 		case 255:
 			return BlockFace.SELF;
+		case -1:
+			return BlockFace.SELF;
 		}
 		throw new IllegalArgumentException("Unknown Vector3.SIDE: " + nukkit);
 	}
