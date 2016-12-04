@@ -18,6 +18,7 @@ import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
 import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
+import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -205,13 +206,17 @@ public final class PokkitWorld implements World {
 	@Override
 	@Deprecated
 	public int getBlockTypeIdAt(int x, int y, int z) {
-		return getBlockAt(x, y, z).getTypeId();
+		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(new Vector3(x, y, z));
+		return Material.getMaterial(nukkitBlock.getId()).getId();
 	}
 
 	@Override
 	@Deprecated
 	public int getBlockTypeIdAt(Location location) {
-		return getBlockAt(location).getTypeId();
+		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(
+				new Vector3(location.getBlockX(), location.getBlockY(), location.getBlockZ())
+		);
+		return Material.getMaterial(nukkitBlock.getId()).getId();
 	}
 
 	@Override
