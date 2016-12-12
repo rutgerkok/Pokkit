@@ -65,6 +65,12 @@ $RECYCLE.BIN/
 # Batch scripts
 *.bat
 
+# Intellij
+# =========================
+*.iml
+.idea
+.idea/*
+
 # Eclipse
 # =========================
 .classpath

@@ -55,6 +55,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.entity.weather.EntityLightning;
@@ -205,13 +206,17 @@ public final class PokkitWorld implements World {
 	@Override
 	@Deprecated
 	public int getBlockTypeIdAt(int x, int y, int z) {
-		return getBlockAt(x, y, z).getTypeId();
+		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(new Vector3(x, y, z));
+		return Material.getMaterial(nukkitBlock.getId()).getId();
 	}
 
 	@Override
 	@Deprecated
 	public int getBlockTypeIdAt(Location location) {
-		return getBlockAt(location).getTypeId();
+		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(
+				new Vector3(location.getBlockX(), location.getBlockY(), location.getBlockZ())
+		);
+		return Material.getMaterial(nukkitBlock.getId()).getId();
 	}
 
 	@Override
@@ -748,6 +753,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public <T extends Entity> T spawn(Location location, Class<T> clazz, Consumer<T> consumer) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 
 	}
