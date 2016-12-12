@@ -18,7 +18,6 @@ import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
 import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
@@ -56,6 +55,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.entity.weather.EntityLightning;
@@ -753,6 +753,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
+		throw Pokkit.unsupported();
+
+	}
+
+	@Override
+	public <T extends Entity> T spawn(Location location, Class<T> clazz, Consumer<T> consumer) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 
 	}
