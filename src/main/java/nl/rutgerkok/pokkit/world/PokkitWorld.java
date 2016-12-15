@@ -59,9 +59,11 @@ import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.entity.weather.EntityLightning;
+import cn.nukkit.level.Explosion;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.generic.BaseFullChunk;
 import cn.nukkit.level.particle.GenericParticle;
+import cn.nukkit.level.Position;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
@@ -111,34 +113,48 @@ public final class PokkitWorld implements World {
 		return false;
 	}
 
+	private boolean createExplosion(Level level, double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
+		// Base function called by all other createExplosion functions
+		// Nukkit does not yet support setFire
+		if (level == null) {
+			level = nukkit;
+		}
+		Explosion explosion = new Explosion(
+			new Position(x, y, z, level),
+			power,
+			null);
+		if (breakBlocks) {
+			explosion.explodeA();
+		}
+		explosion.explodeB();
+		return true;
+	}
+
 	@Override
 	public boolean createExplosion(double x, double y, double z, float power) {
-		throw Pokkit.unsupported();
-
+		return this.createExplosion(null, x, y, z, power, false, true);
 	}
 
 	@Override
 	public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
-		throw Pokkit.unsupported();
-
+		return this.createExplosion(null, x, y, z, power, setFire, true);
 	}
 
 	@Override
 	public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
-		throw Pokkit.unsupported();
-
+		return this.createExplosion(null, x, y, z, power, setFire, breakBlocks);
 	}
 
 	@Override
 	public boolean createExplosion(Location loc, float power) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.level.Location l = PokkitLocation.toNukkit(loc);
+		return this.createExplosion(l.level, l.x, l.y, l.z, power, false, true);
 	}
 
 	@Override
 	public boolean createExplosion(Location loc, float power, boolean setFire) {
-		throw Pokkit.unsupported();
-
+		cn.nukkit.level.Location l = PokkitLocation.toNukkit(loc);
+		return this.createExplosion(l.level, l.x, l.y, l.z, power, setFire, true);
 	}
 
 	@Override
