@@ -153,7 +153,7 @@ public class PokkitEntity implements Entity {
 
 	@Override
 	public Entity getPassenger() {
-		return PokkitEntity.toBukkit(nukkit.rider);
+		return PokkitEntity.toBukkit(nukkit.riding);
 	}
 
 	@Override

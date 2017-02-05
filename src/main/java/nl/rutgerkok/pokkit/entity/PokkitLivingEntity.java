@@ -71,7 +71,7 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public int _INVALID_getHealth() {
-		return nukkit.getHealth();
+		return (int) nukkit.getHealth();
 	}
 
 	@Override

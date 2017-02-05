@@ -6,7 +6,6 @@ import org.bukkit.Sound;
 import cn.nukkit.level.sound.AnvilBreakSound;
 import cn.nukkit.level.sound.AnvilFallSound;
 import cn.nukkit.level.sound.AnvilUseSound;
-import cn.nukkit.level.sound.BatSound;
 import cn.nukkit.level.sound.ClickSound;
 import cn.nukkit.level.sound.DoorBumpSound;
 import cn.nukkit.level.sound.DoorCrashSound;
@@ -21,7 +20,6 @@ import cn.nukkit.level.sound.LeverSound;
 import cn.nukkit.level.sound.NoteBoxSound;
 import cn.nukkit.level.sound.PopSound;
 import cn.nukkit.level.sound.TNTPrimeSound;
-import cn.nukkit.level.sound.ZombieInfectSound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.LevelEventPacket;
 
@@ -306,8 +304,8 @@ public final class PokkitSound {
 			break;
 		case ENTITY_BAT_LOOP:
 			break;
-		case ENTITY_BAT_TAKEOFF:
-			return new BatSound(vector, pitch);
+		// case ENTITY_BAT_TAKEOFF:
+		// 	return new BatSound(vector, pitch);
 		case ENTITY_BLAZE_AMBIENT:
 			break;
 		case ENTITY_BLAZE_BURN:
@@ -852,8 +850,8 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ZOMBIE_HURT:
 			break;
-		case ENTITY_ZOMBIE_INFECT:
-			return new ZombieInfectSound(vector, pitch);
+		// case ENTITY_ZOMBIE_INFECT:
+		// 	return new ZombieInfectSound(vector, pitch);
 		case ENTITY_ZOMBIE_PIG_AMBIENT:
 			break;
 		case ENTITY_ZOMBIE_PIG_ANGRY:
@@ -868,8 +866,8 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ZOMBIE_VILLAGER_CONVERTED:
 			break;
-		case ENTITY_ZOMBIE_VILLAGER_CURE:
-			return new ZombieInfectSound(vector, pitch);
+		// case ENTITY_ZOMBIE_VILLAGER_CURE:
+		// 	return new ZombieInfectSound(vector, pitch);
 		case ENTITY_ZOMBIE_VILLAGER_DEATH:
 			break;
 		case ENTITY_ZOMBIE_VILLAGER_HURT:

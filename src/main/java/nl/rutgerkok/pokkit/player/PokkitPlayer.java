@@ -1364,4 +1364,10 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		nukkit.getInventory().sendContents(nukkit);
 	}
 
+    @Override
+    public void sendTitle(String arg0, String arg1, int arg2, int arg3, int arg4) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
