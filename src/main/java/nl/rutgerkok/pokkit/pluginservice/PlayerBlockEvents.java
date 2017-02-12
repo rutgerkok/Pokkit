@@ -10,13 +10,16 @@ import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +34,17 @@ public final class PlayerBlockEvents extends EventTranslator {
 			return;
 		}
 
+		// In Bukkit, if you break a block in creative, a PlayerInteractEvent is sent before the block breaks
+		// So we need to call a PlayerInteractEvent if the player is in creative
+		if (event.getPlayer().isCreative()) {
+		    // Yes, the player is in creative!
+		    // TODO: That BlockFace.SELF is wrong
+		    PlayerInteractEvent playerInteractEvent = new PlayerInteractEvent(PokkitPlayer.toBukkit(event.getPlayer()), Action.LEFT_CLICK_BLOCK, PokkitItemStack.toBukkitCopy(event.getItem()), PokkitBlock.toBukkit(event.getBlock()), BlockFace.SELF);
+		    callCancellable(event, playerInteractEvent);
+		    if (playerInteractEvent.isCancelled()) {
+		        return;
+		    }
+		}
 		PokkitBlock brokenBlock = PokkitBlock.toBukkit(event.getBlock());
 
 		// Capture original drops
