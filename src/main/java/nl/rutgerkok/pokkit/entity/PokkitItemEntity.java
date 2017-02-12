@@ -21,8 +21,14 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class PokkitItemEntity implements Item {
+import cn.nukkit.level.Level;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
+public class PokkitItemEntity implements Item {
+    public Level level;
+    public cn.nukkit.item.Item item;
+    
     @Override
     public boolean addScoreboardTag(String arg0) {
         // TODO Auto-generated method stub
@@ -139,8 +145,7 @@ public class PokkitItemEntity implements Item {
 
     @Override
     public World getWorld() {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitWorld.toBukkit(level);
     }
 
     @Override
@@ -463,8 +468,7 @@ public class PokkitItemEntity implements Item {
 
     @Override
     public ItemStack getItemStack() {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitItemStack.toBukkitCopy(item);
     }
 
     @Override
