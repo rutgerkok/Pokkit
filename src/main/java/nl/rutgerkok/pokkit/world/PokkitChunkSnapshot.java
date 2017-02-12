@@ -12,8 +12,8 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
     private final int z;
     private final String worldname;
     // X, Y, Z
-    private int[][][] blocksIds = new int[16][128][16];
-    private int[][][] blocksData = new int[16][128][16];
+    private int[][][] blocksIds = new int[16][256][16];
+    private int[][][] blocksData = new int[16][256][16];
     
 	public PokkitChunkSnapshot(final int x, final int z, final String wname, BaseFullChunk baseFullChunk) {
 		this.nukkit = baseFullChunk;
@@ -24,7 +24,7 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 		// Ouch, this isn't the best way to implement this... right? TODO: Improve this
 		// Yeah, Chunk Snapshot is a chunk... "snapshot", so we need to clone the chunk
 		for (int blockX = 0; blockX < 16; blockX++) {
-			for (int blockY = 0; blockY < 127; blockY++) {
+			for (int blockY = 0; blockY < 255; blockY++) {
 				for (int blockZ = 0; blockZ < 16; blockZ++) {
 					blocksIds[blockX][blockY][blockZ] = baseFullChunk.getBlockId(blockX, blockY, blockZ);
 					blocksData[blockX][blockY][blockZ] = baseFullChunk.getBlockData(blockX, blockY, blockZ);
@@ -77,8 +77,7 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 
 	@Override
 	public Biome getBiome(int x, int z) {
-		throw Pokkit.unsupported();
-		
+		return Biome.PLAINS;
 	}
 
 	@Override

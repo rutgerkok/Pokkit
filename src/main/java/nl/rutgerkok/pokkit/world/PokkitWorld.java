@@ -72,7 +72,7 @@ import cn.nukkit.nbt.tag.ListTag;
 
 public final class PokkitWorld implements World {
 
-	private static final int WORLD_HEIGHT = 128;
+	private static final int WORLD_HEIGHT = 256;
 
 	/**
 	 * World cache. If Nukkit ever adds world unload support, we'll need to
