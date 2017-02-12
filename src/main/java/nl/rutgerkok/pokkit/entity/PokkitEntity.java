@@ -29,7 +29,6 @@ import org.bukkit.util.Vector;
 
 import com.google.common.base.Strings;
 
-import cn.nukkit.entity.passive.EntityPig;
 import cn.nukkit.math.Vector3;
 
 public class PokkitEntity implements Entity {

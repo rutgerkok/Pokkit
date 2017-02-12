@@ -184,7 +184,6 @@ public final class EntityEvents extends EventTranslator {
 		if (canIgnore(PlayerInteractEvent.getHandlerList())) {
 			return;
 		}
-		
 		EntitySpawnEvent bukkitEvent = new EntitySpawnEvent(PokkitEntity.toBukkit(event.getEntity()));
 
 		callUncancellable(bukkitEvent);

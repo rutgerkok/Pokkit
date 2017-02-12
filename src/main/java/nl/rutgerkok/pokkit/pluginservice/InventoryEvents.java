@@ -37,7 +37,8 @@ public class InventoryEvents extends EventTranslator {
 		PokkitItemEntity pokkit = new PokkitItemEntity();
 		pokkit.level = event.getPlayer().getLevel();
 		pokkit.item = event.getItem();
-		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), new PokkitItemEntity());
+		pokkit.location = event.getPlayer().getLocation();
+		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), pokkit);
 		callCancellable(event, bukkitEvent);
 	}
 

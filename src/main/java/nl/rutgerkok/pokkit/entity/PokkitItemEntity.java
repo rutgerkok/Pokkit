@@ -22,12 +22,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.level.Level;
+import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public class PokkitItemEntity implements Item {
     public Level level;
     public cn.nukkit.item.Item item;
+    public cn.nukkit.level.Location location;
     
     @Override
     public boolean addScoreboardTag(String arg0) {
@@ -67,14 +69,12 @@ public class PokkitItemEntity implements Item {
 
     @Override
     public Location getLocation() {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitLocation.toBukkit(location);
     }
 
     @Override
     public Location getLocation(Location arg0) {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitLocation.toBukkit(location);
     }
 
     @Override
