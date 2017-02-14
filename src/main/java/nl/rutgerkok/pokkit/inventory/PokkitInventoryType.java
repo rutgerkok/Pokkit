@@ -29,7 +29,7 @@ public final class PokkitInventoryType {
 		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
 		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);
 		bukkitToNukkit.put(InventoryType.CREATIVE, cn.nukkit.inventory.InventoryType.PLAYER);
-		bukkitToNukkit.put(InventoryType.ENDER_CHEST, cn.nukkit.inventory.InventoryType.CHEST);
+		bukkitToNukkit.put(InventoryType.ENDER_CHEST, cn.nukkit.inventory.InventoryType.ENDER_CHEST);
 	}
 
 	/**
