@@ -132,7 +132,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
             @Override
 			public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
 					float offsetZ, float speed, int particleCount, int radius) {
-            	throw Pokkit.unsupported();
+                // Silently unsupported!
             }
 
             @Override
@@ -824,14 +824,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void playEffect(Location arg0, Effect arg1, int arg2) {
-		throw Pokkit.unsupported();
-
+	    // Silently unsupported!
 	}
 
 	@Override
 	public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-		throw Pokkit.unsupported();
-
+	    // Silently unsupported!
 	}
 
 	@Override
