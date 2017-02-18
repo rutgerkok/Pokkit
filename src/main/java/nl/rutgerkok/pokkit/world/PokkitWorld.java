@@ -723,14 +723,14 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setStorm(boolean hasStorm) {
-		throw Pokkit.unsupported();
-
+		// Silently unsupported!
+	    // Nukkit doesn't have storms yet, so we just ignore that.
 	}
 
 	@Override
 	public void setThunderDuration(int duration) {
-		throw Pokkit.unsupported();
-
+        // Silently unsupported!
+        // Nukkit doesn't have storms yet, so we just ignore that.
 	}
 
 	@Override
