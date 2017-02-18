@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.metadata.PokkitMetadataValue;
 import nl.rutgerkok.pokkit.player.PokkitTeleportCause;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
@@ -138,7 +140,11 @@ public class PokkitEntity implements Entity {
 
     @Override
     public List<MetadataValue> getMetadata(String metadataKey) {
-        throw Pokkit.unsupported();
+        List<MetadataValue> bukkitList = new ArrayList<MetadataValue>();
+        if (nukkit.getMetadata(metadataKey) != null) {
+            nukkit.getMetadata(metadataKey).forEach((value) -> bukkitList.add(PokkitMetadataValue.toBukkit(value)));
+        }
+        return bukkitList;
     }
 
     @Override
