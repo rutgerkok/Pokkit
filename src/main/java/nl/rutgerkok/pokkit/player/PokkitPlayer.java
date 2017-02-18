@@ -737,7 +737,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean isPermissionSet(String permission) {
-	    if (permission == null) { // For some reason WorldGuard checks a null permission, so...
+	    if (nukkit == null) { // WorldGuard workaround
 	        return false;
 	    }
 		return nukkit.isPermissionSet(permission);
