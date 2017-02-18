@@ -222,7 +222,7 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 
 	@Override
 	public InventoryHolder getHolder() {
-		throw Pokkit.unsupported();
+	    return PokkitInventoryHolder.toBukkit(nukkit.getHolder());
 	}
 
 	@Override
