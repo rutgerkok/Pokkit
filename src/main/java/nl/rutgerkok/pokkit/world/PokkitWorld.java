@@ -461,8 +461,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public long getTime() {
-		throw Pokkit.unsupported();
-
+		return this.nukkit.getTime();
 	}
 
 	@Override
