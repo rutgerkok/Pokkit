@@ -43,7 +43,7 @@ public final class EntityEvents extends EventTranslator {
         // EntityDamageByEntityEvent
         
         // TODO: Do this the proper way... not the "let's use deprecated methods!" way
-        EntityDamageByEntityEvent bukkitEvent = new EntityDamageByEntityEvent(new PokkitItemFrameEntity(event.getItemFrame()), PokkitEntity.toBukkit(event.getPlayer()), EntityDamageEvent.DamageCause.ENTITY_ATTACK, 999D);
+        EntityDamageByEntityEvent bukkitEvent = new EntityDamageByEntityEvent(PokkitEntity.toBukkit(event.getPlayer()), new PokkitItemFrameEntity(event.getItemFrame()), EntityDamageEvent.DamageCause.ENTITY_ATTACK, 999D);
 
         callCancellable(event, bukkitEvent);
     }

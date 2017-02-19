@@ -1,5 +1,7 @@
 package nl.rutgerkok.pokkit.entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +22,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import cn.nukkit.blockentity.BlockEntityItemFrame;
+import nl.rutgerkok.pokkit.PokkitLocation;
 
 public class PokkitItemFrameEntity implements Entity {
     BlockEntityItemFrame nukkit;
@@ -36,8 +39,7 @@ public class PokkitItemFrameEntity implements Entity {
 
     @Override
     public List<MetadataValue> getMetadata(String metadataKey) {
-        // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<MetadataValue>(); // Nukkit can't store metadata
     }
 
     @Override
@@ -132,8 +134,7 @@ public class PokkitItemFrameEntity implements Entity {
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        // TODO Auto-generated method stub
-        return null;
+        return new HashSet<PermissionAttachmentInfo>();
     }
 
     @Override
@@ -162,14 +163,12 @@ public class PokkitItemFrameEntity implements Entity {
 
     @Override
     public Location getLocation() {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitLocation.toBukkit(nukkit.getLocation());
     }
 
     @Override
     public Location getLocation(Location loc) {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitLocation.toBukkit(nukkit.getLocation(), loc);
     }
 
     @Override
@@ -347,8 +346,7 @@ public class PokkitItemFrameEntity implements Entity {
 
     @Override
     public EntityType getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return EntityType.ITEM_FRAME;
     }
 
     @Override
