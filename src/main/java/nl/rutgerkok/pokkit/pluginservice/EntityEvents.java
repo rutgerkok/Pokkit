@@ -25,15 +25,29 @@ import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.entity.EntityLiving;
 import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.block.ItemFrameDropItemEvent;
 import cn.nukkit.item.Item;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.entity.PokkitDamageCause;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.entity.PokkitItemFrameEntity;
 import nl.rutgerkok.pokkit.entity.PokkitLivingEntity;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public final class EntityEvents extends EventTranslator {
+    @EventHandler(ignoreCancelled = false)
+    public void onItemDrop(ItemFrameDropItemEvent event) {
+        // Bukkit uses EntityDamageByEntityEvent when someone hits an Item Frame
+        // However Nukkit uses ItemFrameDropItemEvent, so we are going to trigger an
+        // EntityDamageByEntityEvent
+        
+        // TODO: Do this the proper way... not the "let's use deprecated methods!" way
+        EntityDamageByEntityEvent bukkitEvent = new EntityDamageByEntityEvent(new PokkitItemFrameEntity(event.getItemFrame()), PokkitEntity.toBukkit(event.getPlayer()), EntityDamageEvent.DamageCause.ENTITY_ATTACK, 999D);
+
+        callCancellable(event, bukkitEvent);
+    }
+    
 	@EventHandler(ignoreCancelled = false)
 	public void onCreeperPower(cn.nukkit.event.entity.CreeperPowerEvent event) {
 		if (canIgnore(PlayerInteractEvent.getHandlerList())) {
