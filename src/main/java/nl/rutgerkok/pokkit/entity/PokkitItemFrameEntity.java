@@ -27,6 +27,7 @@ import org.bukkit.util.Vector;
 
 import cn.nukkit.blockentity.BlockEntityItemFrame;
 import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 public class PokkitItemFrameEntity implements ItemFrame {
@@ -196,8 +197,7 @@ public class PokkitItemFrameEntity implements ItemFrame {
 
     @Override
     public World getWorld() {
-        // TODO Auto-generated method stub
-        return null;
+        return PokkitWorld.toBukkit(nukkit.getLevel());
     }
 
     @Override
