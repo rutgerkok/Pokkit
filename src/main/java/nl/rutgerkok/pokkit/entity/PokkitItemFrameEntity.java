@@ -8,12 +8,16 @@ import java.util.UUID;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.Rotation;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
@@ -23,8 +27,9 @@ import org.bukkit.util.Vector;
 
 import cn.nukkit.blockentity.BlockEntityItemFrame;
 import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
-public class PokkitItemFrameEntity implements Entity {
+public class PokkitItemFrameEntity implements ItemFrame {
     BlockEntityItemFrame nukkit;
     
     public PokkitItemFrameEntity(BlockEntityItemFrame nukkit) {
@@ -461,6 +466,52 @@ public class PokkitItemFrameEntity implements Entity {
     public Spigot spigot() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean setFacingDirection(BlockFace face, boolean force) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public BlockFace getAttachedFace() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void setFacingDirection(BlockFace face) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public BlockFace getFacing() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return PokkitItemStack.toBukkitCopy(nukkit.getItem());
+    }
+
+    @Override
+    public void setItem(ItemStack item) {
+        nukkit.setItem(PokkitItemStack.toNukkitCopy(item));
+    }
+
+    @Override
+    public Rotation getRotation() {
+        // TODO: Implement
+        return Rotation.CLOCKWISE;
+    }
+
+    @Override
+    public void setRotation(Rotation rotation) throws IllegalArgumentException {
+        // TODO Auto-generated method stub
+        
     }
 
 }
