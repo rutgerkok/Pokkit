@@ -10,6 +10,7 @@ import java.util.UUID;
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.metadata.PokkitMetadataValue;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.player.PokkitTeleportCause;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 
@@ -20,6 +21,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
@@ -32,6 +34,7 @@ import org.bukkit.util.Vector;
 import com.google.common.base.Strings;
 
 import cn.nukkit.math.Vector3;
+import cn.nukkit.network.protocol.RemoveEntityPacket;
 
 public class PokkitEntity implements Entity {
     public static Entity toBukkit(cn.nukkit.entity.Entity nukkit) {
@@ -376,8 +379,11 @@ public class PokkitEntity implements Entity {
 
     @Override
     public void remove() {
-        throw Pokkit.unsupported();
-
+    	RemoveEntityPacket pk = new RemoveEntityPacket();
+    	pk.eid = nukkit.getId();
+    	for (Player p : getServer().getOnlinePlayers())
+    		PokkitPlayer.toNukkit(p).dataPacket(pk);
+    	nukkit.chunk.removeEntity(nukkit);
     }
 
     @Override

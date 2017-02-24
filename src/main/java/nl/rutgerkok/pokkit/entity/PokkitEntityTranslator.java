@@ -10,7 +10,6 @@ public class PokkitEntityTranslator {
 	public static String getEntity(EntityType et) {
 		switch (et) {
 		case ARROW:
-		case PRIMED_TNT:
 		case SNOWBALL:
 		case PAINTING:
 		case CREEPER:
@@ -21,11 +20,18 @@ public class PokkitEntityTranslator {
 		case WOLF:
 		case OCELOT:
 		case VILLAGER:
-		case THROWN_EXP_BOTTLE:
 		case BOAT:
 		case LIGHTNING:
 		case CHICKEN:
-			return et.getName().replace("_", "");
+			String name = et.getName();
+			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+			return name;
+		case ENDER_PEARL:
+			return "EnderPearl";
+		case THROWN_EXP_BOTTLE:
+			return "ThrownExpBottle";
+		case PRIMED_TNT:
+			return "PrimedTnt";
 		case EXPERIENCE_ORB:
 			return "XpOrb";
 		case SPLASH_POTION:
