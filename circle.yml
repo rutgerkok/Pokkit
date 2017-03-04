@@ -1,11 +1,11 @@
 machine:
-  java:
-version: oraclejdk8
+ java:
+  version: oraclejdk8
 
 checkout:
-  post:
-    - git submodule sync
-    - git submodule update --init
-    - mvn clean
-    - mvn package
-    - cp -R ./target/Pokkit*.jar $CIRCLE_ARTIFACTS
+ post:
+  - git submodule sync
+  - git submodule update --init
+  - mvn clean
+  - mvn package
+  - cp -R ./target/Pokkit*.jar $CIRCLE_ARTIFACTS
