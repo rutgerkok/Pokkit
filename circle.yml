@@ -1,4 +1,4 @@
-machine:
+pachine:
  java:
   version: oraclejdk8
 
@@ -8,4 +8,4 @@ checkout:
   - git submodule update --init
   - mvn clean
   - mvn package
-  - cp -R ./target/Pokkit*.jar $CIRCLE_ARTIFACTS
+  - cp -R ./target/pokkit*.jar $CIRCLE_ARTIFACTS
