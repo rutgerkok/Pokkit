@@ -32,9 +32,7 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
-		nukkit.item.addEnchantment(ench);
-		nukkit.ench.setLevel(level);
-		nukkit.getMinEnchantAbility(level) + 5;
+		throw Pokkit.unsupported();
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public int getEnchantLevel(Enchantment ench) {
-		nukkit.setLevel(level, true);
+		throw Pokkit.unsupported();
 	}
 
 	@Override
