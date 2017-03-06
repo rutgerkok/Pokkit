@@ -20,7 +20,6 @@ import com.google.common.base.Throwables;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.nbt.tag.Tag;
-import cn.nukkit.item.enchantment.Enchantment;
 
 public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
