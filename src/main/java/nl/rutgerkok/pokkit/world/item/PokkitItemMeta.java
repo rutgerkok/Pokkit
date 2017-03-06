@@ -20,6 +20,7 @@ import com.google.common.base.Throwables;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.nbt.tag.Tag;
+import cn.nukkit.item.enchantment.Enchantment;
 
 public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
@@ -31,7 +32,9 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
-		throw Pokkit.unsupported();
+		nukkit.item.addEnchantment(ench);
+		nukkit.ench.setLevel(level);
+		nukkit.getMinEnchantAbility(level) + 5;
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public int getEnchantLevel(Enchantment ench) {
-		throw Pokkit.unsupported();
+		nukkit.setLevel(level, true);
 	}
 
 	@Override
