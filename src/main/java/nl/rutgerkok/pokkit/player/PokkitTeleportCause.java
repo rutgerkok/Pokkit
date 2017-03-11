@@ -16,7 +16,9 @@ public final class PokkitTeleportCause {
 	public static TeleportCause toNukkit(org.bukkit.event.player.PlayerTeleportEvent.TeleportCause cause) {
 		switch (cause) {
 		case COMMAND:
-			return TeleportCause.COMMAND;
+			return TeleportCause.COMMAND;          
+		case ENDER_PEARL:
+		        return TeleportCause.ENDER_PEARL;
 		case NETHER_PORTAL:
 			return TeleportCause.NETHER_PORTAL;
 		case PLUGIN:
