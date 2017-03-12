@@ -1078,7 +1078,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setFlying(boolean arg0) {
-		throw Pokkit.unsupported();
+		nukkit.getAdventureSettings().setFlying(arg0);
 
 	}
 
