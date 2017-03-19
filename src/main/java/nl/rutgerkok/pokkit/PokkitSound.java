@@ -12,7 +12,7 @@ import cn.nukkit.level.sound.DoorCrashSound;
 import cn.nukkit.level.sound.DoorSound;
 import cn.nukkit.level.sound.EndermanTeleportSound;
 import cn.nukkit.level.sound.ExperienceOrbSound;
-import cn.nukkit.level.sound.GenericSound;
+import cn.nukkit.level.sound.LevelEventSound;
 import cn.nukkit.level.sound.GhastShootSound;
 import cn.nukkit.level.sound.GhastSound;
 import cn.nukkit.level.sound.LaunchSound;
@@ -547,15 +547,15 @@ public final class PokkitSound {
 		case ENTITY_IRONGOLEM_STEP:
 			break;
 		case ENTITY_ITEMFRAME_ADD_ITEM:
-			return new GenericSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ADDED, pitch);
+			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ADDED, pitch);
 		case ENTITY_ITEMFRAME_BREAK:
-			return new GenericSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_REMOVED, pitch);
+			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_REMOVED, pitch);
 		case ENTITY_ITEMFRAME_PLACE:
-			return new GenericSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_PLACED, pitch);
+			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_PLACED, pitch);
 		case ENTITY_ITEMFRAME_REMOVE_ITEM:
-			return new GenericSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_REMOVED, pitch);
+			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_REMOVED, pitch);
 		case ENTITY_ITEMFRAME_ROTATE_ITEM:
-			return new GenericSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ROTATED, pitch);
+			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ROTATED, pitch);
 		case ENTITY_ITEM_BREAK:
 			break;
 		case ENTITY_ITEM_PICKUP:
