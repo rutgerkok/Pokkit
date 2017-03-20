@@ -50,7 +50,6 @@ public final class PlayerChatEvents extends EventTranslator {
 	@EventHandler(ignoreCancelled = false)
 	public void onPlayerChat(cn.nukkit.event.player.PlayerChatEvent event) {
 		if (canIgnore(AsyncPlayerChatEvent.getHandlerList())) {
-			return;
 		}
 		AsyncPlayerChatEvent bukkitEvent = new AsyncPlayerChatEvent(false, PokkitPlayer.toBukkit(event.getPlayer()),
 				event.getMessage(), new RecipientsSet(event.getRecipients()));
