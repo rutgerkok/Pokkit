@@ -211,7 +211,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
 		cn.nukkit.plugin.Plugin nukkitPlugin = PokkitPlugin.toNukkit(plugin);
 		cn.nukkit.permission.PermissionAttachment nukkitAttachment = nukkit.addAttachment(nukkitPlugin);
-		nukkit.getServer().getScheduler().scheduleDelayedTask(() -> {
+		nukkit.getServer().getScheduler().scheduleDelayedTask(nukkitPlugin, () -> {
 			nukkit.removeAttachment(nukkitAttachment);
 		}, ticks);
 

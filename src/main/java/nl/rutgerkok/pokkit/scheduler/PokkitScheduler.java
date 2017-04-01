@@ -37,7 +37,7 @@ public final class PokkitScheduler implements BukkitScheduler {
 	@Override
 	public <T> Future<T> callSyncMethod(Plugin plugin, Callable<T> callable) {
 		CompletableFuture<T> future = new CompletableFuture<>();
-		nukkit.scheduleTask(() -> {
+		nukkit.scheduleTask(PokkitPlugin.toNukkit(plugin), () -> {
 			try {
 				future.complete(callable.call());
 			} catch (Throwable t) {
@@ -88,37 +88,37 @@ public final class PokkitScheduler implements BukkitScheduler {
 	@Override
 	public BukkitTask runTask(Plugin plugin, BukkitRunnable runnable) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleTask(runnable, false), plugin);
+		return new PokkitTask(nukkit.scheduleTask(PokkitPlugin.toNukkit(plugin), runnable, false), plugin);
 	}
 
 	@Override
 	public BukkitTask runTask(Plugin plugin, Runnable runnable) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleTask(runnable, false), plugin);
+		return new PokkitTask(nukkit.scheduleTask(PokkitPlugin.toNukkit(plugin), runnable, false), plugin);
 	}
 
 	@Override
 	public BukkitTask runTaskAsynchronously(Plugin plugin, BukkitRunnable runnable) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleTask(runnable, true), plugin);
+		return new PokkitTask(nukkit.scheduleTask(PokkitPlugin.toNukkit(plugin), runnable, true), plugin);
 	}
 
 	@Override
 	public BukkitTask runTaskAsynchronously(Plugin plugin, Runnable runnable) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleTask(runnable, true), plugin);
+		return new PokkitTask(nukkit.scheduleTask(PokkitPlugin.toNukkit(plugin), runnable, true), plugin);
 	}
 
 	@Override
 	public BukkitTask runTaskLater(Plugin plugin, BukkitRunnable runnable, long delay) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleDelayedTask(runnable, (int) delay), plugin);
+		return new PokkitTask(nukkit.scheduleDelayedTask(PokkitPlugin.toNukkit(plugin), runnable, (int) delay), plugin);
 	}
 
 	@Override
 	public BukkitTask runTaskLater(Plugin plugin, Runnable task, long delay) throws IllegalArgumentException {
 		Objects.requireNonNull(plugin, "plugin");
-		return new PokkitTask(nukkit.scheduleDelayedTask(task, (int) delay), plugin);
+		return new PokkitTask(nukkit.scheduleDelayedTask(PokkitPlugin.toNukkit(plugin), task, (int) delay), plugin);
 	}
 
 	@Override
@@ -140,13 +140,17 @@ public final class PokkitScheduler implements BukkitScheduler {
 	@Override
 	public BukkitTask runTaskTimer(Plugin plugin, BukkitRunnable task, long delay, long period)
 			throws IllegalArgumentException {
-		return new PokkitTask(nukkit.scheduleDelayedRepeatingTask(task, (int) delay, (int) period), plugin);
+		return new PokkitTask(
+				nukkit.scheduleDelayedRepeatingTask(PokkitPlugin.toNukkit(plugin), task, (int) delay, (int) period),
+				plugin);
 	}
 
 	@Override
 	public BukkitTask runTaskTimer(Plugin plugin, Runnable task, long delay, long period)
 			throws IllegalArgumentException {
-		return new PokkitTask(nukkit.scheduleDelayedRepeatingTask(task, (int) delay, (int) period), plugin);
+		return new PokkitTask(
+				nukkit.scheduleDelayedRepeatingTask(PokkitPlugin.toNukkit(plugin), task, (int) delay, (int) period),
+				plugin);
 	}
 
 	@Override
