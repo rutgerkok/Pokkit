@@ -1001,8 +1001,19 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void sendTitle(String arg0, String arg1) {
-		nukkit.sendPopup(arg0, arg1);
+	public void sendTitle(String title, String subtitle) {
+		sendTitle(title, subtitle, 10, 70, 20); // Copied from CraftBukkit
+	}
+
+	@Override
+	public void sendTitle(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+		if (title != null) {
+			nukkit.sendTitle(title);
+		}
+		if (subtitle != null) {
+			nukkit.setSubtitle(subtitle);
+		}
+		nukkit.setTitleAnimationTimes(fadeIn, stay, fadeOut);
 	}
 
 	@Override
@@ -1365,11 +1376,5 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public void updateInventory() {
 		nukkit.getInventory().sendContents(nukkit);
 	}
-
-    @Override
-    public void sendTitle(String arg0, String arg1, int arg2, int arg3, int arg4) {
-        // TODO Auto-generated method stub
-        
-    }
 
 }
