@@ -31,8 +31,11 @@ public abstract class PokkitBlockState implements BlockState {
 	 * @return The block state.
 	 */
 	public static PokkitBlockState getBlockState(PokkitBlock block) {
-		BlockEntity blockEntityOrNull = PokkitWorld.toNukkit(block.getWorld())
-				.getBlockEntity(PokkitBlock.toNukkit(block));
+		Objects.requireNonNull(block, "block");
+
+		cn.nukkit.block.Block nukkitBlock = PokkitBlock.toNukkit(block);
+
+		BlockEntity blockEntityOrNull = nukkitBlock.getLevel().getBlockEntity(nukkitBlock);
 
 		MaterialData materialData = block.getTypeData();
 		Location location = block.getLocation();
