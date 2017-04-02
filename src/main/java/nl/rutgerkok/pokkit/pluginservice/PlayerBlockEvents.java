@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
@@ -15,9 +16,12 @@ import org.bukkit.block.BlockState;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -30,25 +34,31 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockBreak(cn.nukkit.event.block.BlockBreakEvent event) {
-		if (canIgnore(BlockBreakEvent.getHandlerList())) {
-			return;
-		}
+		PokkitBlock brokenBlock = PokkitBlock.toBukkit(event.getBlock());
 
 		// In Bukkit, if you break a block in creative, a PlayerInteractEvent is sent before the block breaks
 		// So we need to call a PlayerInteractEvent if the player is in creative
 		if (event.getPlayer().isCreative()) {
 		    // Yes, the player is in creative!
 		    // TODO: That BlockFace.SELF is wrong
-		    PlayerInteractEvent playerInteractEvent = new PlayerInteractEvent(PokkitPlayer.toBukkit(event.getPlayer()), Action.LEFT_CLICK_BLOCK, PokkitItemStack.toBukkitCopy(event.getItem()), PokkitBlock.toBukkit(event.getBlock()), BlockFace.SELF);
+			PlayerInteractEvent playerInteractEvent = new PlayerInteractEvent(
+					PokkitPlayer.toBukkit(event.getPlayer()),
+					Action.LEFT_CLICK_BLOCK,
+					PokkitItemStack.toBukkitCopy(event.getItem()),
+					brokenBlock, BlockFace.SELF);
 		    callCancellable(event, playerInteractEvent);
 		    if (playerInteractEvent.isCancelled()) {
 		        return;
 		    }
 		}
-		PokkitBlock brokenBlock = PokkitBlock.toBukkit(event.getBlock());
+
+		if (canIgnore(BlockBreakEvent.getHandlerList())) {
+			return;
+		}
 
 		// Capture original drops
-		List<ItemStack> originalDrops = Arrays.stream(event.getDrops()).map(PokkitItemStack::toBukkitCopy)
+		List<ItemStack> originalDrops = Arrays.stream(event.getDrops())
+				.map(PokkitItemStack::toBukkitCopy)
 				.collect(Collectors.toList());
 
 		// Inject actual drops
@@ -67,46 +77,48 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockBurn(cn.nukkit.event.block.BlockBurnEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(BlockBurnEvent.getHandlerList())) {
 			return;
 		}
 
 		cn.nukkit.block.Block burning = event.getBlock();
 
+		// Nukkit does not provide ignitingBlock, so we have to use this
+		// deprecated method
+		@SuppressWarnings("deprecation")
 		BlockBurnEvent bukkitEvent = new BlockBurnEvent(PokkitBlock.toBukkit(burning));
 		callCancellable(event, bukkitEvent);
 	}
 
-	/*
-	 * TODO: getBlockState(...) is giving a error @ line 34
-	 */
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockForm(cn.nukkit.event.block.BlockFormEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(BlockFormEvent.getHandlerList())) {
 			return;
 		}
 
 		cn.nukkit.block.Block forming = event.getBlock();
 
-		// BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		// callCancellable(event, bukkitEvent);
+		BlockFormEvent bukkitEvent = new BlockFormEvent(PokkitBlock.toBukkit(forming),
+				PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		callCancellable(event, bukkitEvent);
 	}
 
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockGrowing(cn.nukkit.event.block.BlockGrowEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(BlockGrowEvent.getHandlerList())) {
 			return;
 		}
 
 		cn.nukkit.block.Block growing = event.getBlock();
 
-		// BlockGrowEvent bukkitEvent = new BlockGrowEvent(PokkitBlock.toBukkit(growing), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		// callCancellable(event, bukkitEvent);
+		BlockGrowEvent bukkitEvent = new BlockGrowEvent(PokkitBlock.toBukkit(growing),
+				PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		callCancellable(event, bukkitEvent);
 	}
 
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockIgnite(cn.nukkit.event.block.BlockIgniteEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(BlockIgniteEvent.getHandlerList())) {
 			return;
 		}
 
@@ -159,19 +171,21 @@ public final class PlayerBlockEvents extends EventTranslator {
 
 	@EventHandler(ignoreCancelled = false)
 	public void onBlockSpread(cn.nukkit.event.block.BlockSpreadEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(BlockSpreadEvent.getHandlerList())) {
 			return;
 		}
 
 		cn.nukkit.block.Block spreading = event.getBlock();
 
-		// BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading), PokkitBlock.toBukkit(event.getNewState()), PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
-		// callCancellable(event, bukkitEvent);
+		BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading),
+				PokkitBlock.toBukkit(event.getNewState()),
+				PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+		callCancellable(event, bukkitEvent);
 	}
 
 	@EventHandler(ignoreCancelled = false)
 	public void onLeavesDecay(cn.nukkit.event.block.LeavesDecayEvent event) {
-		if (canIgnore(BlockPlaceEvent.getHandlerList())) {
+		if (canIgnore(LeavesDecayEvent.getHandlerList())) {
 			return;
 		}
 
