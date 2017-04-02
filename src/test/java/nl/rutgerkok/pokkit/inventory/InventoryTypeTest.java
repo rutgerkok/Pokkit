@@ -17,8 +17,7 @@ public class InventoryTypeTest {
 	@Test
 	public void testNukkitToBukkit() {
 		for (cn.nukkit.inventory.InventoryType type : cn.nukkit.inventory.InventoryType.values()) {
-			// Ignore this test...
-		    // assertNotNull("Type " + type + " must have a mapping", PokkitInventoryType.toBukkit(type));
+			assertNotNull("Type " + type + " must have a mapping", PokkitInventoryType.toBukkit(type));
 		}
 	}
 }
