@@ -31,14 +31,18 @@ public abstract class PokkitBlockState implements BlockState {
 	 * @return The block state.
 	 */
 	public static PokkitBlockState getBlockState(PokkitBlock block) {
-		BlockEntity blockEntity = PokkitWorld.toNukkit(block.getWorld()).getBlockEntity(PokkitBlock.toNukkit(block));
+		BlockEntity blockEntityOrNull = PokkitWorld.toNukkit(block.getWorld())
+				.getBlockEntity(PokkitBlock.toNukkit(block));
+
 		MaterialData materialData = block.getTypeData();
 		Location location = block.getLocation();
 
-		if (blockEntity instanceof BlockEntitySign) {
-			String hiddenData = blockEntity.namedTag.getString(Pokkit.NAME);
-			return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntity).getText(), hiddenData);
+		if (blockEntityOrNull instanceof BlockEntitySign) {
+			String hiddenData = blockEntityOrNull.namedTag.getString(Pokkit.NAME);
+			return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntityOrNull).getText(),
+					hiddenData);
 		}
+
 		return new PlainBlockState(location, materialData);
 	}
 
@@ -92,7 +96,7 @@ public abstract class PokkitBlockState implements BlockState {
 
 	/**
 	 * Gets the Nukkit block entity.
-	 * 
+	 *
 	 * @return The Nukkit block entity.
 	 */
 	public BlockEntity getBlockEntity() {
@@ -193,7 +197,7 @@ public abstract class PokkitBlockState implements BlockState {
 
 	/**
 	 * Saves the state of this block state to the given compound tag.
-	 * 
+	 *
 	 * @param tag
 	 *            The tag.
 	 */
