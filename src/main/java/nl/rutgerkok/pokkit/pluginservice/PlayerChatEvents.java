@@ -47,6 +47,37 @@ public final class PlayerChatEvents extends EventTranslator {
 
 	}
 
+	/**
+	 * Chat messages usually have a defined format, like "&lt;Name&gt; message".
+	 * Nukkit represents this format as "&lt;{%0}&gt; {%1}", Bukkit as
+	 * "&lt;%s$1&gt; %s$2". This message converts from the Bukkit to the Nukkit
+	 * format.
+	 *
+	 * @param bukkit
+	 *            The Bukkit format.
+	 * @return The Mukkit format.
+	 */
+	static String bukkitToNukkitFormat(String bukkit) {
+		return String.format(bukkit, "{%0}", "{%1}");
+	}
+
+	/**
+	 * Chat messages usually have a defined format, like "&lt;Name&gt; message".
+	 * Nukkit represents this format as "&lt;{%0}&gt; {%1}", Bukkit as
+	 * "&lt;%s$1&gt; %s$2". This message converts from the Nukkit to the Bukkit
+	 * format. Note that Nukkit is zero-indexed, while Bukkit is one-indexed.
+	 *
+	 * @param nukkit
+	 *            The Nukkit format.
+	 * @return The Bukkit format.
+	 */
+	static String nukkitToBukkitFormat(String nukkit) {
+		return nukkit.replace("%", "%%") // escape for String.format
+				.replace("{%%0}", "%1$s") // replace first parameter (player
+											// name)
+				.replace("{%%1}", "%2$s"); // replace second parameter (message)
+	}
+
 	@EventHandler(ignoreCancelled = false)
 	public void onPlayerChat(cn.nukkit.event.player.PlayerChatEvent event) {
 		if (canIgnore(AsyncPlayerChatEvent.getHandlerList())) {
@@ -54,11 +85,11 @@ public final class PlayerChatEvents extends EventTranslator {
 		}
 		AsyncPlayerChatEvent bukkitEvent = new AsyncPlayerChatEvent(false, PokkitPlayer.toBukkit(event.getPlayer()),
 				event.getMessage(), new RecipientsSet(event.getRecipients()));
-		bukkitEvent.setFormat(event.getFormat());
+		bukkitEvent.setFormat(nukkitToBukkitFormat(event.getFormat()));
 
 		callCancellable(event, bukkitEvent);
 
 		event.setMessage(bukkitEvent.getMessage());
-		event.setFormat(bukkitEvent.getFormat());
+		event.setFormat(bukkitToNukkitFormat(bukkitEvent.getFormat()));
 	}
 }
