@@ -12,7 +12,6 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import cn.nukkit.event.EventHandler;
@@ -27,7 +26,7 @@ public final class PlayerInteractEvents extends EventTranslator {
 
 	@EventHandler(ignoreCancelled = false)
 	public void onMove(cn.nukkit.event.player.PlayerMoveEvent event) {
-		if (canIgnore(PlayerItemHeldEvent.getHandlerList())) {
+		if (canIgnore(PlayerMoveEvent.getHandlerList())) {
 			return;
 		}
 
