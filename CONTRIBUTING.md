@@ -8,4 +8,4 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 
 In the [README.md](./README.md) file you can find information on how to compile Pokkit. In the [IMPL_EXAMPLES.md](./IMPL_EXAMPLES.md) file, you can find information on how to write code for Pokkit.
 
-Don't worry about code formatting, just make sure that I can read your code.
+Don't worry too much about code formatting, just make sure that I can read your code. Still, if you want to know: we use tabs instead of spaces for indenting, and we place opening braces (`{`) on the same line.

@@ -1,4 +1,4 @@
-# Pokkit  [![Build Status](https://travis-ci.org/rutgerkok/Pokkit.svg?branch=master)](https://travis-ci.org/rutgerkok/Pokkit)
+# Pokkit  [![Build Status](https://circleci.com/gh/rutgerkok/Pokkit.svg?style=shield)](https://circleci.com/gh/rutgerkok/Pokkit/tree/master)
 
 The Minecraft multiplayer scene is fragmented. There are many competing server implementations. A popular server is [Spigot](http://www.spigotmc.org/). Spigot is able to load plugins, which can interact with Minecraft through the Spigot Plugin API. For Minecraft Pocket Edition, the mobile version of Minecraft, a server with a plugin API similar to Spigot exists: [Nukkit](https://forums.nukkit.io/). Unfortunately, plugins written for Spigot cannot run on Nukkit.
 
@@ -15,8 +15,8 @@ While testing your plugin, you will most likely come accross an unimplemented me
 
 To get started writing code for Pokkit, I have created a [file with examples](./IMPL_EXAMPLES.md) on how I implemented the methods.
 
-## How to use it
-Install Pokkit like you would install any Nukkit plugin: place [the JAR file](https://github.com/rutgerkok/Pokkit/releases) in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
+## Download and usage
+Download the latest release [here](https://github.com/rutgerkok/Pokkit/releases). Install Pokkit like you would install any Nukkit plugin: place the JAR file in the `plugins` directory of your Nukkit server. Start your server, then stop it again. You'll notice that a new folder has been created inside the `plugins` directory: a folder called `Pokkit`. Open this folder. Inside the folder, there a three things:
 
 * A folder called `bukkitPlugins`: place any plugin written for Spigot in this folder.
 * A file called `permissions.yml`: this is Bukkit's [permissions.yml file](http://wiki.bukkit.org/Permissions.yml).
@@ -35,15 +35,27 @@ In general, I will only fix a bug for you if happens to also affect me. Pokkit i
 
 Still, I will leave open all valid bug reports, so that anyone interested in improving Pokkit can have a look.
 
-## Pull requests
-Contributions are very much welcomed. If you have any questions, feel free to send me an e-mail (address is on my Github profile).
-
 ## License
 License is MIT, except for the files that were derived from the Bukkit project. See the [license](./LICENSE.md) file for details.
 
-## Contributors
-<!-- Feel free to change your name or link here -->
+## Pull requests
+Contributions are very much welcomed. If you have any questions, feel free to send me an e-mail (address is on my Github profile).
+
+Before you start, please read the [contribution guidelines](./CONTRIBUTING.md). I hope to be able to add your name to the list below soon!
+
+### Contributors since 2017
+* [Ankit](//github.com/AnkitM252)
 * [Langsdorf](//github.com/Langsdorf)
 * [MrPowerGamerBR](//github.com/MrPowerGamerBR)
-* [ZINGDING](//github.com/ZINGDING)
+* [NycuRO](//github.com/NycuRO)
+* [PikyCZ](//github.com/PikyCZ)
 * [Rutger Kok](//github.com/rutgerkok)
+* [SuperAlecs](//github.com/SuperAlecs)
+
+### Contributors in 2016
+* [daveboden](//github.com/daveboden)
+* [Langsdorf](//github.com/Langsdorf)
+* [MrPowerGamerBR](//github.com/MrPowerGamerBR)
+* [OliverUv](//github.com/OliverUv)
+* [Rutger Kok](//github.com/rutgerkok)
+* [ZINGDING](//github.com/ZINGDING)
