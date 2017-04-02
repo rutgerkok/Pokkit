@@ -8,23 +8,32 @@ import cn.nukkit.level.Position;
 
 public class PokkitLocation {
 
-	public static Location toBukkit(cn.nukkit.level.Location location) {
-		return new Location(PokkitWorld.toBukkit(location.getLevel()), location.getX(), location.getY(),
-				location.getZ(), (float) location.getYaw(), (float) location.getPitch());
-	}
-
-	public static Location toBukkit(cn.nukkit.level.Location location, Location toOverwrite) {
-		toOverwrite.setWorld(PokkitWorld.toBukkit(location.getLevel()));
-		toOverwrite.setX(location.getX());
-		toOverwrite.setY(location.getY());
-		toOverwrite.setZ(location.getZ());
-		toOverwrite.setYaw((float) location.getYaw());
-		toOverwrite.setPitch((float) location.getPitch());
+	public static Location toBukkit(cn.nukkit.level.Position position, Location toOverwrite) {
+		toOverwrite.setWorld(PokkitWorld.toBukkit(position.getLevel()));
+		toOverwrite.setX(position.getX());
+		toOverwrite.setY(position.getY());
+		toOverwrite.setZ(position.getZ());
+		if (position instanceof cn.nukkit.level.Location) {
+			toOverwrite.setYaw((float) ((cn.nukkit.level.Location) position).getYaw());
+			toOverwrite.setPitch((float) ((cn.nukkit.level.Location) position).getPitch());
+		}
 		return toOverwrite;
 	}
 
 	public static Location toBukkit(Position position) {
-		return new Location(PokkitWorld.toBukkit(position.getLevel()), position.getX(), position.getY(),
+		if (position instanceof cn.nukkit.level.Location) {
+			cn.nukkit.level.Location location = (cn.nukkit.level.Location) position;
+			return new Location(PokkitWorld.toBukkit(location.getLevel()),
+					location.getX(),
+					location.getY(),
+					location.getZ(),
+					(float) location.getYaw(),
+					(float) location.getPitch());
+		}
+
+		return new Location(PokkitWorld.toBukkit(position.getLevel()),
+				position.getX(),
+				position.getY(),
 				position.getZ());
 	}
 
