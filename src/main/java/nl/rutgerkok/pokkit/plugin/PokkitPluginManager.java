@@ -209,7 +209,9 @@ public final class PokkitPluginManager implements PluginManager {
 					throw new RuntimeException(
 							"Unexpected plugin type: " + nukkitPlugin + "(" + nukkitPlugin.getClass() + ")");
 				}
-				bukkitPlugins.add(PokkitPlugin.toBukkit(nukkitPlugin));
+				Plugin bukkitPlugin = PokkitPlugin.toBukkit(nukkitPlugin);
+				bukkitPlugin.onLoad();
+				bukkitPlugins.add(bukkitPlugin);
 			}
 			return bukkitPlugins.toArray(new Plugin[0]);
 		}
