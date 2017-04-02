@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
 import java.util.AbstractSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.google.common.collect.Iterators;
 
@@ -91,5 +93,20 @@ public final class PlayerChatEvents extends EventTranslator {
 
 		event.setMessage(bukkitEvent.getMessage());
 		event.setFormat(bukkitToNukkitFormat(bukkitEvent.getFormat()));
+	}
+
+	@EventHandler(ignoreCancelled = false)
+	public void onPlayerCommandPreprocess(cn.nukkit.event.player.PlayerCommandPreprocessEvent event) {
+		if (canIgnore(PlayerCommandPreprocessEvent.getHandlerList())) {
+			return;
+		}
+
+		PlayerCommandPreprocessEvent bukkitEvent = new PlayerCommandPreprocessEvent(
+				PokkitPlayer.toBukkit(event.getPlayer()),
+				event.getMessage(),
+				Collections.emptySet());
+
+		callCancellable(event, bukkitEvent);
+		event.setMessage(bukkitEvent.getMessage());
 	}
 }
