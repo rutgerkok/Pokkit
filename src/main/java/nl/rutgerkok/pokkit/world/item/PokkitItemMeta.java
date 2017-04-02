@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.world.item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.enchantment.PokkitEnchantment;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
@@ -30,8 +33,43 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
-	public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
-		throw Pokkit.unsupported();
+	public boolean addEnchant(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
+		if (level > enchantment.getMaxLevel() && !ignoreLevelRestriction) {
+			return false;
+		}
+
+		short nukkitEnchantmentId = (short) PokkitEnchantment.toNukkit(enchantment);
+
+		ListTag<CompoundTag> enchTag;
+		if (!hasEnchants()) {
+			enchTag = new ListTag<>("ench");
+			tag.putList(enchTag);
+		} else {
+			enchTag = tag.getList("ench", CompoundTag.class);
+		}
+
+		// Try to modify an existing enchantment first
+		boolean modifiedATag = false;
+		for (int i = 0; i < enchTag.size(); i++) {
+			CompoundTag entry = enchTag.get(i);
+			if (entry.getShort("id") == nukkitEnchantmentId) {
+				// The add method actually replaces a tag
+				enchTag.add(i, new CompoundTag()
+						.putShort("id", nukkitEnchantmentId)
+						.putShort("lvl", level));
+				modifiedATag = true;
+				break;
+			}
+		}
+
+		// Else, add this enchantment as a new enchantment
+		if (!modifiedATag) {
+			enchTag.add(new CompoundTag()
+					.putShort("id", nukkitEnchantmentId)
+					.putShort("lvl", level));
+		}
+
+		return true;
 	}
 
 	@Override
@@ -74,13 +112,39 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
-	public int getEnchantLevel(Enchantment ench) {
-		throw Pokkit.unsupported();
+	public int getEnchantLevel(Enchantment enchantment) {
+		int nukkitEnchantmentId = PokkitEnchantment.toNukkit(enchantment);
+
+		if (!hasEnchants()) {
+			return 0;
+		}
+
+		ListTag<CompoundTag> enchTag = tag.getList("ench", CompoundTag.class);
+		for (int i = 0; i < enchTag.size(); i++) {
+			CompoundTag entry = enchTag.get(i);
+			if (entry.getShort("id") == nukkitEnchantmentId) {
+				return entry.getShort("lvl");
+			}
+		}
+
+		return 0;
 	}
 
 	@Override
 	public Map<Enchantment, Integer> getEnchants() {
-		throw Pokkit.unsupported();
+		if (!hasEnchants()) {
+			return Collections.emptyMap();
+		}
+
+		ImmutableMap.Builder<Enchantment, Integer> map = new ImmutableMap.Builder<>();
+
+		ListTag<CompoundTag> enchTag = tag.getList("ench", CompoundTag.class);
+		for (int i = 0; i < enchTag.size(); i++) {
+			CompoundTag entry = enchTag.get(i);
+			map.put(PokkitEnchantment.toBukkit(entry.getShort("id")), entry.getShort("lvl"));
+		}
+
+		return map.build();
 	}
 
 	@Override
@@ -109,7 +173,12 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public boolean hasConflictingEnchant(Enchantment ench) {
-		throw Pokkit.unsupported();
+		for (Enchantment onItem : getEnchants().keySet()) {
+			if (onItem.conflictsWith(ench)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -122,22 +191,36 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
-	public boolean hasEnchant(Enchantment ench) {
-		throw Pokkit.unsupported();
+	public boolean hasEnchant(Enchantment enchantment) {
+		int nukkitEnchantmentId = PokkitEnchantment.toNukkit(enchantment);
+
+		if (!hasEnchants()) {
+			return false;
+		}
+
+		ListTag<CompoundTag> enchTag = tag.getList("ench", CompoundTag.class);
+		for (int i = 0; i < enchTag.size(); i++) {
+			CompoundTag entry = enchTag.get(i);
+			if (entry.getShort("id") == nukkitEnchantmentId) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean hasEnchants() {
-        CompoundTag tag = this.tag;
+		CompoundTag tag = this.tag;
 
-        if (tag.contains("ench")) {
-            Tag enchTag = tag.get("ench");
-            if (enchTag instanceof ListTag) {
-                return true;
-            }
-        }
+		if (tag.contains("ench")) {
+			Tag enchTag = tag.get("ench");
+			if (enchTag instanceof ListTag) {
+				return ((ListTag<?>) enchTag).size() > 0;
+			}
+		}
 
-        return false;
+		return false;
 	}
 
 	@Override
@@ -170,8 +253,30 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
-	public boolean removeEnchant(Enchantment ench) {
-		throw Pokkit.unsupported();
+	public boolean removeEnchant(Enchantment enchantment) {
+		if (!hasEnchants()) {
+			return false;
+		}
+
+		int nukkitEnchantmentId = PokkitEnchantment.toNukkit(enchantment);
+
+		ListTag<CompoundTag> enchTag = tag.getList("ench", CompoundTag.class);
+		for (int i = 0; i < enchTag.size(); i++) {
+			CompoundTag entry = enchTag.get(i);
+			if (entry.getShort("id") == nukkitEnchantmentId) {
+				// Found enchantment of right type, remove
+				enchTag.remove(i);
+
+				if (enchTag.size() == 0) {
+					// No enchantments remain, remove tag
+					tag.remove("ench");
+				}
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

@@ -88,6 +88,7 @@ public final class PokkitItemStack {
 		cn.nukkit.item.Item nukkit = Item.get(materialData.getNukkitId(), materialData.getNukkitDamage(),
 				bukkit.getAmount());
 
+		// Convert item meta
 		if (bukkit.hasItemMeta()) {
 			PokkitItemMeta meta = (PokkitItemMeta) bukkit.getItemMeta();
 			nukkit.setNamedTag(meta.getTag());

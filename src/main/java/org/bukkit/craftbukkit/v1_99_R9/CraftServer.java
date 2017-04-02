@@ -24,6 +24,7 @@ import nl.rutgerkok.pokkit.PokkitUnsafe;
 import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.command.PokkitCommandFetcher;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
+import nl.rutgerkok.pokkit.enchantment.PokkitEnchantment;
 import nl.rutgerkok.pokkit.inventory.custom.PokkitCustomInventory;
 import nl.rutgerkok.pokkit.metadata.AllMetadataStore;
 import nl.rutgerkok.pokkit.player.OnlinePlayerData;
@@ -130,6 +131,8 @@ public final class CraftServer extends Server.Spigot implements Server {
 		this.itemFactory = new PokkitItemFactory();
 		this.helpMap = new PokkitHelpMap();
 		this.messenger = new PokkitPluginMessenger();
+
+		PokkitEnchantment.registerNukkitEnchantmentsInBukkit();
 	}
 
 	@Override
