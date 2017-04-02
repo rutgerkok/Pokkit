@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
+
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Location;
@@ -13,9 +16,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 
 import cn.nukkit.level.Level;
-
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
 
 public final class PokkitChunk implements Chunk {
 
@@ -59,7 +59,7 @@ public final class PokkitChunk implements Chunk {
 	public Entity[] getEntities() {
 		Level level = PokkitWorld.toNukkit(world);
 		List<Entity> entitiesInChunk = new ArrayList<Entity>();
-		
+
 		for (cn.nukkit.entity.Entity entity : level.getChunk(chunkX, chunkZ).getEntities().values()) {
 			entitiesInChunk.add(PokkitEntity.toBukkit(entity));
 		}
@@ -90,6 +90,11 @@ public final class PokkitChunk implements Chunk {
 	@Override
 	public boolean isLoaded() {
 		return world.isChunkLoaded(chunkX, chunkZ);
+	}
+
+	@Override
+	public boolean isSlimeChunk() {
+		return false; // silently unsupported, there are no slimes yet in Nukkit
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import nl.rutgerkok.pokkit.inventory.PokkitInventory;
 import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.Block;
@@ -33,11 +32,7 @@ public class InventoryEvents extends EventTranslator {
 			return;
 		}
 
-		// TODO: Implement PokkitItemEntity
-		PokkitItemEntity pokkit = new PokkitItemEntity();
-		pokkit.level = event.getPlayer().getLevel();
-		pokkit.item = event.getItem();
-		pokkit.location = event.getPlayer().getLocation();
+		PokkitItemEntity pokkit = new PokkitItemEntity(event.getItem(), event.getPlayer().getLocation());
 		PlayerDropItemEvent bukkitEvent = new PlayerDropItemEvent(PokkitPlayer.toBukkit(event.getPlayer()), pokkit);
 		callCancellable(event, bukkitEvent);
 	}

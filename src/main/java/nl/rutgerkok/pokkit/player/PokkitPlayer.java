@@ -29,7 +29,6 @@ import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Achievement;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
@@ -103,13 +102,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		PokkitPlayer instance = this;
 		this.spigot = new Player.Spigot() {
-            @Override
-            public boolean getCollidesWithEntities() {
-            	return nukkit.canCollide();
-            }
+			@Override
+			public boolean getCollidesWithEntities() {
+				return nukkit.canCollide();
+			}
 
-            @Override
-            public Set<Player> getHiddenPlayers() {
+			@Override
+			public Set<Player> getHiddenPlayers() {
 				Set<Player> hiddenPlayers = new HashSet<>();
 				for (Player player : getServer().getOnlinePlayers()) {
 					if (!canSee(player)) {
@@ -117,44 +116,44 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 					}
 				}
 				return hiddenPlayers;
-            }
+			}
 
-            @Override
-            public String getLocale() {
-            	return nukkit.getLocale().toString();
-            }
+			@Override
+			public String getLocale() {
+				return nukkit.getLocale().toString();
+			}
 
-            @Override
-            public InetSocketAddress getRawAddress() {
-            	return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
-            }
+			@Override
+			public InetSocketAddress getRawAddress() {
+				return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
+			}
 
-            @Override
+			@Override
 			public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
 					float offsetZ, float speed, int particleCount, int radius) {
-                // Silently unsupported!
-            }
+				// Silently unsupported!
+			}
 
-            @Override
-            public void respawn() {
-            	throw Pokkit.unsupported();
-            }
+			@Override
+			public void respawn() {
+				throw Pokkit.unsupported();
+			}
 
-            @Override
-        	public void sendMessage(BaseComponent component) {
-            	instance.sendMessage(component.toLegacyText());
-        	}
+			@Override
+			public void sendMessage(BaseComponent component) {
+				instance.sendMessage(component.toLegacyText());
+			}
 
-            @Override
-        	public void sendMessage(BaseComponent... components) {
-        		StringBuilder text = new StringBuilder();
-        		for (BaseComponent component : components) {
-        			text.append(component.toLegacyText());
-        		}
-        		instance.sendMessage(text.toString());
-        	}
+			@Override
+			public void sendMessage(BaseComponent... components) {
+				StringBuilder text = new StringBuilder();
+				for (BaseComponent component : components) {
+					text.append(component.toLegacyText());
+				}
+				instance.sendMessage(text.toString());
+			}
 
-        	@Override
+			@Override
 			public void sendMessage(ChatMessageType position, BaseComponent component) {
 				switch (position) {
 					case CHAT:
@@ -165,9 +164,9 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 					default:
 						throw Pokkit.unsupported();
 				}
-            }
+			}
 
-            @Override
+			@Override
 			public void sendMessage(ChatMessageType position, BaseComponent... components) {
 				switch (position) {
 					case CHAT:
@@ -178,13 +177,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 					default:
 						throw Pokkit.unsupported();
 				}
-            }
+			}
 
-            @Override
+			@Override
 			public void setCollidesWithEntities(boolean collides) {
 				setCollidable(collides);
-            }
-        };
+			}
+		};
 	}
 
 	@Override
@@ -248,7 +247,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void awardAchievement(Achievement arg0) {
+	public void awardAchievement(@SuppressWarnings("deprecation") org.bukkit.Achievement achievement) {
 		// Silently unsupported!
 	}
 
@@ -266,10 +265,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	public void chat(String message) {
 		 String msg = message = nukkit.getRemoveFormat() ? TextFormat.clean(message) : message;
 		 PlayerChatEvent chatEvent = new PlayerChatEvent(toNukkit(this), msg);
-         nukkit.getServer().getPluginManager().callEvent(chatEvent);
-         if (!chatEvent.isCancelled()) {
-        	 nukkit.getServer().broadcastMessage(nukkit.getServer().getLanguage().translateString(chatEvent.getFormat(), new String[]{chatEvent.getPlayer().getDisplayName(), chatEvent.getMessage()}), chatEvent.getRecipients());
-         }
+		nukkit.getServer().getPluginManager().callEvent(chatEvent);
+		if (!chatEvent.isCancelled()) {
+			nukkit.getServer().broadcastMessage(
+					nukkit.getServer().getLanguage().translateString(chatEvent.getFormat(),
+							new String[] { chatEvent.getPlayer().getDisplayName(), chatEvent.getMessage() }),
+					chatEvent.getRecipients());
+		}
 	}
 
 	@Override
@@ -416,20 +418,20 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public double getEyeHeight(boolean ignoreSneaking) {
-        if (ignoreSneaking) {
-            return 1.62;
-        }
-        if (this.isSneaking()) {
-            return 1.54;
-        }
-        return 1.62;
+		if (ignoreSneaking) {
+			return 1.62;
+		}
+		if (this.isSneaking()) {
+			return 1.54;
+		}
+		return 1.62;
 	}
 
 	@Override
 	public Location getEyeLocation() {
-        final Location loc = this.getLocation();
-        loc.setY(loc.getY() + this.getEyeHeight());
-        return loc;
+		final Location loc = this.getLocation();
+		loc.setY(loc.getY() + this.getEyeHeight());
+		return loc;
 	}
 
 	@Override
@@ -555,15 +557,18 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public int getStatistic(Statistic arg0) throws IllegalArgumentException {
-	    switch (arg0) {
-	    case PLAY_ONE_TICK:
-	        long first = nukkit.getFirstPlayed();
-	        long diff = System.currentTimeMillis() - first; // This is the difference in millis
-	        int seconds = (int) (diff / 1000) % 60; // And this is the difference in seconds
-	        return seconds * 20; // And this is in ticks
-	    default:
-	        break;
-	    }
+		switch (arg0) {
+		case PLAY_ONE_TICK:
+			long first = nukkit.getFirstPlayed();
+			long diff = System.currentTimeMillis() - first; // This is the
+															// difference in
+															// millis
+			int seconds = (int) (diff / 1000) % 60; // And this is the
+													// difference in seconds
+			return seconds * 20; // And this is in ticks
+		default:
+			break;
+		}
 		throw Pokkit.unsupported();
 	}
 
@@ -613,7 +618,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public boolean hasAchievement(Achievement arg0) {
+	public boolean hasAchievement(@SuppressWarnings("deprecation") org.bukkit.Achievement achievement) {
 		return true; // TODO: When achievements are properly implemented in Nukkit, change this to use Nukkit's API!
 	}
 
@@ -737,11 +742,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean isPermissionSet(String permission) {
-	    try {
-	        return nukkit.isPermissionSet(permission);
-	    } catch (NullPointerException e) { // WorldGuard workaround
-	        return false;
-	    }
+		try {
+			return nukkit.isPermissionSet(permission);
+		} catch (NullPointerException e) { // WorldGuard workaround
+			return false;
+		}
 	}
 
 	@Override
@@ -828,12 +833,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void playEffect(Location arg0, Effect arg1, int arg2) {
-	    // Silently unsupported!
+		// Silently unsupported!
 	}
 
 	@Override
 	public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-	    // Silently unsupported!
+		// Silently unsupported!
 	}
 
 	@Override
@@ -890,7 +895,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void removeAchievement(Achievement arg0) {
+	public void removeAchievement(@SuppressWarnings("deprecation") org.bukkit.Achievement achievement) {
 		throw Pokkit.unsupported();
 
 	}
@@ -955,7 +960,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		packet.z = z;
 		packet.blockId = nukkitBlockId;
 		packet.blockData = nukkitBlockData;
-        packet.flags = flags;
+		packet.flags = flags;
 		nukkit.dataPacket(packet, false);
 	}
 
@@ -1078,18 +1083,18 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setFallDistance(float arg0) {
-		nukkit.fallDistance = arg0;
+	public void setFallDistance(float fallDistance) {
+		nukkit.fallDistance = fallDistance;
 	}
 
 	@Override
-	public void setFireTicks(int arg0) {
-		nukkit.fireTicks = arg0;
+	public void setFireTicks(int fireTicks) {
+		nukkit.fireTicks = fireTicks;
 	}
 
 	@Override
-	public void setFlying(boolean arg0) {
-		nukkit.getAdventureSettings().setFlying(arg0);
+	public void setFlying(boolean flying) {
+		nukkit.getAdventureSettings().setFlying(flying);
 
 	}
 
@@ -1167,9 +1172,14 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setResourcePack(String arg0) {
+	public void setResourcePack(String url) {
 		throw Pokkit.unsupported();
 
+	}
+
+	@Override
+	public void setResourcePack(String url, byte[] hash) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override

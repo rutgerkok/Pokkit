@@ -56,6 +56,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
@@ -326,6 +327,11 @@ public final class CraftServer extends Server.Spigot implements Server {
 	@Override
 	public GameMode getDefaultGameMode() {
 		return PokkitGameMode.toBukkit(nukkit.getDefaultGamemode());
+	}
+
+	@Override
+	public Entity getEntity(UUID uuid) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override

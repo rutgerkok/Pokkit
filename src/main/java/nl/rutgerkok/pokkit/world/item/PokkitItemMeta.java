@@ -89,6 +89,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
+	public String getLocalizedName() {
+		return null; // Silently unsupported
+	}
+
+	@Override
 	public List<String> getLore() {
 		return new ArrayList<>();
 	}
@@ -146,6 +151,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
+	public boolean hasLocalizedName() {
+		return false; // Silently unsupported
+	}
+
+	@Override
 	public boolean hasLore() {
 		return false;
 	}
@@ -191,6 +201,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 		CompoundTag displayTag = tag.getCompound("display");
 		displayTag.putString("Name", name);
 		tag.putCompound("display", displayTag);
+	}
+
+	@Override
+	public void setLocalizedName(String name) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override

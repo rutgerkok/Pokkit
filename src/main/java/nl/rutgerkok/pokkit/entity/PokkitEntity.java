@@ -83,6 +83,11 @@ public class PokkitEntity implements Entity {
     }
 
     @Override
+	public boolean addPassenger(Entity passenger) {
+		throw Pokkit.unsupported();
+	}
+
+    @Override
     public boolean addScoreboardTag(String tag) {
         throw Pokkit.unsupported();
     }
@@ -116,6 +121,11 @@ public class PokkitEntity implements Entity {
     public int getFireTicks() {
         return nukkit.fireTicks;
     }
+
+    @Override
+	public double getHeight() {
+		return nukkit.getHeight();
+	}
 
     @Override
     public EntityDamageEvent getLastDamageCause() {
@@ -164,6 +174,11 @@ public class PokkitEntity implements Entity {
     public Entity getPassenger() {
         return PokkitEntity.toBukkit(nukkit.riding);
     }
+
+    @Override
+	public List<Entity> getPassengers() {
+		throw Pokkit.unsupported();
+	}
 
     @Override
     public int getPortalCooldown() {
@@ -263,6 +278,11 @@ public class PokkitEntity implements Entity {
     public Vector getVelocity() {
         return new Vector(nukkit.motionX, nukkit.motionY, nukkit.motionZ);
     }
+
+    @Override
+	public double getWidth() {
+		return nukkit.getWidth();
+	}
 
     @Override
     public World getWorld() {
@@ -399,6 +419,11 @@ public class PokkitEntity implements Entity {
     }
 
     @Override
+	public boolean removePassenger(Entity passenger) {
+		throw Pokkit.unsupported();
+	}
+
+    @Override
     public boolean removeScoreboardTag(String tag) {
         throw Pokkit.unsupported();
     }
@@ -494,7 +519,7 @@ public class PokkitEntity implements Entity {
         nukkit.setMotion(new Vector3(velocity.getX(), velocity.getY(), velocity.getZ()));
     }
 
-    @Override
+	@Override
     public Entity.Spigot spigot() {
         return new Entity.Spigot() {
             @Override
@@ -504,22 +529,22 @@ public class PokkitEntity implements Entity {
         };
     }
 
-    @Override
+	@Override
     public boolean teleport(Entity entity) {
         return teleport(entity.getLocation());
     }
 
-    @Override
-    public boolean teleport(Entity entity, TeleportCause cause) {
-        return teleport(entity.getLocation(), cause);
-    }
+	@Override
+	public boolean teleport(Entity entity, TeleportCause cause) {
+		return teleport(entity.getLocation(), cause);
+	}
 
-    @Override
-    public boolean teleport(Location location) {
-        return nukkit.teleport(PokkitLocation.toNukkit(location));
-    }
+	@Override
+	public boolean teleport(Location location) {
+		return nukkit.teleport(PokkitLocation.toNukkit(location));
+	}
 
-    @Override
+	@Override
     public boolean teleport(Location location, TeleportCause cause) {
         return nukkit.teleport(PokkitLocation.toNukkit(location), PokkitTeleportCause.toNukkit(cause));
     }
