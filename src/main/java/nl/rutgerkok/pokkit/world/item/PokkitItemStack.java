@@ -94,8 +94,6 @@ public final class PokkitItemStack {
 			nukkit.setNamedTag(meta.getTag());
 		}
 
-		// For the future, we'll want to support item meta, like names,
-		// enchantments, etc.
 		return nukkit;
 	}
 }
