@@ -43,16 +43,17 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 
 Before you start, please read the [contribution guidelines](./CONTRIBUTING.md). I hope to be able to add your name to the list below soon!
 
-### Contributors since 2017
+### Contributed code since 2017
 * [Ankit](//github.com/AnkitM252)
 * [Langsdorf](//github.com/Langsdorf)
 * [MrPowerGamerBR](//github.com/MrPowerGamerBR)
 * [NycuRO](//github.com/NycuRO)
 * [PikyCZ](//github.com/PikyCZ)
+* [RaynLegends](//github.com/RaynLegends)
 * [Rutger Kok](//github.com/rutgerkok)
 * [SuperAlecs](//github.com/SuperAlecs)
 
-### Contributors in 2016
+### Contributed code in 2016
 * [daveboden](//github.com/daveboden)
 * [Langsdorf](//github.com/Langsdorf)
 * [MrPowerGamerBR](//github.com/MrPowerGamerBR)

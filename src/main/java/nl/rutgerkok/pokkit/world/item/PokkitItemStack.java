@@ -82,7 +82,7 @@ public final class PokkitItemStack {
 
 	public static final cn.nukkit.item.Item toNukkitCopy(ItemStack bukkit) {
 		if (bukkit == null) {
-			return null;
+			return Item.get(Item.AIR);
 		}
 		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(bukkit.getType(), bukkit.getDurability());
 		cn.nukkit.item.Item nukkit = Item.get(materialData.getNukkitId(), materialData.getNukkitDamage(),
@@ -94,8 +94,6 @@ public final class PokkitItemStack {
 			nukkit.setNamedTag(meta.getTag());
 		}
 
-		// For the future, we'll want to support item meta, like names,
-		// enchantments, etc.
 		return nukkit;
 	}
 }
