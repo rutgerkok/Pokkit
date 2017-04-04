@@ -358,8 +358,15 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public List<LivingEntity> getLivingEntities() {
-		throw Pokkit.unsupported();
-
+		List<LivingEntity> livingEntities = new ArrayList<LivingEntity>();
+		
+		for (Entity entity : getEntities()) {
+			if (entity != null && entity instanceof LivingEntity) {
+				livingEntities.add((LivingEntity) entity);
+			}
+		}
+		
+		return livingEntities;
 	}
 
 	@Override
