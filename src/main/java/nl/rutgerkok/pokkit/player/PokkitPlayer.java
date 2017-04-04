@@ -606,15 +606,13 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void giveExp(int arg0) {
-		throw Pokkit.unsupported();
-
+	public void giveExp(int exp) {
+		nukkit.addExperience(exp);
 	}
 
 	@Override
-	public void giveExpLevels(int arg0) {
-		throw Pokkit.unsupported();
-
+	public void giveExpLevels(int levels) {
+		nukkit.setExperience(nukkit.getExperience(), nukkit.getExperienceLevel() + levels);
 	}
 
 	@Override
@@ -924,8 +922,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void resetTitle() {
-		throw Pokkit.unsupported();
-
+		nukkit.clearTitle();
 	}
 
 	@Override
@@ -1133,9 +1130,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setLevel(int arg0) {
-		throw Pokkit.unsupported();
-
+	public void setLevel(int level) {
+		nukkit.setExperience(nukkit.getExperience(), level);
 	}
 
 	@Override

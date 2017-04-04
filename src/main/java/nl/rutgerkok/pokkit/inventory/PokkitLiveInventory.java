@@ -262,12 +262,36 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 
 	@Override
 	public void remove(ItemStack item) {
-		throw Pokkit.unsupported();
+		if (item == null) {
+			return;
+		}
+		
+		ItemStack[] contents = getContents();
+		
+		for (int i = 0; i < contents.length; i++) {
+			if (contents[i] != null && contents[i].equals(item)) {
+				contents[i] = null;
+			}
+		}
+		
+		setContents(contents);
 	}
 
 	@Override
 	public void remove(Material material) throws IllegalArgumentException {
-		throw Pokkit.unsupported();
+		if (material == null) {
+			return;
+		}
+		
+		ItemStack[] contents = getContents();
+		
+		for (int i = 0; i < contents.length; i++) {
+			if (contents[i] != null && contents[i].getType().equals(material)) {
+				contents[i] = null;
+			}
+		}
+		
+		setContents(contents);
 	}
 
 	@Override
