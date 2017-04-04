@@ -236,6 +236,12 @@ public final class CraftServer extends Server.Spigot implements Server {
 		if (alreadyLoaded != null) {
 			return alreadyLoaded;
 		}
+		
+		if (nukkit.isLevelGenerated(creator.name())) {
+			nukkit.loadLevel(creator.name());
+			World alreadyGenerated = this.getWorld(creator.name());
+			return alreadyGenerated;
+		}
 
 		if (creator.environment() != Environment.NORMAL) {
 			throw new IllegalArgumentException("No Nether or End support yet");
