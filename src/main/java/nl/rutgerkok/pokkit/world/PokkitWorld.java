@@ -358,11 +358,11 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public List<LivingEntity> getLivingEntities() {
-		List<LivingEntity> livingEntities = new ArrayList<LivingEntity>();
+		List<LivingEntity> livingEntities = new ArrayList<>();
 		
-		for (Entity entity : getEntities()) {
-			if (entity != null && entity instanceof LivingEntity) {
-				livingEntities.add((LivingEntity) entity);
+		for (cn.nukkit.entity.Entity entity : nukkit.getEntities()) {
+			if (entity instanceof cn.nukkit.entity.EntityLiving) {
+		 		livingEntities.add((LivingEntity) PokkitEntity.toBukkit(entity));
 			}
 		}
 		
