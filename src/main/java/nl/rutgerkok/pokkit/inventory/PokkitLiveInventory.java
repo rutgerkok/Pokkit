@@ -6,9 +6,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;

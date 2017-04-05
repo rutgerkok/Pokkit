@@ -2,8 +2,8 @@ package nl.rutgerkok.pokkit;
 
 import java.util.List;
 
+import nl.rutgerkok.pokkit.item.PokkitItemMeta;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.world.item.PokkitItemMeta;
 
 import org.bukkit.Achievement;
 import org.bukkit.Material;

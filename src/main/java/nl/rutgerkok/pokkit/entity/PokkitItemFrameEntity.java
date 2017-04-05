@@ -1,7 +1,7 @@
 package nl.rutgerkok.pokkit.entity;
 
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 
 import org.bukkit.Rotation;
 import org.bukkit.block.BlockFace;

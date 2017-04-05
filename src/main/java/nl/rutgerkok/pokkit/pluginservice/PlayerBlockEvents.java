@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 
 import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;

@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit.world.item;
+package nl.rutgerkok.pokkit.item;
 
 import org.bukkit.Color;
 import org.bukkit.inventory.meta.LeatherArmorMeta;

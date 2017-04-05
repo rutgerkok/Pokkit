@@ -3,7 +3,7 @@ package nl.rutgerkok.pokkit.enchantment;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import nl.rutgerkok.pokkit.world.item.PokkitItemFactory;
+import nl.rutgerkok.pokkit.item.PokkitItemFactory;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

@@ -10,8 +10,8 @@ import nl.rutgerkok.pokkit.entity.PokkitDamageCause;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitItemFrameEntity;
 import nl.rutgerkok.pokkit.entity.PokkitLivingEntity;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creeper;

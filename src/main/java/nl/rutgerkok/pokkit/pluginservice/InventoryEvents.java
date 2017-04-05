@@ -3,9 +3,9 @@ package nl.rutgerkok.pokkit.pluginservice;
 import nl.rutgerkok.pokkit.entity.PokkitItemEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitInventory;
 import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
 import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.inventory.FurnaceBurnEvent;

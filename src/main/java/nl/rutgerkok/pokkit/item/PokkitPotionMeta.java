@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit.world.item;
+package nl.rutgerkok.pokkit.item;
 
 import java.util.ArrayList;
 import java.util.List;

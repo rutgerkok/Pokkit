@@ -18,10 +18,10 @@ import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
 import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;

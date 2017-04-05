@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;

@@ -3,7 +3,7 @@ package nl.rutgerkok.pokkit.entity;
 import java.util.Objects;
 
 import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;

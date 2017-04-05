@@ -26,6 +26,7 @@ import nl.rutgerkok.pokkit.command.PokkitCommandFetcher;
 import nl.rutgerkok.pokkit.command.PokkitCommandSender;
 import nl.rutgerkok.pokkit.enchantment.PokkitEnchantment;
 import nl.rutgerkok.pokkit.inventory.custom.PokkitCustomInventory;
+import nl.rutgerkok.pokkit.item.PokkitItemFactory;
 import nl.rutgerkok.pokkit.metadata.AllMetadataStore;
 import nl.rutgerkok.pokkit.player.OnlinePlayerData;
 import nl.rutgerkok.pokkit.player.PokkitOfflinePlayer;
@@ -35,7 +36,6 @@ import nl.rutgerkok.pokkit.scheduler.PokkitScheduler;
 import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboardManager;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
 import nl.rutgerkok.pokkit.world.PokkitWorldType;
-import nl.rutgerkok.pokkit.world.item.PokkitItemFactory;
 
 import org.bukkit.BanList;
 import org.bukkit.BanList.Type;

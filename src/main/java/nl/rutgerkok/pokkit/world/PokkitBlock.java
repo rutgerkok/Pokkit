@@ -7,9 +7,9 @@ import java.util.Objects;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

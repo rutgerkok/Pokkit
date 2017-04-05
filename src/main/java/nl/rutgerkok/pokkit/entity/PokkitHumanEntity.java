@@ -2,8 +2,8 @@ package nl.rutgerkok.pokkit.entity;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.inventory.PokkitPlayerInventory;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

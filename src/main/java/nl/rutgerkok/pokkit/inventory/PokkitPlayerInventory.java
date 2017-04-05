@@ -11,7 +11,7 @@ import cn.nukkit.item.Item;
 
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
-import nl.rutgerkok.pokkit.world.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 
 public final class PokkitPlayerInventory extends PokkitLiveInventory implements PlayerInventory {
 

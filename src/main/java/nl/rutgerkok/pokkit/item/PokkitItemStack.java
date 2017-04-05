@@ -1,4 +1,4 @@
-package nl.rutgerkok.pokkit.world.item;
+package nl.rutgerkok.pokkit.item;
 
 import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 
