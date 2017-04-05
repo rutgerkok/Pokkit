@@ -1,6 +1,5 @@
 package nl.rutgerkok.pokkit.item;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -159,7 +158,7 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public List<String> getLore() {
-		return new ArrayList<>();
+		return null;
 	}
 
 	/**
