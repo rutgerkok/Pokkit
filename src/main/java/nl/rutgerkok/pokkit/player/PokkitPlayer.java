@@ -407,8 +407,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public float getExp() {
-		return nukkit.getExperience();
-
+		return cn.nukkit.entity.Attribute.getAttribute(cn.nukkit.entity.Attribute.EXPERIENCE).getValue();
 	}
 
 	@Override
@@ -1074,9 +1073,10 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	public void setExp(float arg0) {
-		nukkit.setExperience((int) arg0);
-
+	public void setExp(float exp) {
+		if (nukkit.spawned) {
+			nukkit.setAttribute(cn.nukkit.entity.Attribute.getAttribute(cn.nukkit.entity.Attribute.EXPERIENCE).setValue(exp));
+		}
 	}
 
 	@Override
