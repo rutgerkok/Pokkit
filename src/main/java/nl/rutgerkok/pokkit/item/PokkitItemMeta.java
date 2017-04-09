@@ -160,23 +160,22 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public List<String> getLore() {
-		List<String> lore = new ArrayList<>();
-		
 		if (!hasLore()) {
-			return lore;
+			return null;
 		}
-		
+
+		List<String> lore = new ArrayList<>();
 		CompoundTag displayTag = tag.getCompound("display");
 		ListTag<? extends Tag> loreListTag = displayTag.getList("Lore");
-		
+
 		for (Tag tag : loreListTag.getAll()) {
 			if (!(tag instanceof StringTag)) {
 				continue;
 			}
-			
+
 			lore.add(((StringTag) tag).data);
 		}
-		
+
 		return lore;
 	}
 
@@ -262,7 +261,16 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 			return false;
 		}
 		CompoundTag displayTag = tag.getCompound("display");
-		return displayTag.contains("Lore");
+		if (!displayTag.contains("Lore")) {
+			return false;
+		}
+
+		Tag loreTag = displayTag.get("Lore");
+		if (loreTag instanceof ListTag) {
+			return ((ListTag<?>) loreTag).size() > 0;
+		}
+
+		return false;
 	}
 
 	boolean isApplicable(Material material) {
@@ -337,17 +345,21 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public void setLore(List<String> lore) {
-		ListTag<StringTag> loreListTag = new ListTag<>("Lore");
-		
-		if (lore != null) {
+		CompoundTag displayTag = tag.getCompound("display");
+
+		if (lore == null || lore.isEmpty()) {
+			// Remove the lore
+			displayTag.remove("Lore");
+		} else {
+			// Set the lore
+			ListTag<StringTag> loreListTag = new ListTag<>("Lore");
 			for (String line : lore) {
 				loreListTag.add(new StringTag("", line));
 			}
+			displayTag.putList(loreListTag);
 		}
-		
-		CompoundTag displayTag = tag.getCompound("display");
-		displayTag.putList(loreListTag);
-		tag.putCompound("display", displayTag);
+
+		setOrRemoveChildTag(tag, "display", displayTag);
 	}
 
 	/**
