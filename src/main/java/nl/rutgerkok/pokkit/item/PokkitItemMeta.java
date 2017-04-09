@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.item;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.nbt.tag.StringTag;
 import cn.nukkit.nbt.tag.Tag;
 
 public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
@@ -158,7 +160,24 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public List<String> getLore() {
-		return null;
+		List<String> lore = new ArrayList<>();
+		
+		if (!hasLore()) {
+			return lore;
+		}
+		
+		CompoundTag displayTag = tag.getCompound("display");
+		ListTag<? extends Tag> loreListTag = displayTag.getList("Lore");
+		
+		for (Tag tag : loreListTag.getAll()) {
+			if (!(tag instanceof StringTag)) {
+				continue;
+			}
+			
+			lore.add(((StringTag) tag).data);
+		}
+		
+		return lore;
 	}
 
 	/**
@@ -239,7 +258,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public boolean hasLore() {
-		return false;
+		if (!tag.contains("display")) {
+			return false;
+		}
+		CompoundTag displayTag = tag.getCompound("display");
+		return displayTag.contains("Lore");
 	}
 
 	boolean isApplicable(Material material) {
@@ -314,7 +337,17 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 
 	@Override
 	public void setLore(List<String> lore) {
-		// Not supported
+		ListTag<StringTag> loreListTag = new ListTag<>("Lore");
+		
+		if (lore != null) {
+			for (String line : lore) {
+				loreListTag.add(new StringTag("", line));
+			}
+		}
+		
+		CompoundTag displayTag = tag.getCompound("display");
+		displayTag.putList(loreListTag);
+		tag.putCompound("display", displayTag);
 	}
 
 	/**
