@@ -176,10 +176,14 @@ public final class PlayerBlockEvents extends EventTranslator {
 		}
 
 		cn.nukkit.block.Block spreading = event.getBlock();
+		cn.nukkit.block.Block newState = event.getNewState();
+		
+		newState.position(spreading);
+		newState.setLevel(spreading.level);
 
 		BlockSpreadEvent bukkitEvent = new BlockSpreadEvent(PokkitBlock.toBukkit(spreading),
-				PokkitBlock.toBukkit(event.getNewState()),
-				PokkitBlockState.getBlockState(PokkitBlock.toBukkit(event.getNewState())));
+				PokkitBlock.toBukkit(newState),
+				PokkitBlockState.getBlockState(PokkitBlock.toBukkit(newState)));
 		callCancellable(event, bukkitEvent);
 	}
 
