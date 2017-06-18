@@ -7,6 +7,7 @@ import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
@@ -149,6 +150,21 @@ public class PokkitHumanEntity extends PokkitLivingEntity implements HumanEntity
 
 	@Override
 	public boolean setWindowProperty(Property prop, int value) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public int getCooldown(Material material) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean hasCooldown(Material material) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setCooldown(Material material, int cooldown) {
 		throw Pokkit.unsupported();
 	}
 }

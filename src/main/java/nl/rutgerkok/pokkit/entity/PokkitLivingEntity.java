@@ -59,13 +59,13 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public void _INVALID_damage(int arg0) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, arg0);
 		nukkit.attack(e);
 	}
 
 	@Override
 	public void _INVALID_damage(int arg0, Entity arg1) {
-		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, arg0);
+		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, arg0);
 		nukkit.attack(e);
 	}
 
@@ -122,13 +122,13 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public void damage(double arg0) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, (float) arg0);
 		nukkit.attack(e);
 	}
 
 	@Override
 	public void damage(double arg0, Entity arg1) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.CAUSE_CUSTOM, (float) arg0);
+		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, (float) arg0);
 		nukkit.attack(e);
 	}
 

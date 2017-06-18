@@ -4,25 +4,21 @@ import org.bukkit.block.BlockFace;
 
 public final class PokkitBlockFace {
 
-	public static BlockFace toBukkit(int nukkit) {
+	public static BlockFace toBukkit(cn.nukkit.math.BlockFace nukkit) {
 		switch (nukkit) {
-		case cn.nukkit.math.Vector3.SIDE_DOWN:
+		case DOWN:
 			return BlockFace.DOWN;
-		case cn.nukkit.math.Vector3.SIDE_UP:
+		case UP:
 			return BlockFace.UP;
-		case cn.nukkit.math.Vector3.SIDE_WEST:
+		case WEST:
 			return BlockFace.WEST;
-		case cn.nukkit.math.Vector3.SIDE_EAST:
+		case EAST:
 			return BlockFace.EAST;
-		case cn.nukkit.math.Vector3.SIDE_NORTH:
+		case NORTH:
 			return BlockFace.NORTH;
-		case cn.nukkit.math.Vector3.SIDE_SOUTH:
+		case SOUTH:
 			return BlockFace.SOUTH;
-		case 255:
-			return BlockFace.SELF;
-		case -1:
-			return BlockFace.SELF;
 		}
-		throw new IllegalArgumentException("Unknown Vector3.SIDE: " + nukkit);
+		throw new IllegalArgumentException("Unknown BlockFace.SIDE: " + nukkit);
 	}
 }

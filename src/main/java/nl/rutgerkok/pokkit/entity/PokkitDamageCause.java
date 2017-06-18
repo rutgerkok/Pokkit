@@ -2,43 +2,41 @@ package nl.rutgerkok.pokkit.entity;
 
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import cn.nukkit.event.entity.EntityDamageEvent;
-
 public final class PokkitDamageCause {
 
-	public static DamageCause toBukkit(int nukkit) {
+	public static DamageCause toBukkit(cn.nukkit.event.entity.EntityDamageEvent.DamageCause nukkit) {
 		switch (nukkit) {
-			case EntityDamageEvent.CAUSE_CONTACT:
+			case CONTACT:
 				return DamageCause.CONTACT;
-			case EntityDamageEvent.CAUSE_ENTITY_ATTACK:
+			case ENTITY_ATTACK:
 				return DamageCause.ENTITY_ATTACK;
-			case EntityDamageEvent.CAUSE_PROJECTILE:
+			case PROJECTILE:
 				return DamageCause.PROJECTILE;
-			case EntityDamageEvent.CAUSE_SUFFOCATION:
+			case SUFFOCATION:
 				return DamageCause.SUFFOCATION;
-			case EntityDamageEvent.CAUSE_FALL:
+			case FALL:
 				return DamageCause.FALL;
-			case EntityDamageEvent.CAUSE_FIRE:
+			case FIRE:
 				return DamageCause.FIRE;
-			case EntityDamageEvent.CAUSE_FIRE_TICK:
+			case FIRE_TICK:
 				return DamageCause.FIRE_TICK;
-			case EntityDamageEvent.CAUSE_LAVA:
+			case LAVA:
 				return DamageCause.LAVA;
-			case EntityDamageEvent.CAUSE_DROWNING:
+			case DROWNING:
 				return DamageCause.DROWNING;
-			case EntityDamageEvent.CAUSE_BLOCK_EXPLOSION:
+			case BLOCK_EXPLOSION:
 				return DamageCause.BLOCK_EXPLOSION;
-			case EntityDamageEvent.CAUSE_ENTITY_EXPLOSION:
+			case ENTITY_EXPLOSION:
 				return DamageCause.ENTITY_EXPLOSION;
-			case EntityDamageEvent.CAUSE_VOID:
+			case VOID:
 				return DamageCause.VOID;
-			case EntityDamageEvent.CAUSE_SUICIDE:
+			case SUICIDE:
 				return DamageCause.SUICIDE;
-			case EntityDamageEvent.CAUSE_MAGIC:
+			case MAGIC:
 				return DamageCause.MAGIC;
-			case EntityDamageEvent.CAUSE_LIGHTNING:
+			case LIGHTNING:
 				return DamageCause.LIGHTNING;
-			case EntityDamageEvent.CAUSE_CUSTOM:
+			case CUSTOM:
 			default:
 				return DamageCause.CUSTOM;
 		}

@@ -280,12 +280,12 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public boolean isBlockIndirectlyPowered() {
-		return nukkit.isNeighborPowered();
+		return nukkit.level.isBlockIndirectlyGettingPowered(nukkit) > 0;
 	}
 
 	@Override
 	public boolean isBlockPowered() {
-		return nukkit.isPowered();
+		return nukkit.level.isBlockPowered(nukkit);
 	}
 
 	@Override
