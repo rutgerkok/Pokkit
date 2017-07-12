@@ -27,6 +27,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import cn.nukkit.block.BlockAir;
+import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
 
 /**
@@ -99,7 +100,7 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public byte getData() {
-		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage());
+		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.toItem());
 		return (byte) materialData.getBukkitDamage();
 	}
 
@@ -122,11 +123,11 @@ public final class PokkitBlock implements Block {
 			item = new ItemBlock(new BlockAir(), 0, 0);
 		}
 
-		int[][] drops = nukkit.getDrops(item);
+		Item[] drops = nukkit.getDrops(item);
 		List<ItemStack> result = new ArrayList<>();
-		for (int[] drop : drops) {
-			PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(drop[0], drop[1]);
-			ItemStack stack = new ItemStack(materialData.getBukkitMaterial(), drop[2], materialData.getBukkitDamage());
+		for (Item drop : drops) {
+			PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(drop);
+			ItemStack stack = new ItemStack(materialData.getBukkitMaterial(), drop.getCount(), materialData.getBukkitDamage());
 			result.add(stack);
 		}
 		this.drops = result;
@@ -222,7 +223,7 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public Material getType() {
-		return PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage()).getBukkitMaterial();
+		return PokkitMaterialData.fromNukkit(nukkit.toItem()).getBukkitMaterial();
 	}
 
 	/**
@@ -231,7 +232,7 @@ public final class PokkitBlock implements Block {
 	 * @return The material data.
 	 */
 	public MaterialData getTypeData() {
-		return PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage()).toBukkit();
+		return PokkitMaterialData.fromNukkit(nukkit.toItem()).toBukkit();
 	}
 
 	@Override

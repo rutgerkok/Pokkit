@@ -5,6 +5,7 @@ import org.bukkit.block.BlockFace;
 public final class PokkitBlockFace {
 
 	public static BlockFace toBukkit(cn.nukkit.math.BlockFace nukkit) {
+		// TODO Direct mapping via BlockFace.valueOf?
 		switch (nukkit) {
 		case DOWN:
 			return BlockFace.DOWN;

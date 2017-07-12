@@ -73,17 +73,18 @@ public final class PlayerInteractEvents extends EventTranslator {
 		// event.setLines(bukkitEvent.getLines()) is unnecessary
 	}
 
-	private Action toBukkit(int nukkit) {
+	private Action toBukkit(cn.nukkit.event.player.PlayerInteractEvent.Action nukkit) {
+		// TODO Direct mapping via Action.valueOf?
 		switch (nukkit) {
-		case cn.nukkit.event.player.PlayerInteractEvent.LEFT_CLICK_AIR:
+		case LEFT_CLICK_AIR:
 			return Action.LEFT_CLICK_AIR;
-		case cn.nukkit.event.player.PlayerInteractEvent.RIGHT_CLICK_AIR:
+		case RIGHT_CLICK_AIR:
 			return Action.RIGHT_CLICK_AIR;
-		case cn.nukkit.event.player.PlayerInteractEvent.LEFT_CLICK_BLOCK:
+		case LEFT_CLICK_BLOCK:
 			return Action.LEFT_CLICK_BLOCK;
-		case cn.nukkit.event.player.PlayerInteractEvent.RIGHT_CLICK_BLOCK:
+		case RIGHT_CLICK_BLOCK:
 			return Action.RIGHT_CLICK_BLOCK;
-		case cn.nukkit.event.player.PlayerInteractEvent.PHYSICAL:
+		case PHYSICAL:
 			return Action.PHYSICAL;
 		}
 		throw new RuntimeException("Unknown action: " + nukkit);

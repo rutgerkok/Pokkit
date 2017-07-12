@@ -63,7 +63,7 @@ public final class PokkitItemStack {
 		if (nukkit == null) {
 			return null;
 		}
-		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.getId(), nukkit.getDamage());
+		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit);
 		Material material = materialData.getBukkitMaterial();
 		if (material == null) {
 			return null;

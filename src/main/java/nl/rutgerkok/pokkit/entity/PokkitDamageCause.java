@@ -5,6 +5,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 public final class PokkitDamageCause {
 
 	public static DamageCause toBukkit(cn.nukkit.event.entity.EntityDamageEvent.DamageCause nukkit) {
+		// TODO Direct mapping via DamageCause.valueOf?
 		switch (nukkit) {
 			case CONTACT:
 				return DamageCause.CONTACT;

@@ -107,7 +107,6 @@ public class NukkitCustomInventory extends BaseInventory {
         ContainerOpenPacket containerOpenPacket = new ContainerOpenPacket();
         containerOpenPacket.windowid = (byte) who.getWindowId(this);
         containerOpenPacket.type = (byte) this.getType().getNetworkType();
-        containerOpenPacket.slots = this.getSize();
 
         containerOpenPacket.x = (int) v.x;
         containerOpenPacket.y = (int) v.y;

@@ -41,6 +41,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.block.ItemFrameDropItemEvent;
 import cn.nukkit.item.Item;
 
+@SuppressWarnings("deprecation")
 public final class EntityEvents extends EventTranslator {
 
 	private static Map<DamageModifier, Double> getDamageMap(double baseDamage) {
