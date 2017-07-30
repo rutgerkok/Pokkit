@@ -41,6 +41,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
@@ -346,6 +348,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
+	public AdvancementProgress getAdvancementProgress(Advancement advancement) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
 	public boolean getAllowFlight() {
 		return nukkit.getAdventureSettings().canFly();
 	}
@@ -490,6 +497,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
+	public String getLocale() {
+		// Not implemented in Nukkit
+		return "en_US";
+	}
+
+	@Override
 	public List<MetadataValue> getMetadata(String metadataKey) {
 		return getMetadataStore().getMetadata(this, metadataKey);
 	}
@@ -616,7 +629,8 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean hasAchievement(@SuppressWarnings("deprecation") org.bukkit.Achievement achievement) {
-		return true; // TODO: When achievements are properly implemented in Nukkit, change this to use Nukkit's API!
+		return true; // When achievements are properly implemented in Nukkit,
+						// change this to use Nukkit's API!
 	}
 
 	@Override
@@ -1026,11 +1040,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void setAllowFlight(boolean value) {
 		nukkit.getAdventureSettings().setCanFly(value);
-	}
-
-	@Override
-	public void setBanned(boolean value) {
-		nukkit.setBanned(value);
 	}
 
 	@Override

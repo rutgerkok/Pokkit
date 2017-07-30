@@ -7,8 +7,10 @@ import nl.rutgerkok.pokkit.material.PokkitMaterialData;
 
 import org.bukkit.Achievement;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Statistic;
 import org.bukkit.UnsafeValues;
+import org.bukkit.advancement.Advancement;
 import org.bukkit.inventory.ItemStack;
 
 import cn.nukkit.item.Item;
@@ -47,12 +49,22 @@ public class PokkitUnsafe implements UnsafeValues {
 	}
 
 	@Override
+	public Advancement loadAdvancement(NamespacedKey key, String advancementJson) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
 	public ItemStack modifyItemStack(ItemStack stack, String arguments) {
 		// NBT not yet supported
 		PokkitItemMeta itemMeta = (PokkitItemMeta) stack.getItemMeta();
 		itemMeta.getTag().putString("Unknown", arguments);
 		stack.setItemMeta(itemMeta);
 		return stack;
+	}
+
+	@Override
+	public boolean removeAdvancement(NamespacedKey key) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override

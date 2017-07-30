@@ -19,6 +19,7 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -178,6 +179,11 @@ public class PokkitEntity implements Entity {
     @Override
 	public List<Entity> getPassengers() {
 		throw Pokkit.unsupported();
+	}
+
+    @Override
+	public PistonMoveReaction getPistonMoveReaction() {
+		return PistonMoveReaction.MOVE;
 	}
 
     @Override
@@ -500,7 +506,7 @@ public class PokkitEntity implements Entity {
 
     @Override
     public void setPortalCooldown(int cooldown) {
-        return; // TODO: When portals are properly implemented in Nukkit, change this to use Nukkit's API!
+        return; // When portals are properly implemented in Nukkit, change this to use Nukkit's API!
     }
 
     @Override
@@ -514,7 +520,7 @@ public class PokkitEntity implements Entity {
         nukkit.ticksLived = value;
     }
 
-    @Override
+	@Override
     public void setVelocity(Vector velocity) {
         nukkit.setMotion(new Vector3(velocity.getX(), velocity.getY(), velocity.getZ()));
     }

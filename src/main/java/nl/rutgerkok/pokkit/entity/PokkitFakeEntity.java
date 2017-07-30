@@ -16,6 +16,7 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -159,6 +160,11 @@ abstract class PokkitFakeEntity implements Entity {
 	@Override
 	public List<Entity> getPassengers() {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public PistonMoveReaction getPistonMoveReaction() {
+		return PistonMoveReaction.MOVE;
 	}
 
 	@Override

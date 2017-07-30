@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.base.Strings;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -85,7 +84,7 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 			meta.tag = this.tag.copy();
 			return meta;
 		} catch (CloneNotSupportedException e) {
-			throw Throwables.propagate(e);
+			throw new RuntimeException(e);
 		}
 	}
 

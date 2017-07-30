@@ -58,50 +58,6 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
-	public void _INVALID_damage(int arg0) {
-		cn.nukkit.event.entity.EntityDamageEvent e = new cn.nukkit.event.entity.EntityDamageEvent(nukkit, cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
-	public void _INVALID_damage(int arg0, Entity arg1) {
-		cn.nukkit.event.entity.EntityDamageByEntityEvent e = new cn.nukkit.event.entity.EntityDamageByEntityEvent(nukkit, PokkitEntity.toNukkit(arg1), cn.nukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM, arg0);
-		nukkit.attack(e);
-	}
-
-	@Override
-	public int _INVALID_getHealth() {
-		return (int) nukkit.getHealth();
-	}
-
-	@Override
-	public int _INVALID_getLastDamage() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public int _INVALID_getMaxHealth() {
-		return nukkit.getMaxHealth();
-	}
-
-	@Override
-	public void _INVALID_setHealth(int arg0) {
-		nukkit.setHealth(arg0);
-	}
-
-	@Override
-	public void _INVALID_setLastDamage(int arg0) {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void _INVALID_setMaxHealth(int arg0) {
-		nukkit.setMaxHealth(arg0);
-	}
-
-	@Override
 	public boolean addPotionEffect(PotionEffect bukkitEffect) {
 		return addPotionEffect(bukkitEffect, false);
 	}
@@ -195,19 +151,6 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	@Override
 	public Entity getLeashHolder() throws IllegalStateException {
 		throw Pokkit.unsupported();
-	}
-
-	@Override
-	public List<Block> getLineOfSight(HashSet<Byte> bukkitTransparent, int maxDistance) {
-		cn.nukkit.block.Block[] nukkitBlocks = nukkit.getLineOfSight(maxDistance, 0,
-				toNukkitBlockIds(bukkitTransparent));
-
-		List<Block> bukkitBlocks = new ArrayList<>(nukkitBlocks.length);
-		for (cn.nukkit.block.Block nukkitBlock : nukkitBlocks) {
-			bukkitBlocks.add(PokkitBlock.toBukkit(nukkitBlock));
-		}
-
-		return bukkitBlocks;
 	}
 
 	@Override

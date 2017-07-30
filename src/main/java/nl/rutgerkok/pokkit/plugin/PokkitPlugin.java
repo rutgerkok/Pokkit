@@ -20,8 +20,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.avaje.ebean.EbeanServer;
-
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -52,11 +50,6 @@ public class PokkitPlugin implements cn.nukkit.plugin.Plugin {
 
 		@Override
 		public FileConfiguration getConfig() {
-			throw Pokkit.unsupported();
-		}
-
-		@Override
-		public EbeanServer getDatabase() {
 			throw Pokkit.unsupported();
 		}
 

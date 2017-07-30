@@ -5,8 +5,6 @@ import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Objects;
 
-import com.google.common.base.Throwables;
-
 import cn.nukkit.Player;
 import cn.nukkit.inventory.BaseInventory;
 import cn.nukkit.inventory.InventoryType;
@@ -98,7 +96,7 @@ public class NukkitCustomInventory extends BaseInventory {
         try {
             blockEntityDataPacket.namedTag = NBTIO.write(getSpawnCompound(v), ByteOrder.LITTLE_ENDIAN);
         } catch (IOException e) {
-			throw Throwables.propagate(e);
+			throw new RuntimeException(e);
         }
 
         who.dataPacket(blockEntityDataPacket);

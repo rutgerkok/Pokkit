@@ -42,6 +42,17 @@ public final class PokkitMaterialData {
 	}
 
 	/**
+	 * Creates a universal material object from a Nukkit item.
+	 *
+	 * @param item
+	 *            The Nukkit item.
+	 * @return The universal material object.
+	 */
+	public static PokkitMaterialData fromNukkit(cn.nukkit.item.Item item) {
+		return new PokkitMaterialData(item.getId(), item.getDamage());
+	}
+	
+	/**
 	 * Creates a universal material object from a Nukkit material.
 	 *
 	 * @param nukkitId
@@ -53,19 +64,6 @@ public final class PokkitMaterialData {
 	@Deprecated
 	public static PokkitMaterialData fromNukkit(int nukkitId, int nukkitDamage) {
 		return new PokkitMaterialData(nukkitId, nukkitDamage);
-	}
-	
-	/**
-	 * Creates a universal material object from a Nukkit item.
-	 *
-	 * @param nukkitId
-	 *            The Nukkit material.
-	 * @param nukkitDamage
-	 *            The Nukkit damage/block data.
-	 * @return The universal material object.
-	 */
-	public static PokkitMaterialData fromNukkit(cn.nukkit.item.Item item) {
-		return new PokkitMaterialData(item.getId(), item.getDamage());
 	}
 
 	private final int id;

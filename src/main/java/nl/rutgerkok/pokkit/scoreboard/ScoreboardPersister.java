@@ -3,6 +3,7 @@ package nl.rutgerkok.pokkit.scoreboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -92,6 +93,7 @@ public final class ScoreboardPersister {
 		team.setOption(Option.DEATH_MESSAGE_VISIBILITY, toOptionStatus(config.getString("death_messages", "")));
 		team.setOption(Option.NAME_TAG_VISIBILITY, toOptionStatus(config.getString("name_tags", "")));
 		team.setAllowFriendlyFire(config.getBoolean("friendly_fire"));
+		team.setColor(toChatColor(config.getString("color", "")));
 
 		List<String> members = config.getStringList("members");
 		if (members != null) {
@@ -142,6 +144,15 @@ public final class ScoreboardPersister {
 		config.set("name_tags", team.getOption(Option.NAME_TAG_VISIBILITY).name().toLowerCase());
 		config.set("friendly_fire", team.allowFriendlyFire());
 		config.set("members", new ArrayList<>(team.getEntries()));
+		config.set("color", team.getColor().name());
+	}
+
+	private ChatColor toChatColor(String string) {
+		try {
+			return ChatColor.valueOf(string.toUpperCase());
+		} catch (IllegalArgumentException e) {
+			return ChatColor.RESET;
+		}
 	}
 
 	private OptionStatus toOptionStatus(String string) {

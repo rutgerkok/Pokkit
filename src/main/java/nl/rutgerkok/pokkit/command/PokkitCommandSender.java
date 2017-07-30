@@ -16,7 +16,9 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
-public class PokkitCommandSender implements CommandSender {
+import net.md_5.bungee.api.chat.BaseComponent;
+
+public class PokkitCommandSender extends CommandSender.Spigot implements CommandSender {
 
 	public static CommandSender toBukkit(cn.nukkit.command.CommandSender nukkit) {
 		// More specialized ones to support instanceof checks
@@ -120,6 +122,20 @@ public class PokkitCommandSender implements CommandSender {
 	}
 
 	@Override
+	public void sendMessage(BaseComponent component) {
+		sendMessage(component.toLegacyText());
+	}
+
+	@Override
+	public void sendMessage(BaseComponent... components) {
+		StringBuilder text = new StringBuilder();
+		for (BaseComponent component : components) {
+			text.append(component.toLegacyText());
+		}
+		sendMessage(text.toString());
+	}
+
+	@Override
 	public void sendMessage(String message) {
 		nukkit.sendMessage(message);
 	}
@@ -134,6 +150,11 @@ public class PokkitCommandSender implements CommandSender {
 	@Override
 	public void setOp(boolean value) {
 		nukkit.setOp(value);
+	}
+
+	@Override
+	public Spigot spigot() {
+		return this;
 	}
 
 }

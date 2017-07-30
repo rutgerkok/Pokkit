@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
@@ -27,6 +28,7 @@ final class PokkitTeam implements Team {
 	private String suffix = "";
 	private boolean allowFriendyFire;
 	private boolean canSeeFriendlyInvisibles;
+	private ChatColor color = ChatColor.RESET;
 
 	PokkitTeam(String name, PokkitScoreboard scoreboard) {
 		this.name = Objects.requireNonNull(name);
@@ -65,6 +67,12 @@ final class PokkitTeam implements Team {
 			throw new IllegalStateException("team has been unregistered");
 		}
 		return scoreboard;
+	}
+
+	@Override
+	public ChatColor getColor() throws IllegalStateException {
+		checkScoreboard();
+		return color;
 	}
 
 	@Override
@@ -177,6 +185,13 @@ final class PokkitTeam implements Team {
 	public void setCanSeeFriendlyInvisibles(boolean enabled) throws IllegalStateException {
 		checkScoreboard();
 		this.canSeeFriendlyInvisibles = enabled;
+	}
+
+	@Override
+	public void setColor(ChatColor color) {
+		Validate.notNull(color, "color");
+		checkScoreboard();
+		this.color = color;
 	}
 
 	@Override

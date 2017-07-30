@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.11.2-R0.1-SNAPSHOT</version>
+			<version>1.12-R0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -35,8 +35,8 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>17.0</version> <!-- Keep in sync with Spigot -->
-			<scope>compile</scope> <!-- Include this ourselves, Nukkit doesn't include it -->
+			<version>21.0</version> <!-- Keep in sync with Spigot -->
+			<scope>provided</scope> <!-- Don't include in Pokkit JAR, Nukkit also includes Guava -->
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

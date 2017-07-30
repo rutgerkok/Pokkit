@@ -40,6 +40,7 @@ import nl.rutgerkok.pokkit.world.PokkitWorldType;
 import org.bukkit.BanList;
 import org.bukkit.BanList.Type;
 import org.bukkit.GameMode;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.UnsafeValues;
@@ -47,6 +48,7 @@ import org.bukkit.Warning.WarningState;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
+import org.bukkit.advancement.Advancement;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -78,7 +80,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.CachedServerIcon;
 
-import com.avaje.ebean.config.ServerConfig;
 import com.google.common.collect.ImmutableMap;
 
 import cn.nukkit.level.Level;
@@ -136,13 +137,14 @@ public final class CraftServer extends Server.Spigot implements Server {
 	}
 
 	@Override
-	public Player[] _INVALID_getOnlinePlayers() {
-		return nukkit.getOnlinePlayers().values().stream().map(PokkitPlayer::toBukkit).toArray(Player[]::new);
+	public boolean addRecipe(Recipe arg0) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public boolean addRecipe(Recipe arg0) {
-		throw Pokkit.unsupported();
+	public Iterator<Advancement> advancementIterator() {
+		// Advancements not implemented
+		return Collections.emptyIterator();
 	}
 
 	@Override
@@ -176,12 +178,6 @@ public final class CraftServer extends Server.Spigot implements Server {
 
 	@Override
 	public void clearRecipes() {
-		throw Pokkit.unsupported();
-
-	}
-
-	@Override
-	public void configureDbConfig(ServerConfig arg0) {
 		throw Pokkit.unsupported();
 
 	}
@@ -263,6 +259,12 @@ public final class CraftServer extends Server.Spigot implements Server {
 	@Override
 	public boolean dispatchCommand(CommandSender sender, String command) throws CommandException {
 		return nukkit.dispatchCommand(PokkitCommandSender.toNukkit(sender), command);
+	}
+
+	@Override
+	public Advancement getAdvancement(NamespacedKey key) {
+		// Advancements not implemented
+		return null;
 	}
 
 	@Override
@@ -692,6 +694,12 @@ public final class CraftServer extends Server.Spigot implements Server {
 	@Override
 	public void reload() {
 		nukkit.reload();
+	}
+
+	@Override
+	public void reloadData() {
+		// Are there more things we can reload, without reloading all plugins or worlds?
+		nukkit.reloadWhitelist();
 	}
 
 	@Override

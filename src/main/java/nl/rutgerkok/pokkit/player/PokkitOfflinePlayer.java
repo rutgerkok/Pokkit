@@ -125,11 +125,6 @@ public final class PokkitOfflinePlayer implements OfflinePlayer {
 	}
 
 	@Override
-	public void setBanned(boolean banned) {
-		getNukkit().setBanned(banned);
-	}
-
-	@Override
 	public void setOp(boolean value) {
 		getNukkit().setOp(value);
 	}
