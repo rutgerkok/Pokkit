@@ -1,21 +1,12 @@
 package nl.rutgerkok.pokkit.entity;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import cn.nukkit.math.SimpleAxisAlignedBB;
+import java.util.*;
 import java.util.stream.Collectors;
-
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.world.PokkitWorld;
-
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -26,8 +17,6 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
-
-import cn.nukkit.math.AxisAlignedBB;
 
 abstract class PokkitFakeEntity implements Entity {
 
@@ -143,7 +132,7 @@ abstract class PokkitFakeEntity implements Entity {
 	@Override
 	public List<Entity> getNearbyEntities(double x, double y, double z) {
 		cn.nukkit.level.Location location = this.getNukkitLocation();
-		cn.nukkit.entity.Entity[] found = location.level.getNearbyEntities(new AxisAlignedBB(
+		cn.nukkit.entity.Entity[] found = location.level.getNearbyEntities(new SimpleAxisAlignedBB(
 				location.x - x, location.y - y, location.z - z,
 				location.x + x, location.y + y, location.z + z));
 

@@ -1,20 +1,21 @@
 package nl.rutgerkok.pokkit.world;
 
+import cn.nukkit.entity.weather.EntityLightning;
+import cn.nukkit.level.Explosion;
+import cn.nukkit.level.Level;
+import cn.nukkit.level.Position;
+import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.level.format.generic.BaseFullChunk;
+import cn.nukkit.level.particle.GenericParticle;
+import cn.nukkit.math.Vector3;
+import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.DoubleTag;
+import cn.nukkit.nbt.tag.FloatTag;
+import cn.nukkit.nbt.tag.ListTag;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.SplittableRandom;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.*;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
 import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
@@ -22,33 +23,11 @@ import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-
-import org.bukkit.BlockChangeDelegate;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.ChunkSnapshot;
-import org.bukkit.Difficulty;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.TreeType;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
@@ -57,18 +36,6 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
-
-import cn.nukkit.entity.weather.EntityLightning;
-import cn.nukkit.level.Explosion;
-import cn.nukkit.level.Level;
-import cn.nukkit.level.format.generic.BaseFullChunk;
-import cn.nukkit.level.particle.GenericParticle;
-import cn.nukkit.level.Position;
-import cn.nukkit.math.Vector3;
-import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.nbt.tag.DoubleTag;
-import cn.nukkit.nbt.tag.FloatTag;
-import cn.nukkit.nbt.tag.ListTag;
 
 public final class PokkitWorld implements World {
 
@@ -373,7 +340,7 @@ public final class PokkitWorld implements World {
 	public Chunk[] getLoadedChunks() {
 		ArrayList<Chunk> loadedChunks = new ArrayList<>();
 
-		for (BaseFullChunk chunk : nukkit.getChunks().values()) {
+		for (FullChunk chunk : nukkit.getChunks().values()) {
 			if (chunk.isLoaded()) {
 				loadedChunks.add(new PokkitChunk(PokkitWorld.toBukkit(nukkit), chunk.getX(), chunk.getZ()));
 			}
@@ -593,11 +560,12 @@ public final class PokkitWorld implements World {
 			return;
 		}
 
-		cn.nukkit.level.sound.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
+		cn.nukkit.level.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
 		if (nukkitSound == null) {
 			return;
 		}
-		nukkit.addSound(nukkitSound);
+		Vector3 pos = PokkitVector.toNukkit(location.toVector());
+		nukkit.addSound(pos, nukkitSound, volume, pitch);
 	}
 
 	@Override

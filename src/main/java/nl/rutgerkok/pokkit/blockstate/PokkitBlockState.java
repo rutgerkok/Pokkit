@@ -272,7 +272,6 @@ public abstract class PokkitBlockState implements BlockState {
 		((BlockEntitySpawnable) blockEntity).spawnToAll();
 		if (blockEntity.chunk != null) {
 			blockEntity.chunk.setChanged();
-			blockEntity.level.clearChunkCache(blockEntity.chunk.getX(), blockEntity.chunk.getZ());
 		}
 
 		return true;
