@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.player;
 
+import cn.nukkit.AdventureSettings;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,11 +12,7 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitGameMode;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.*;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitInventory;
 import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
@@ -278,7 +275,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void closeInventory() {
-		throw Pokkit.unsupported();
+		nukkit.removeAllWindows();
 	}
 
 	@Override
@@ -354,7 +351,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean getAllowFlight() {
-		return nukkit.getAdventureSettings().canFly();
+		return nukkit.getAdventureSettings().get(AdventureSettings.Type.ALLOW_FLIGHT);
 	}
 
 	@Override
@@ -722,7 +719,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public boolean isFlying() {
-		return nukkit.getAdventureSettings().canFly() && !nukkit.isOnGround();
+		return nukkit.getAdventureSettings().get(AdventureSettings.Type.ALLOW_FLIGHT) && !nukkit.isOnGround();
 	}
 
 	@Override
@@ -875,11 +872,12 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 			return;
 		}
 
-		cn.nukkit.level.sound.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
+		cn.nukkit.level.Sound nukkitSound = PokkitSound.toNukkit(location, sound, pitch);
 		if (nukkitSound == null) {
 			return;
 		}
-		nukkit.level.addSound(nukkitSound, nukkit);
+		Vector3 pos = PokkitVector.toNukkit(location.toVector());
+		nukkit.level.addSound(pos, nukkitSound, volume, pitch);
 	}
 
 	@Override
@@ -1039,7 +1037,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setAllowFlight(boolean value) {
-		nukkit.getAdventureSettings().setCanFly(value);
+		nukkit.getAdventureSettings().set(AdventureSettings.Type.ALLOW_FLIGHT, value);
 	}
 
 	@Override
@@ -1100,7 +1098,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setFlying(boolean flying) {
-		nukkit.getAdventureSettings().setFlying(flying);
+		nukkit.getAdventureSettings().set(AdventureSettings.Type.FLYING, flying);
 
 	}
 

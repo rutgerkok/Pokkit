@@ -1,27 +1,8 @@
 package nl.rutgerkok.pokkit;
 
+import cn.nukkit.math.Vector3;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-
-import cn.nukkit.level.sound.AnvilBreakSound;
-import cn.nukkit.level.sound.AnvilFallSound;
-import cn.nukkit.level.sound.AnvilUseSound;
-import cn.nukkit.level.sound.ClickSound;
-import cn.nukkit.level.sound.DoorBumpSound;
-import cn.nukkit.level.sound.DoorCrashSound;
-import cn.nukkit.level.sound.DoorSound;
-import cn.nukkit.level.sound.EndermanTeleportSound;
-import cn.nukkit.level.sound.ExperienceOrbSound;
-import cn.nukkit.level.sound.LevelEventSound;
-import cn.nukkit.level.sound.GhastShootSound;
-import cn.nukkit.level.sound.GhastSound;
-import cn.nukkit.level.sound.LaunchSound;
-import cn.nukkit.level.sound.LeverSound;
-import cn.nukkit.level.sound.NoteBoxSound;
-import cn.nukkit.level.sound.PopSound;
-import cn.nukkit.level.sound.TNTPrimeSound;
-import cn.nukkit.math.Vector3;
-import cn.nukkit.network.protocol.LevelEventPacket;
 
 /**
  * Sound conversion. Many sounds from PC cannot be played in PE, as far as I
@@ -30,28 +11,28 @@ import cn.nukkit.network.protocol.LevelEventPacket;
  */
 public final class PokkitSound {
 
-	public static cn.nukkit.level.sound.Sound toNukkit(Location location, Sound sound, float pitch) {
+	public static cn.nukkit.level.Sound toNukkit(Location location, Sound sound, float pitch) {
 
 		Vector3 vector = new Vector3(location.getX(), location.getY(), location.getZ());
 		switch (sound) {
 		case AMBIENT_CAVE:
 			break;
 		case BLOCK_ANVIL_BREAK:
-			return new AnvilBreakSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_ANVIL_BREAK;
 		case BLOCK_ANVIL_DESTROY:
 			break;
 		case BLOCK_ANVIL_FALL:
-			return new AnvilFallSound(vector, pitch);
+			break;
 		case BLOCK_ANVIL_HIT:
 			break;
 		case BLOCK_ANVIL_LAND:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_ANVIL_LAND;
 		case BLOCK_ANVIL_PLACE:
 			break;
 		case BLOCK_ANVIL_STEP:
 			break;
 		case BLOCK_ANVIL_USE:
-			return new AnvilUseSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_ANVIL_USE;
 		case BLOCK_BREWING_STAND_BREW:
 			break;
 		case BLOCK_CHEST_CLOSE:
@@ -155,7 +136,7 @@ public final class PokkitSound {
 		case BLOCK_LAVA_POP:
 			break;
 		case BLOCK_LEVER_CLICK:
-			return new LeverSound(vector, pitch > 0.6);
+			break;
 		case BLOCK_METAL_BREAK:
 			break;
 		case BLOCK_METAL_FALL:
@@ -171,17 +152,17 @@ public final class PokkitSound {
 		case BLOCK_METAL_STEP:
 			break;
 		case BLOCK_NOTE_BASEDRUM:
-			return new NoteBoxSound(vector, NoteBoxSound.INSTRUMENT_BASS_DRUM, (int) (pitch * 16));
+			return cn.nukkit.level.Sound.NOTE_BASSATTACK;
 		case BLOCK_NOTE_BASS:
-			return new NoteBoxSound(vector, NoteBoxSound.INSTRUMENT_BASS, (int) (pitch * 16));
+			return cn.nukkit.level.Sound.NOTE_BASS;
 		case BLOCK_NOTE_HARP:
-			break;
+			return cn.nukkit.level.Sound.NOTE_HARP;
 		case BLOCK_NOTE_HAT:
-			return new NoteBoxSound(vector, NoteBoxSound.INSTRUMENT_CLICK, (int) (pitch * 16));
+			return cn.nukkit.level.Sound.NOTE_HAT;
 		case BLOCK_NOTE_PLING:
-			return new NoteBoxSound(vector, NoteBoxSound.INSTRUMENT_PIANO, (int) (pitch * 16));
+			return cn.nukkit.level.Sound.NOTE_PLING;
 		case BLOCK_NOTE_SNARE:
-			return new NoteBoxSound(vector, NoteBoxSound.INSTRUMENT_TABOUR, (int) (pitch * 16));
+			return cn.nukkit.level.Sound.NOTE_SNARE;
 		case BLOCK_PISTON_CONTRACT:
 			break;
 		case BLOCK_PISTON_EXTEND:
@@ -255,15 +236,15 @@ public final class PokkitSound {
 		case BLOCK_WATER_AMBIENT:
 			break;
 		case BLOCK_WOODEN_DOOR_CLOSE:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_DOOR_CLOSE;
 		case BLOCK_WOODEN_DOOR_OPEN:
-			return new DoorSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_DOOR_OPEN;
 		case BLOCK_WOODEN_TRAPDOOR_CLOSE:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_DOOR_CLOSE;
 		case BLOCK_WOODEN_TRAPDOOR_OPEN:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_DOOR_OPEN;
 		case BLOCK_WOOD_BREAK:
-			break;
+			return cn.nukkit.level.Sound.HIT_WOOD;
 		case BLOCK_WOOD_BUTTON_CLICK_OFF:
 			break;
 		case BLOCK_WOOD_BUTTON_CLICK_ON:
@@ -295,7 +276,7 @@ public final class PokkitSound {
 		case ENTITY_ARROW_HIT_PLAYER:
 			break;
 		case ENTITY_ARROW_SHOOT:
-			return new LaunchSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_BOW;
 		case ENTITY_BAT_AMBIENT:
 			break;
 		case ENTITY_BAT_DEATH:
@@ -401,17 +382,17 @@ public final class PokkitSound {
 		case ENTITY_ENDEREYE_LAUNCH:
 			break;
 		case ENTITY_ENDERMEN_AMBIENT:
-			break;
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_IDLE;
 		case ENTITY_ENDERMEN_DEATH:
-			break;
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_DEATH;
 		case ENTITY_ENDERMEN_HURT:
-			break;
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_HIT;
 		case ENTITY_ENDERMEN_SCREAM:
-			break;
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_SCREAM;
 		case ENTITY_ENDERMEN_STARE:
-			break;
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_STARE;
 		case ENTITY_ENDERMEN_TELEPORT:
-			return new EndermanTeleportSound(vector, pitch);
+			return cn.nukkit.level.Sound.MOB_ENDERMEN_PORTAL;
 		case ENTITY_ENDERMITE_AMBIENT:
 			break;
 		case ENTITY_ENDERMITE_DEATH:
@@ -425,7 +406,7 @@ public final class PokkitSound {
 		case ENTITY_EXPERIENCE_BOTTLE_THROW:
 			break;
 		case ENTITY_EXPERIENCE_ORB_PICKUP:
-			return new ExperienceOrbSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_ORB;
 		case ENTITY_FIREWORK_BLAST:
 			break;
 		case ENTITY_FIREWORK_BLAST_FAR:
@@ -465,17 +446,17 @@ public final class PokkitSound {
 		case ENTITY_GENERIC_SWIM:
 			break;
 		case ENTITY_GHAST_AMBIENT:
-			break;
+			return cn.nukkit.level.Sound.MOB_GHAST_AFFECTIONATE_SCREAM;
 		case ENTITY_GHAST_DEATH:
-			break;
+			return cn.nukkit.level.Sound.MOB_GHAST_DEATH;
 		case ENTITY_GHAST_HURT:
-			break;
+			return cn.nukkit.level.Sound.MOB_GHAST_MOAN;
 		case ENTITY_GHAST_SCREAM:
-			return new GhastShootSound(vector, pitch);
+			return cn.nukkit.level.Sound.MOB_GHAST_SCREAM;
 		case ENTITY_GHAST_SHOOT:
-			break;
+			return cn.nukkit.level.Sound.MOB_GHAST_FIREBALL;
 		case ENTITY_GHAST_WARN:
-			return new GhastSound(vector, pitch);
+			return cn.nukkit.level.Sound.MOB_GHAST_CHARGE;
 		case ENTITY_GUARDIAN_AMBIENT:
 			break;
 		case ENTITY_GUARDIAN_AMBIENT_LAND:
@@ -547,15 +528,15 @@ public final class PokkitSound {
 		case ENTITY_IRONGOLEM_STEP:
 			break;
 		case ENTITY_ITEMFRAME_ADD_ITEM:
-			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ADDED, pitch);
+			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_ADD_ITEM;
 		case ENTITY_ITEMFRAME_BREAK:
-			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_REMOVED, pitch);
+			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_BREAK;
 		case ENTITY_ITEMFRAME_PLACE:
-			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_PLACED, pitch);
+			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_PLACE;
 		case ENTITY_ITEMFRAME_REMOVE_ITEM:
-			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_REMOVED, pitch);
+			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_REMOVE_ITEM;
 		case ENTITY_ITEMFRAME_ROTATE_ITEM:
-			return new LevelEventSound(vector, LevelEventPacket.EVENT_SOUND_ITEM_FRAME_ITEM_ROTATED, pitch);
+			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_ROTATE_ITEM;
 		case ENTITY_ITEM_BREAK:
 			break;
 		case ENTITY_ITEM_PICKUP:
@@ -707,7 +688,7 @@ public final class PokkitSound {
 		case ENTITY_SKELETON_HURT:
 			break;
 		case ENTITY_SKELETON_SHOOT:
-			return new PopSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_BOW;
 		case ENTITY_SKELETON_STEP:
 			break;
 		case ENTITY_SLIME_ATTACK:
@@ -771,7 +752,7 @@ public final class PokkitSound {
 		case ENTITY_STRAY_STEP:
 			break;
 		case ENTITY_TNT_PRIMED:
-			return new TNTPrimeSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_FUSE;
 		case ENTITY_VILLAGER_AMBIENT:
 			break;
 		case ENTITY_VILLAGER_DEATH:
@@ -835,11 +816,11 @@ public final class PokkitSound {
 		case ENTITY_ZOMBIE_AMBIENT:
 			break;
 		case ENTITY_ZOMBIE_ATTACK_DOOR_WOOD:
-			return new DoorBumpSound(vector, pitch);
+			return cn.nukkit.level.Sound.MOB_ZOMBIE_WOOD;
 		case ENTITY_ZOMBIE_ATTACK_IRON_DOOR:
 			break;
 		case ENTITY_ZOMBIE_BREAK_DOOR_WOOD:
-			return new DoorCrashSound(vector, pitch);
+			return cn.nukkit.level.Sound.MOB_ZOMBIE_WOODBREAK;
 		case ENTITY_ZOMBIE_DEATH:
 			break;
 		case ENTITY_ZOMBIE_HORSE_AMBIENT:
@@ -953,7 +934,7 @@ public final class PokkitSound {
 		case RECORD_WARD:
 			break;
 		case UI_BUTTON_CLICK:
-			return new ClickSound(vector, pitch);
+			return cn.nukkit.level.Sound.RANDOM_CLICK;
 		case WEATHER_RAIN:
 			break;
 		case WEATHER_RAIN_ABOVE:

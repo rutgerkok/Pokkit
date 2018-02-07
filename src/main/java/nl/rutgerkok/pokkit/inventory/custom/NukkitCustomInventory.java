@@ -56,7 +56,7 @@ public class NukkitCustomInventory extends BaseInventory {
 	public void onClose(Player player) {
 		// Remove the fake chest block
 		ContainerClosePacket closePacket = new ContainerClosePacket();
-		closePacket.windowid = (byte) player.getWindowId(this);
+		closePacket.windowId = (byte) player.getWindowId(this);
 		player.dataPacket(closePacket);
 
 		Vector3 v = spawnedFakeChestBlocks.get(player.getName().toLowerCase());
@@ -103,7 +103,7 @@ public class NukkitCustomInventory extends BaseInventory {
 
 		// Open the chest
         ContainerOpenPacket containerOpenPacket = new ContainerOpenPacket();
-        containerOpenPacket.windowid = (byte) who.getWindowId(this);
+        containerOpenPacket.windowId = (byte) who.getWindowId(this);
         containerOpenPacket.type = (byte) this.getType().getNetworkType();
 
         containerOpenPacket.x = (int) v.x;
