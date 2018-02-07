@@ -1037,7 +1037,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setAllowFlight(boolean value) {
-		nukkit.getAdventureSettings().set(AdventureSettings.Type.ALLOW_FLIGHT, true);
+		nukkit.getAdventureSettings().set(AdventureSettings.Type.ALLOW_FLIGHT, value);
 	}
 
 	@Override
@@ -1098,7 +1098,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setFlying(boolean flying) {
-		nukkit.getAdventureSettings().set(AdventureSettings.Type.FLYING, true);
+		nukkit.getAdventureSettings().set(AdventureSettings.Type.FLYING, flying);
 
 	}
 
