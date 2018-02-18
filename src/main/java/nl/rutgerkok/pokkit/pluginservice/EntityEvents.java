@@ -6,6 +6,7 @@ import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.block.ItemFrameDropItemEvent;
 import cn.nukkit.item.Item;
+import cn.nukkit.level.MovingObjectPosition;
 import com.google.common.base.Function;
 import nl.rutgerkok.pokkit.PokkitLocation;
 import nl.rutgerkok.pokkit.entity.*;
@@ -292,14 +293,17 @@ public final class EntityEvents extends EventTranslator {
 
 		Entity entity = null;
 		cn.nukkit.block.Block block = null;
-		if (event.getMovingObjectPosition().typeOfHit == 0) {
-			// Block hit
-			block = event.getEntity().getLevel().getBlock(event.getMovingObjectPosition().hitVector);
-		} else {
-			// Entity hit
-			entity = event.getMovingObjectPosition().entityHit;
+		MovingObjectPosition movingObjectPosition = event.getMovingObjectPosition();
+		if (movingObjectPosition != null) {
+			if (movingObjectPosition.typeOfHit == 0) {
+				// Block hit
+				block = event.getEntity().getLevel().getBlock(event.getMovingObjectPosition().hitVector);
+			} else {
+				// Entity hit
+				entity = movingObjectPosition.entityHit;
+			}
 		}
-		System.out.println(event.getEntity().toString());
+		// System.out.println(event.getEntity().toString());
 		EntityProjectile nukkitProjectile = (EntityProjectile) event.getEntity();
 		Projectile projectile = PokkitProjectile.toBukkit(nukkitProjectile);
 		ProjectileHitEvent bukkitEvent = new ProjectileHitEvent(projectile, PokkitEntity.toBukkit(entity), PokkitBlock.toBukkit(block));
