@@ -1,45 +1,31 @@
 package nl.rutgerkok.pokkit.pluginservice;
 
+import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityLiving;
+import cn.nukkit.entity.projectile.EntityProjectile;
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.block.ItemFrameDropItemEvent;
+import cn.nukkit.item.Item;
+import com.google.common.base.Function;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.entity.*;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.CreeperPowerEvent.PowerCause;
+import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.entity.PokkitDamageCause;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
-import nl.rutgerkok.pokkit.entity.PokkitItemFrameEntity;
-import nl.rutgerkok.pokkit.entity.PokkitLivingEntity;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
-
-import org.bukkit.block.Block;
-import org.bukkit.entity.Creeper;
-import org.bukkit.event.entity.CreeperPowerEvent;
-import org.bukkit.event.entity.CreeperPowerEvent.PowerCause;
-import org.bukkit.event.entity.EntityCombustByBlockEvent;
-import org.bukkit.event.entity.EntityCombustByEntityEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageByBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-
-import com.google.common.base.Function;
-
-import cn.nukkit.entity.EntityLiving;
-import cn.nukkit.event.EventHandler;
-import cn.nukkit.event.block.ItemFrameDropItemEvent;
-import cn.nukkit.item.Item;
 
 @SuppressWarnings("deprecation")
 public final class EntityEvents extends EventTranslator {
@@ -148,6 +134,11 @@ public final class EntityEvents extends EventTranslator {
 	private void onEntityDamageByBlock(cn.nukkit.event.entity.EntityDamageByBlockEvent event) {
 		// Called by onEntityDamage, so don't use an @EventHandler annotation
 
+		Class tClass = event.getClass();
+		Method[] methods = tClass.getMethods();
+		for (Method method : methods) {
+			System.out.println("public method: " + method);
+		}
 		// For now, only base damage is taken into account. Potions, armor etc
 		// are ignored
 		EntityDamageByBlockEvent bukkitEvent = new EntityDamageByBlockEvent(
@@ -292,4 +283,30 @@ public final class EntityEvents extends EventTranslator {
 
 		callCancellable(event, bukkitEvent);
 	}
+
+	@EventHandler(ignoreCancelled = false)
+	public void onProjectileHit(cn.nukkit.event.entity.ProjectileHitEvent event) {
+		if (canIgnore(ProjectileHitEvent.getHandlerList())) {
+			return;
+		}
+
+		Entity entity = null;
+		cn.nukkit.block.Block block = null;
+		if (event.getMovingObjectPosition().typeOfHit == 0) {
+			// Block hit
+			block = event.getEntity().getLevel().getBlock(event.getMovingObjectPosition().hitVector);
+		} else {
+			// Entity hit
+			entity = event.getMovingObjectPosition().entityHit;
+		}
+		System.out.println(event.getEntity().toString());
+		EntityProjectile nukkitProjectile = (EntityProjectile) event.getEntity();
+		Projectile projectile = PokkitProjectile.toBukkit(nukkitProjectile);
+		ProjectileHitEvent bukkitEvent = new ProjectileHitEvent(projectile, PokkitEntity.toBukkit(entity), PokkitBlock.toBukkit(block));
+
+		callUncancellable(bukkitEvent);
+	}
+
+
+
 }
