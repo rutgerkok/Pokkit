@@ -12,18 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Note;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.Statistic;
-import org.bukkit.WeatherType;
+import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
@@ -255,6 +244,10 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		}
 		return true;
 	}
+
+	/*public void removePotionEffect(PotionEffect bukkitEffect) {
+		nukkit.removeEffect(PokkitPotionEffect.toNukkit(bukkitEffect).getId());
+	}*/
 
 	@Override
 	public void awardAchievement(@SuppressWarnings("deprecation") org.bukkit.Achievement achievement) {

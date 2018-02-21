@@ -259,8 +259,8 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 
 	@Override
 	public void removePotionEffect(PotionEffectType type) {
-		throw Pokkit.unsupported();
-
+		// throw Pokkit.unsupported();
+		nukkit.removeEffect(type.getId());
 	}
 
 	@Override
