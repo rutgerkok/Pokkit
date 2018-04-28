@@ -1,5 +1,50 @@
 package nl.rutgerkok.pokkit.world;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.SplittableRandom;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.ChunkSnapshot;
+import org.bukkit.Difficulty;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.TreeType;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
+import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Consumer;
+import org.bukkit.util.Vector;
+
 import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.level.Explosion;
 import cn.nukkit.level.Level;
@@ -12,10 +57,12 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
-import java.io.File;
-import java.util.*;
-import java.util.stream.Collectors;
-import nl.rutgerkok.pokkit.*;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.PokkitVector;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitEntity;
 import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
 import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
@@ -23,19 +70,6 @@ import nl.rutgerkok.pokkit.item.PokkitItemStack;
 import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
 import nl.rutgerkok.pokkit.particle.PokkitParticle;
 import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import org.bukkit.*;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
-import org.bukkit.entity.*;
-import org.bukkit.generator.BlockPopulator;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Consumer;
-import org.bukkit.util.Vector;
 
 public final class PokkitWorld implements World {
 
@@ -80,6 +114,21 @@ public final class PokkitWorld implements World {
 		return false;
 	}
 
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power) {
+		return this.createExplosion(null, x, y, z, power, false, true);
+	}
+
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
+		return this.createExplosion(null, x, y, z, power, setFire, true);
+	}
+
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
+		return this.createExplosion(null, x, y, z, power, setFire, breakBlocks);
+	}
+
 	private boolean createExplosion(Level level, double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
 		// Base function called by all other createExplosion functions
 		// Nukkit does not yet support setFire
@@ -98,21 +147,6 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public boolean createExplosion(double x, double y, double z, float power) {
-		return this.createExplosion(null, x, y, z, power, false, true);
-	}
-
-	@Override
-	public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
-		return this.createExplosion(null, x, y, z, power, setFire, true);
-	}
-
-	@Override
-	public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
-		return this.createExplosion(null, x, y, z, power, setFire, breakBlocks);
-	}
-
-	@Override
 	public boolean createExplosion(Location loc, float power) {
 		cn.nukkit.level.Location l = PokkitLocation.toNukkit(loc);
 		return this.createExplosion(l.level, l.x, l.y, l.z, power, false, true);
@@ -127,13 +161,13 @@ public final class PokkitWorld implements World {
 	@Override
 	public Item dropItem(Location location, ItemStack item) {
 		nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item), new Vector3(0, 0, 0));
-		return null; // TODO add entity support
+		return null; // Add entity support
 	}
 
 	@Override
 	public Item dropItemNaturally(Location location, ItemStack item) {
 		nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item));
-		return null; // TODO add entity support
+		return null; // Add entity support
 	}
 
 	@Override
@@ -143,7 +177,8 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public boolean generateTree(Location loc, TreeType type, BlockChangeDelegate delegate) {
+	@Deprecated
+	public boolean generateTree(Location loc, TreeType type, org.bukkit.BlockChangeDelegate delegate) {
 		throw Pokkit.unsupported();
 
 	}
@@ -326,13 +361,13 @@ public final class PokkitWorld implements World {
 	@Override
 	public List<LivingEntity> getLivingEntities() {
 		List<LivingEntity> livingEntities = new ArrayList<>();
-		
+
 		for (cn.nukkit.entity.Entity entity : nukkit.getEntities()) {
 			if (entity instanceof cn.nukkit.entity.EntityLiving) {
 		 		livingEntities.add((LivingEntity) PokkitEntity.toBukkit(entity));
 			}
 		}
-		
+
 		return livingEntities;
 	}
 
@@ -535,22 +570,22 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data, int radius) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data, int radius) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 
 	}
 
@@ -570,8 +605,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
-		// TODO Auto-generated method stub
-
+		// Ignore the category
+		playSound(location, sound, volume, pitch);
 	}
 
 	@Override
@@ -589,8 +624,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
-		// TODO Auto-generated method stub
-
+		// Ignore the category
+		playSound(location, sound, volume, pitch);
 	}
 
 	@Override
@@ -693,6 +728,15 @@ public final class PokkitWorld implements World {
 	@Override
 	public boolean setSpawnLocation(int x, int y, int z) {
 		nukkit.setSpawnLocation(new Vector3(x, y, z));
+		return true;
+	}
+
+	@Override
+	public boolean setSpawnLocation(Location location) {
+		if (!location.getWorld().equals(this)) {
+			return false;
+		}
+		nukkit.setSpawnLocation(PokkitLocation.toNukkit(location));
 		return true;
 	}
 
@@ -951,12 +995,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save) {
-		return nukkit.unloadChunk(x, z); // TODO: Save
+		return nukkit.unloadChunk(x, z, true, save);
 	}
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
-		return nukkit.unloadChunk(x, z, safe); // TODO: Save
+		return nukkit.unloadChunk(x, z, safe, save);
 	}
 
 	@Override

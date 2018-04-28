@@ -53,7 +53,7 @@ public final class PokkitPlayerInventory extends PokkitLiveInventory implements 
 
 	@Override
 	public int getHeldItemSlot() {
-		return nukkit().getHeldItemSlot();
+		return nukkit().getHeldItemIndex();
 	}
 
 	@Override

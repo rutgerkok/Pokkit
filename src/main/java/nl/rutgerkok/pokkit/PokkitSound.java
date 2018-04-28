@@ -1,6 +1,5 @@
 package nl.rutgerkok.pokkit;
 
-import cn.nukkit.math.Vector3;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 
@@ -13,7 +12,6 @@ public final class PokkitSound {
 
 	public static cn.nukkit.level.Sound toNukkit(Location location, Sound sound, float pitch) {
 
-		Vector3 vector = new Vector3(location.getX(), location.getY(), location.getZ());
 		switch (sound) {
 		case AMBIENT_CAVE:
 			break;

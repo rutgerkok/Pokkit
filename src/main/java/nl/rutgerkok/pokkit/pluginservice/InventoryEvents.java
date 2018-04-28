@@ -124,13 +124,13 @@ public class InventoryEvents extends EventTranslator {
 		PokkitPlayer player = PokkitPlayer.toBukkit(event.getPlayer());
 		int previousSlot = player.lastItemSlot;
 		if (previousSlot == PokkitPlayer.ITEM_SLOT_NOT_INITIALIZED) {
-			previousSlot = event.getInventorySlot();
+			previousSlot = event.getSlot();
 		}
 
-		player.lastItemSlot = event.getInventorySlot();
+		player.lastItemSlot = event.getSlot();
 
-		if (previousSlot != event.getInventorySlot()) {
-			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(player, previousSlot, event.getInventorySlot());
+		if (previousSlot != event.getSlot()) {
+			PlayerItemHeldEvent bukkitEvent = new PlayerItemHeldEvent(player, previousSlot, event.getSlot());
 			callCancellable(event, bukkitEvent);
 		}
 	}

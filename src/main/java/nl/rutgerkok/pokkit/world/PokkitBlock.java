@@ -29,6 +29,7 @@ import org.bukkit.plugin.Plugin;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
+import cn.nukkit.level.biome.EnumBiome;
 
 /**
  * Converts between Nukkit and Bukkit blocks.
@@ -147,9 +148,7 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public double getHumidity() {
-		int biomeId = nukkit.getLevel().getBiomeId((int) nukkit.x, (int) nukkit.z);
-		cn.nukkit.level.generator.biome.Biome biome = cn.nukkit.level.generator.biome.Biome.getBiome(biomeId);
-		return biome.getRainfall();
+		return 0.15; // Seems to be removed from Nukkit
 	}
 
 	@Override
@@ -217,8 +216,12 @@ public final class PokkitBlock implements Block {
 	@Override
 	public double getTemperature() {
 		int biomeId = nukkit.getLevel().getBiomeId((int) nukkit.x, (int) nukkit.z);
-		cn.nukkit.level.generator.biome.Biome biome = cn.nukkit.level.generator.biome.Biome.getBiome(biomeId);
-		return biome.getTemperature();
+		@SuppressWarnings("deprecation")
+		cn.nukkit.level.biome.Biome biome = EnumBiome.getBiome(biomeId);
+		if (biome != null && biome.isFreezing()) {
+			return 0.1;
+		}
+		return 0.6;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import cn.nukkit.Player;
+import cn.nukkit.block.GlobalBlockPalette;
 import cn.nukkit.inventory.BaseInventory;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
@@ -82,8 +83,7 @@ public class NukkitCustomInventory extends BaseInventory {
         updateBlockPacket.x = (int) v.x;
         updateBlockPacket.y = (int) v.y;
         updateBlockPacket.z = (int) v.z;
-        updateBlockPacket.blockId = Item.CHEST;
-        updateBlockPacket.blockData = 0;
+		updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(Item.CHEST, 0);
         updateBlockPacket.flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
         who.dataPacket(updateBlockPacket);
 

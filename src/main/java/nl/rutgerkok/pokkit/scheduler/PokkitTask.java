@@ -33,6 +33,11 @@ final class PokkitTask implements BukkitTask {
 	}
 
 	@Override
+	public boolean isCancelled() {
+		return nukkit.isCancelled();
+	}
+
+	@Override
 	public boolean isSync() {
 		return !nukkit.isAsynchronous();
 	}

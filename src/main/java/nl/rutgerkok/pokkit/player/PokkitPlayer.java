@@ -1,6 +1,5 @@
 package nl.rutgerkok.pokkit.player;
 
-import cn.nukkit.AdventureSettings;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,7 +11,12 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.*;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.PokkitVector;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.inventory.PokkitInventory;
 import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
@@ -63,6 +67,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
 
+import cn.nukkit.AdventureSettings;
+import cn.nukkit.block.GlobalBlockPalette;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
@@ -94,6 +100,15 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	private Scoreboard scoreboard;
 	private InetSocketAddress address;
 	public int lastItemSlot = ITEM_SLOT_NOT_INITIALIZED;
+
+	/**
+	 * All plugin classes that currently request the player to be hidden. If
+	 * this set is empty, the player can be shown again.
+	 *
+	 * @see #hidePlayer(Plugin, Player)
+	 * @see #showPlayer(Plugin, Player)
+	 */
+	private final Set<Class<?>> hidingRequests = new HashSet<>();
 
 	public PokkitPlayer(cn.nukkit.Player player) {
 		super(player);
@@ -665,9 +680,21 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		return nukkit.hasPlayedBefore();
 	}
 
-	@Override
-	public void hidePlayer(Player player) {
+	private void hidePlayer(Class<?> responsible, Player player) {
+		this.hidingRequests.add(responsible);
 		nukkit.hidePlayer(PokkitPlayer.toNukkit(player));
+	}
+
+	@Override
+	@Deprecated
+	public void hidePlayer(Player player) {
+		// No information available on which plugin requested the hide, so just use our own class as a stand-in
+		hidePlayer(PokkitPlayer.class, player);
+	}
+
+	@Override
+	public void hidePlayer(Plugin plugin, Player player) {
+		hidePlayer(plugin.getClass(), player);
 	}
 
 	@Override
@@ -966,8 +993,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		packet.x = x;
 		packet.y = y;
 		packet.z = z;
-		packet.blockId = nukkitBlockId;
-		packet.blockData = nukkitBlockData;
+		packet.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(nukkitBlockId, nukkitBlockData);
 		packet.flags = flags;
 		nukkit.dataPacket(packet, false);
 	}
@@ -1258,9 +1284,23 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		nukkit.setWhitelisted(value);
 	}
 
+	private void showPlayer(Class<?> clazz, Player player) {
+		this.hidingRequests.remove(clazz);
+		if (this.hidingRequests.isEmpty()) {
+			nukkit.showPlayer(PokkitPlayer.toNukkit(player));
+		}
+	}
+
 	@Override
-	public void showPlayer(Player arg0) {
-		nukkit.showPlayer(PokkitPlayer.toNukkit(arg0));
+	@Deprecated
+	public void showPlayer(Player player) {
+		// No information available on which plugin was responsible, so just use our own class as a stand-in
+		showPlayer(PokkitPlayer.class, player);
+	}
+
+	@Override
+	public void showPlayer(Plugin plugin, Player player) {
+		showPlayer(plugin.getClass(), player);
 	}
 
 	@Override
