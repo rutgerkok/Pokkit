@@ -1065,14 +1065,15 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void setBedSpawnLocation(Location arg0) {
-		throw Pokkit.unsupported();
+		this.nukkit.setSpawn(new Vector3(arg0.getX(), arg0.getY(), arg0.getZ()));
+		// throw Pokkit.unsupported();
 
 	}
 
 	@Override
 	public void setBedSpawnLocation(Location arg0, boolean arg1) {
-		throw Pokkit.unsupported();
-
+		this.nukkit.setSpawn(new Vector3(arg0.getX(), arg0.getY(), arg0.getZ()));
+		// throw Pokkit.unsupported();
 	}
 
 	@Override
