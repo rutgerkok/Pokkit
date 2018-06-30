@@ -1,4 +1,4 @@
-# Pokkit  [![Build Status](https://circleci.com/gh/rutgerkok/Pokkit.svg?style=shield)](https://circleci.com/gh/rutgerkok/Pokkit/tree/master)
+# Pokkit  [![Build Status](https://travis-ci.org/rutgerkok/Pokkit.svg?branch=master)](https://travis-ci.org/rutgerkok/Pokkit)
 
 | <h3>Project status</h3>    |
 |-------------------|
@@ -47,20 +47,24 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 
 Before you start, please read the [contribution guidelines](./CONTRIBUTING.md). I hope to be able to add your name to the list below soon!
 
-### Contributed code since 2017
-* [Ankit](//github.com/AnkitM252)
-* [Langsdorf](//github.com/Langsdorf)
-* [MrPowerGamerBR](//github.com/MrPowerGamerBR)
-* [NycuRO](//github.com/NycuRO)
-* [PikyCZ](//github.com/PikyCZ)
-* [RaynLegends](//github.com/RaynLegends)
-* [Rutger Kok](//github.com/rutgerkok)
-* [SuperAlecs](//github.com/SuperAlecs)
+### Contributed code since 2018
+* [Jesse Boyd](https://github.com/boy0001)
+* [Rutger Kok](https://github.com/rutgerkok)
+
+### Contributed code in 2017
+* [Ankit](https://github.com/AnkitM252)
+* [Langsdorf](https://github.com/Langsdorf)
+* [MrPowerGamerBR](https://github.com/MrPowerGamerBR)
+* [NycuRO](https://github.com/NycuRO)
+* [PikyCZ](https://github.com/PikyCZ)
+* [RaynLegends](https://github.com/RaynLegends)
+* [Rutger Kok](https://github.com/rutgerkok)
+* [SuperAlecs](https://github.com/SuperAlecs)
 
 ### Contributed code in 2016
-* [daveboden](//github.com/daveboden)
-* [Langsdorf](//github.com/Langsdorf)
-* [MrPowerGamerBR](//github.com/MrPowerGamerBR)
-* [OliverUv](//github.com/OliverUv)
-* [Rutger Kok](//github.com/rutgerkok)
-* [ZINGDING](//github.com/ZINGDING)
+* [daveboden](https://github.com/daveboden)
+* [Langsdorf](https://github.com/Langsdorf)
+* [MrPowerGamerBR](https://github.com/MrPowerGamerBR)
+* [OliverUv](https://github.com/OliverUv)
+* [Rutger Kok](https://github.com/rutgerkok)
+* [ZINGDING](https://github.com/ZINGDING)
