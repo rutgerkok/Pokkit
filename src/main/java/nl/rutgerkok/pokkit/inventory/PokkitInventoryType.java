@@ -26,11 +26,11 @@ public final class PokkitInventoryType {
 		twoWay(cn.nukkit.inventory.InventoryType.PLAYER, InventoryType.PLAYER);
 		twoWay(cn.nukkit.inventory.InventoryType.WORKBENCH, InventoryType.WORKBENCH);
 		twoWay(cn.nukkit.inventory.InventoryType.ENDER_CHEST, InventoryType.ENDER_CHEST);
+		twoWay(cn.nukkit.inventory.InventoryType.SHULKER_BOX, InventoryType.SHULKER_BOX);
 
 		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
 		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);
 		bukkitToNukkit.put(InventoryType.CREATIVE, cn.nukkit.inventory.InventoryType.PLAYER);
-		bukkitToNukkit.put(InventoryType.SHULKER_BOX, cn.nukkit.inventory.InventoryType.CHEST);
 
 		nukkitToBukkit.put(cn.nukkit.inventory.InventoryType.CURSOR, InventoryType.PLAYER); // TODO wrong
 	}
