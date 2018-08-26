@@ -907,24 +907,30 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
-		spawnParticle(particle, x, y, z, count);
+		spawnParticle(particle, x, y, z, count, 0, 0, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ) {
-		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ);
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ, double extra) {
-		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra);
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra, null);
 	}
 
 	@Override
 	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ, double extra, T data) {
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra, data, false);
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
+			double offsetY, double offsetZ, double extra, T data, boolean force) {
 		int id = 0;
 
 		id = PokkitParticle.toNukkit(particle);
@@ -969,25 +975,33 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, 0, 0, 0);
+		spawnParticle(particle, location, count, 0, 0, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, 0);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ, double extra) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra, null);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, extra, null);
 	}
 
 	@Override
 	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ, double extra, T data) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra, data);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, extra, data, false);
+
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
+			double offsetZ, double extra, T data, boolean force) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ,
+				extra, data, force);
 
 	}
 
