@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
 
 import cn.nukkit.item.Item;
 
@@ -152,7 +152,7 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 	@Override
 	public boolean contains(Material material, int amount) throws IllegalArgumentException {
 		Validate.notNull(material, "material");
-		int nukkitTypeId = PokkitMaterialData.fromBukkit(material, 0).getNukkitId();
+		int nukkitTypeId = PokkitBlockData.createBlockData(material, 0).getNukkitId();
 
 		int remaining = amount;
 
@@ -195,7 +195,7 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 	@Override
 	public int first(Material material) throws IllegalArgumentException {
 		Validate.notNull(material, "material");
-		int nukkitTypeId = PokkitMaterialData.fromBukkit(material, 0).getNukkitId();
+		int nukkitTypeId = PokkitBlockData.createBlockData(material, 0).getNukkitId();
 
 		int size = getSize();
 		for (int i = 0; i < size; i++) {
@@ -265,15 +265,15 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 		if (item == null) {
 			return;
 		}
-		
+
 		ItemStack[] contents = getContents();
-		
+
 		for (int i = 0; i < contents.length; i++) {
 			if (contents[i] != null && contents[i].equals(item)) {
 				contents[i] = null;
 			}
 		}
-		
+
 		setContents(contents);
 	}
 
@@ -282,15 +282,15 @@ public class PokkitLiveInventory extends PokkitAbstractInventory {
 		if (material == null) {
 			return;
 		}
-		
+
 		ItemStack[] contents = getContents();
-		
+
 		for (int i = 0; i < contents.length; i++) {
 			if (contents[i] != null && contents[i].getType().equals(material)) {
 				contents[i] = null;
 			}
 		}
-		
+
 		setContents(contents);
 	}
 

@@ -3,17 +3,18 @@ package nl.rutgerkok.pokkit.blockstate;
 import java.util.List;
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
-
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
-import org.bukkit.material.MaterialData;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
 
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntitySign;
@@ -37,16 +38,16 @@ public abstract class PokkitBlockState implements BlockState {
 
 		BlockEntity blockEntityOrNull = nukkitBlock.getLevel().getBlockEntity(nukkitBlock);
 
-		MaterialData materialData = block.getTypeData();
+		PokkitBlockData blockData = (PokkitBlockData) block.getBlockData();
 		Location location = block.getLocation();
 
 		if (blockEntityOrNull instanceof BlockEntitySign) {
 			String hiddenData = blockEntityOrNull.namedTag.getString(Pokkit.NAME);
-			return new SignBlockState(location, materialData, ((BlockEntitySign) blockEntityOrNull).getText(),
+			return new SignBlockState(location, blockData, ((BlockEntitySign) blockEntityOrNull).getText(),
 					hiddenData);
 		}
 
-		return new PlainBlockState(location, materialData);
+		return new PlainBlockState(location, blockData);
 	}
 
 	/**
@@ -59,8 +60,7 @@ public abstract class PokkitBlockState implements BlockState {
 	 * @return The vitual block state.
 	 */
 	public static PokkitBlockState getVirtual(Material material, CompoundTag tag) {
-		@SuppressWarnings("deprecation")
-		MaterialData materialData = material.getNewData((byte) 0);
+		PokkitBlockData materialData = PokkitBlockData.createBlockData(material, 0);
 
 		if (material == Material.SIGN) {
 			String[] lines = new String[] { tag.getString("Text1"), tag.getString("Text2"), tag.getString("Text3"),
@@ -74,9 +74,9 @@ public abstract class PokkitBlockState implements BlockState {
 
 	private PokkitWorld worldOrNull;
 	private final int x, y, z;
-	private MaterialData materialData;
+	private PokkitBlockData blockData;
 
-	protected PokkitBlockState(Location locationOrNull, MaterialData materialData) {
+	protected PokkitBlockState(Location locationOrNull, PokkitBlockData blockData) {
 		if (locationOrNull == null) {
 			this.worldOrNull = null;
 			this.x = 0;
@@ -89,12 +89,17 @@ public abstract class PokkitBlockState implements BlockState {
 			this.z = locationOrNull.getBlockZ();
 		}
 
-		this.materialData = Objects.requireNonNull(materialData);
+		this.blockData = Objects.requireNonNull(blockData);
 	}
 
 	@Override
 	public PokkitBlock getBlock() {
 		return getWorld().getBlockAt(x, y, z);
+	}
+
+	@Override
+	public BlockData getBlockData() {
+		return blockData;
 	}
 
 	/**
@@ -111,9 +116,10 @@ public abstract class PokkitBlockState implements BlockState {
 		return getWorld().getChunkAt(getLocation());
 	}
 
+	@Deprecated
 	@Override
-	public MaterialData getData() {
-		return materialData.clone();
+	public org.bukkit.material.MaterialData getData() {
+		return blockData.toMaterialData();
 	}
 
 	@Override
@@ -143,21 +149,15 @@ public abstract class PokkitBlockState implements BlockState {
 	}
 
 	@Override
-	@Deprecated
 	public byte getRawData() {
-		return materialData.getData();
+		return this.blockData.getNukkitData();
 	}
 
 	@Override
 	public Material getType() {
-		return materialData.getItemType();
+		return blockData.getMaterial();
 	}
 
-	@Override
-	@Deprecated
-	public int getTypeId() {
-		return getType().getId();
-	}
 
 	@Override
 	public PokkitWorld getWorld() {
@@ -207,8 +207,14 @@ public abstract class PokkitBlockState implements BlockState {
 	public abstract void saveToTag(CompoundTag tag);
 
 	@Override
-	public void setData(MaterialData data) {
-		this.materialData = Objects.requireNonNull(data, "data");
+	public void setBlockData(BlockData data) {
+		this.blockData = (PokkitBlockData) Objects.requireNonNull(data, "data");
+	}
+
+	@Override
+	@Deprecated
+	public void setData(org.bukkit.material.MaterialData data) {
+		this.blockData = PokkitBlockData.createBlockData(data.getItemType(), data.getData());
 	}
 
 	@Override
@@ -219,25 +225,12 @@ public abstract class PokkitBlockState implements BlockState {
 	@Override
 	@Deprecated
 	public void setRawData(byte data) {
-		this.materialData.setData(data);
+		this.blockData = PokkitBlockData.createBlockData(getType(), data);
 	}
 
 	@Override
 	public void setType(Material type) {
-		@SuppressWarnings("deprecation")
-		MaterialData withNewType = type.getNewData(getRawData());
-		this.materialData = withNewType;
-	}
-
-	@Override
-	@Deprecated
-	public boolean setTypeId(int typeId) {
-		Material material = Material.getMaterial(typeId);
-		if (material == null) {
-			return false;
-		}
-		setType(material);
-		return true;
+		this.blockData = PokkitBlockData.createBlockData(type, 0);
 	}
 
 	@Override
@@ -253,12 +246,12 @@ public abstract class PokkitBlockState implements BlockState {
 	@Override
 	public final boolean update(boolean force, boolean applyPhysics) {
 		PokkitBlock block = getBlock();
-		if (!block.getTypeData().equals(materialData)) {
+		if (!block.getBlockData().equals(this.blockData)) {
 			// Block type has changed
 			if (!force) {
 				return false;
 			}
-			block.setTypeAndData(materialData, applyPhysics);
+			block.setBlockData(blockData, applyPhysics);
 		}
 
 		// Update NBT data

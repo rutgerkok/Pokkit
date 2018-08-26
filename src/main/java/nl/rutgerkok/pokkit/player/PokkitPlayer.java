@@ -11,24 +11,6 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitGameMode;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.PokkitSound;
-import nl.rutgerkok.pokkit.PokkitVector;
-import nl.rutgerkok.pokkit.UniqueIdConversion;
-import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
-import nl.rutgerkok.pokkit.inventory.PokkitInventory;
-import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.permission.PokkitPermission;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
-import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
-import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
-import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -46,6 +28,7 @@ import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
@@ -67,6 +50,27 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitGameMode;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.PokkitVector;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
+import nl.rutgerkok.pokkit.inventory.PokkitInventory;
+import nl.rutgerkok.pokkit.inventory.PokkitInventoryView;
+import nl.rutgerkok.pokkit.metadata.PlayerMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.permission.PokkitPermission;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachment;
+import nl.rutgerkok.pokkit.permission.PokkitPermissionAttachmentInfo;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.block.GlobalBlockPalette;
 import cn.nukkit.event.player.PlayerChatEvent;
@@ -74,8 +78,6 @@ import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
 import cn.nukkit.utils.TextFormat;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 
 @DelegateDeserialization(PokkitOfflinePlayer.class)
 public class PokkitPlayer extends PokkitHumanEntity implements Player {
@@ -140,12 +142,6 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 			@Override
 			public InetSocketAddress getRawAddress() {
 				return InetSocketAddress.createUnresolved(nukkit.getAddress(), nukkit.getPort());
-			}
-
-			@Override
-			public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY,
-					float offsetZ, float speed, int particleCount, int radius) {
-				// Silently unsupported!
 			}
 
 			@Override
@@ -529,6 +525,18 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
+	public String getPlayerListFooter() {
+		// Not implemented
+		return null;
+	}
+
+	@Override
+	public String getPlayerListHeader() {
+		// Not implemented
+		return null;
+	}
+
+	@Override
 	public String getPlayerListName() {
 		return nukkit.getDisplayName(); // In Nukkit, if you change the player's display name, it also changes in the player list, so...
 
@@ -582,7 +590,7 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public int getStatistic(Statistic arg0) throws IllegalArgumentException {
 		switch (arg0) {
-		case PLAY_ONE_TICK:
+		case PLAY_ONE_MINUTE:
 			long first = nukkit.getFirstPlayed();
 			long diff = System.currentTimeMillis() - first; // This is the
 															// difference in
@@ -970,23 +978,14 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	}
 
 	@Override
-	@Deprecated
-	public void sendBlockChange(Location location, int materialId, byte blockData) {
-		Material material = Material.getMaterial(materialId);
-		if (material == null) {
-			return;
-		}
-		sendBlockChange(location, material, blockData);
-	}
+	public void sendBlockChange(Location location, BlockData block) {
+		PokkitBlockData materialData = (PokkitBlockData) block;
 
-	@Override
-	public void sendBlockChange(Location location, Material material, byte blockData) {
 		int x = location.getBlockX();
 		int y = location.getBlockY();
 		int z = location.getBlockZ();
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(material, blockData);
 		int nukkitBlockId = materialData.getNukkitId();
-		int nukkitBlockData = materialData.getNukkitDamage();
+		int nukkitBlockData = materialData.getNukkitData();
 		int flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
 
 		UpdateBlockPacket packet = new UpdateBlockPacket();
@@ -996,6 +995,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 		packet.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(nukkitBlockId, nukkitBlockData);
 		packet.flags = flags;
 		nukkit.dataPacket(packet, false);
+	}
+
+	@Override
+	public void sendBlockChange(Location location, Material material, byte blockData) {
+		this.sendBlockChange(location, PokkitBlockData.createBlockData(material, blockData));
 	}
 
 	@Override
@@ -1180,6 +1184,21 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 	@Override
 	public void setOp(boolean value) {
 		nukkit.setOp(value);
+	}
+
+	@Override
+	public void setPlayerListFooter(String footer) {
+		// Ignore - not implemented
+	}
+
+	@Override
+	public void setPlayerListHeader(String header) {
+		// Ignore - not implemented
+	}
+
+	@Override
+	public void setPlayerListHeaderFooter(String header, String footer) {
+		// Ignore - not implemented
 	}
 
 	@Override
@@ -1422,6 +1441,11 @@ public class PokkitPlayer extends PokkitHumanEntity implements Player {
 
 	@Override
 	public void stopSound(String sound, SoundCategory category) {
+		// Silently unsupported!
+	}
+
+	@Override
+	public void updateCommands() {
 		// Silently unsupported!
 	}
 

@@ -1,10 +1,9 @@
 package nl.rutgerkok.pokkit.item;
 
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 
 import cn.nukkit.item.Item;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -33,19 +32,21 @@ public final class PokkitItemStack {
 	 *            The Nukkit item.
 	 */
 	public static void overwriteNukkit(ItemStack bukkit, cn.nukkit.item.Item nukkit) {
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(bukkit.getType(), bukkit.getDurability());
+		cn.nukkit.item.Item nukkitType = ItemMap.fromBukkit(bukkit.getType());
 
-		if (materialData.getNukkitId() != nukkit.getId()) {
+		if (nukkitType.getId() != nukkit.getId()) {
 			Bukkit.getLogger().info("Cannot change item material from " + bukkit.getType() + " to "
-					+ cn.nukkit.item.Item.get(nukkit.getId()));
+					+ nukkit);
 			return;
 		}
 
-		nukkit.setDamage(materialData.getNukkitDamage());
 		nukkit.setCount(bukkit.getAmount());
 
 		if (bukkit.hasItemMeta()) {
 			PokkitItemMeta meta = (PokkitItemMeta) bukkit.getItemMeta();
+			if (meta instanceof Damageable) {
+				nukkit.setDamage(((Damageable) meta).getDamage());
+			}
 			nukkit.setNamedTag(meta.getTag());
 		} else {
 			nukkit.clearNamedTag();
@@ -60,21 +61,16 @@ public final class PokkitItemStack {
 	 * @return A {@link ItemStack}, or null if Nukkit has an air or null stack.
 	 */
 	public static ItemStack toBukkitCopy(cn.nukkit.item.Item nukkit) {
-		if (nukkit == null) {
-			return null;
-		}
-		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit);
-		Material material = materialData.getBukkitMaterial();
+		Material material = ItemMap.fromNukkitOrNull(nukkit);
 		if (material == null) {
 			return null;
 		}
-		ItemStack bukkit = new ItemStack(material, nukkit.getCount(),
-				materialData.getBukkitDamage());
+		ItemStack bukkit = new ItemStack(material, nukkit.getCount());
 
 		// Convert item meta
 		CompoundTag extra = nukkit.getNamedTag();
 		if (extra != null) {
-			bukkit.setItemMeta(getItemFactory().getItemMeta(material, extra));
+			bukkit.setItemMeta(getItemFactory().getItemMeta(material, extra, nukkit.getDamage()));
 		}
 
 		return bukkit;
@@ -84,13 +80,16 @@ public final class PokkitItemStack {
 		if (bukkit == null) {
 			return Item.get(Item.AIR);
 		}
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(bukkit.getType(), bukkit.getDurability());
-		cn.nukkit.item.Item nukkit = Item.get(materialData.getNukkitId(), materialData.getNukkitDamage(),
-				bukkit.getAmount());
+
+		cn.nukkit.item.Item nukkit = ItemMap.fromBukkit(bukkit.getType());
+		nukkit.setCount(bukkit.getAmount());
 
 		// Convert item meta
 		if (bukkit.hasItemMeta()) {
 			PokkitItemMeta meta = (PokkitItemMeta) bukkit.getItemMeta();
+			if (meta instanceof Damageable) {
+				nukkit.setDamage(((Damageable) meta).getDamage());
+			}
 			nukkit.setNamedTag(meta.getTag());
 		}
 

@@ -7,22 +7,16 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import cn.nukkit.item.Item;
-
 import nl.rutgerkok.pokkit.Pokkit;
 import nl.rutgerkok.pokkit.entity.PokkitHumanEntity;
 import nl.rutgerkok.pokkit.item.PokkitItemStack;
+
+import cn.nukkit.item.Item;
 
 public final class PokkitPlayerInventory extends PokkitLiveInventory implements PlayerInventory {
 
 	public PokkitPlayerInventory(cn.nukkit.inventory.PlayerInventory inventory) {
 		super(inventory);
-	}
-
-	@Override
-	public int clear(int id, int data) {
-		throw Pokkit.unsupported();
-
 	}
 
 	@Override

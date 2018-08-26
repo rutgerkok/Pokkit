@@ -43,16 +43,6 @@ public final class PokkitSound {
 			break;
 		case BLOCK_CHORUS_FLOWER_GROW:
 			break;
-		case BLOCK_CLOTH_BREAK:
-			break;
-		case BLOCK_CLOTH_FALL:
-			break;
-		case BLOCK_CLOTH_HIT:
-			break;
-		case BLOCK_CLOTH_PLACE:
-			break;
-		case BLOCK_CLOTH_STEP:
-			break;
 		case BLOCK_COMPARATOR_CLICK:
 			break;
 		case BLOCK_DISPENSER_DISPENSE:
@@ -62,10 +52,6 @@ public final class PokkitSound {
 		case BLOCK_DISPENSER_LAUNCH:
 			break;
 		case BLOCK_ENCHANTMENT_TABLE_USE:
-			break;
-		case BLOCK_ENDERCHEST_CLOSE:
-			break;
-		case BLOCK_ENDERCHEST_OPEN:
 			break;
 		case BLOCK_END_GATEWAY_SPAWN:
 			break;
@@ -143,23 +129,19 @@ public final class PokkitSound {
 			break;
 		case BLOCK_METAL_PLACE:
 			break;
-		case BLOCK_METAL_PRESSUREPLATE_CLICK_OFF:
-			break;
-		case BLOCK_METAL_PRESSUREPLATE_CLICK_ON:
-			break;
 		case BLOCK_METAL_STEP:
 			break;
-		case BLOCK_NOTE_BASEDRUM:
+		case BLOCK_NOTE_BLOCK_BASEDRUM:
 			return cn.nukkit.level.Sound.NOTE_BASSATTACK;
-		case BLOCK_NOTE_BASS:
+		case BLOCK_NOTE_BLOCK_BASS:
 			return cn.nukkit.level.Sound.NOTE_BASS;
-		case BLOCK_NOTE_HARP:
+		case BLOCK_NOTE_BLOCK_HARP:
 			return cn.nukkit.level.Sound.NOTE_HARP;
-		case BLOCK_NOTE_HAT:
+		case BLOCK_NOTE_BLOCK_HAT:
 			return cn.nukkit.level.Sound.NOTE_HAT;
-		case BLOCK_NOTE_PLING:
+		case BLOCK_NOTE_BLOCK_PLING:
 			return cn.nukkit.level.Sound.NOTE_PLING;
-		case BLOCK_NOTE_SNARE:
+		case BLOCK_NOTE_BLOCK_SNARE:
 			return cn.nukkit.level.Sound.NOTE_SNARE;
 		case BLOCK_PISTON_CONTRACT:
 			break;
@@ -183,16 +165,6 @@ public final class PokkitSound {
 			break;
 		case BLOCK_SAND_STEP:
 			break;
-		case BLOCK_SLIME_BREAK:
-			break;
-		case BLOCK_SLIME_FALL:
-			break;
-		case BLOCK_SLIME_HIT:
-			break;
-		case BLOCK_SLIME_PLACE:
-			break;
-		case BLOCK_SLIME_STEP:
-			break;
 		case BLOCK_SNOW_BREAK:
 			break;
 		case BLOCK_SNOW_FALL:
@@ -215,10 +187,6 @@ public final class PokkitSound {
 			break;
 		case BLOCK_STONE_PLACE:
 			break;
-		case BLOCK_STONE_PRESSUREPLATE_CLICK_OFF:
-			break;
-		case BLOCK_STONE_PRESSUREPLATE_CLICK_ON:
-			break;
 		case BLOCK_STONE_STEP:
 			break;
 		case BLOCK_TRIPWIRE_ATTACH:
@@ -228,8 +196,6 @@ public final class PokkitSound {
 		case BLOCK_TRIPWIRE_CLICK_ON:
 			break;
 		case BLOCK_TRIPWIRE_DETACH:
-			break;
-		case BLOCK_WATERLILY_PLACE:
 			break;
 		case BLOCK_WATER_AMBIENT:
 			break;
@@ -243,31 +209,15 @@ public final class PokkitSound {
 			return cn.nukkit.level.Sound.RANDOM_DOOR_OPEN;
 		case BLOCK_WOOD_BREAK:
 			return cn.nukkit.level.Sound.HIT_WOOD;
-		case BLOCK_WOOD_BUTTON_CLICK_OFF:
-			break;
-		case BLOCK_WOOD_BUTTON_CLICK_ON:
-			break;
 		case BLOCK_WOOD_FALL:
 			break;
 		case BLOCK_WOOD_HIT:
 			break;
 		case BLOCK_WOOD_PLACE:
 			break;
-		case BLOCK_WOOD_PRESSUREPLATE_CLICK_OFF:
-			break;
-		case BLOCK_WOOD_PRESSUREPLATE_CLICK_ON:
-			break;
 		case BLOCK_WOOD_STEP:
 			break;
 		case ENCHANT_THORNS_HIT:
-			break;
-		case ENTITY_ARMORSTAND_BREAK:
-			break;
-		case ENTITY_ARMORSTAND_FALL:
-			break;
-		case ENTITY_ARMORSTAND_HIT:
-			break;
-		case ENTITY_ARMORSTAND_PLACE:
 			break;
 		case ENTITY_ARROW_HIT:
 			break;
@@ -283,8 +233,6 @@ public final class PokkitSound {
 			break;
 		case ENTITY_BAT_LOOP:
 			break;
-		// case ENTITY_BAT_TAKEOFF:
-		// 	return new BatSound(vector, pitch);
 		case ENTITY_BLAZE_AMBIENT:
 			break;
 		case ENTITY_BLAZE_BURN:
@@ -294,10 +242,6 @@ public final class PokkitSound {
 		case ENTITY_BLAZE_HURT:
 			break;
 		case ENTITY_BLAZE_SHOOT:
-			break;
-		case ENTITY_BOBBER_SPLASH:
-			break;
-		case ENTITY_BOBBER_THROW:
 			break;
 		case ENTITY_CAT_AMBIENT:
 			break;
@@ -363,33 +307,17 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ELDER_GUARDIAN_HURT_LAND:
 			break;
-		case ENTITY_ENDERDRAGON_AMBIENT:
-			break;
-		case ENTITY_ENDERDRAGON_DEATH:
-			break;
-		case ENTITY_ENDERDRAGON_FIREBALL_EXPLODE:
-			break;
-		case ENTITY_ENDERDRAGON_FLAP:
-			break;
-		case ENTITY_ENDERDRAGON_GROWL:
-			break;
-		case ENTITY_ENDERDRAGON_HURT:
-			break;
-		case ENTITY_ENDERDRAGON_SHOOT:
-			break;
-		case ENTITY_ENDEREYE_LAUNCH:
-			break;
-		case ENTITY_ENDERMEN_AMBIENT:
+		case ENTITY_ENDERMAN_AMBIENT:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_IDLE;
-		case ENTITY_ENDERMEN_DEATH:
+		case ENTITY_ENDERMAN_DEATH:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_DEATH;
-		case ENTITY_ENDERMEN_HURT:
+		case ENTITY_ENDERMAN_HURT:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_HIT;
-		case ENTITY_ENDERMEN_SCREAM:
+		case ENTITY_ENDERMAN_SCREAM:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_SCREAM;
-		case ENTITY_ENDERMEN_STARE:
+		case ENTITY_ENDERMAN_STARE:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_STARE;
-		case ENTITY_ENDERMEN_TELEPORT:
+		case ENTITY_ENDERMAN_TELEPORT:
 			return cn.nukkit.level.Sound.MOB_ENDERMEN_PORTAL;
 		case ENTITY_ENDERMITE_AMBIENT:
 			break;
@@ -399,28 +327,10 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ENDERMITE_STEP:
 			break;
-		case ENTITY_ENDERPEARL_THROW:
-			break;
 		case ENTITY_EXPERIENCE_BOTTLE_THROW:
 			break;
 		case ENTITY_EXPERIENCE_ORB_PICKUP:
 			return cn.nukkit.level.Sound.RANDOM_ORB;
-		case ENTITY_FIREWORK_BLAST:
-			break;
-		case ENTITY_FIREWORK_BLAST_FAR:
-			break;
-		case ENTITY_FIREWORK_LARGE_BLAST:
-			break;
-		case ENTITY_FIREWORK_LARGE_BLAST_FAR:
-			break;
-		case ENTITY_FIREWORK_LAUNCH:
-			break;
-		case ENTITY_FIREWORK_SHOOT:
-			break;
-		case ENTITY_FIREWORK_TWINKLE:
-			break;
-		case ENTITY_FIREWORK_TWINKLE_FAR:
-			break;
 		case ENTITY_GENERIC_BIG_FALL:
 			break;
 		case ENTITY_GENERIC_BURN:
@@ -517,45 +427,19 @@ public final class PokkitSound {
 			break;
 		case ENTITY_HUSK_STEP:
 			break;
-		case ENTITY_IRONGOLEM_ATTACK:
-			break;
-		case ENTITY_IRONGOLEM_DEATH:
-			break;
-		case ENTITY_IRONGOLEM_HURT:
-			break;
-		case ENTITY_IRONGOLEM_STEP:
-			break;
-		case ENTITY_ITEMFRAME_ADD_ITEM:
+		case ENTITY_ITEM_FRAME_ADD_ITEM:
 			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_ADD_ITEM;
-		case ENTITY_ITEMFRAME_BREAK:
+		case ENTITY_ITEM_FRAME_BREAK:
 			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_BREAK;
-		case ENTITY_ITEMFRAME_PLACE:
+		case ENTITY_ITEM_FRAME_PLACE:
 			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_PLACE;
-		case ENTITY_ITEMFRAME_REMOVE_ITEM:
+		case ENTITY_ITEM_FRAME_REMOVE_ITEM:
 			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_REMOVE_ITEM;
-		case ENTITY_ITEMFRAME_ROTATE_ITEM:
+		case ENTITY_ITEM_FRAME_ROTATE_ITEM:
 			return cn.nukkit.level.Sound.BLOCK_ITEMFRAME_ROTATE_ITEM;
 		case ENTITY_ITEM_BREAK:
 			break;
 		case ENTITY_ITEM_PICKUP:
-			break;
-		case ENTITY_LEASHKNOT_BREAK:
-			break;
-		case ENTITY_LEASHKNOT_PLACE:
-			break;
-		case ENTITY_LIGHTNING_IMPACT:
-			break;
-		case ENTITY_LIGHTNING_THUNDER:
-			break;
-		case ENTITY_LINGERINGPOTION_THROW:
-			break;
-		case ENTITY_MAGMACUBE_DEATH:
-			break;
-		case ENTITY_MAGMACUBE_HURT:
-			break;
-		case ENTITY_MAGMACUBE_JUMP:
-			break;
-		case ENTITY_MAGMACUBE_SQUISH:
 			break;
 		case ENTITY_MINECART_INSIDE:
 			break;
@@ -614,8 +498,6 @@ public final class PokkitSound {
 		case ENTITY_PLAYER_SWIM:
 			break;
 		case ENTITY_POLAR_BEAR_AMBIENT:
-			break;
-		case ENTITY_POLAR_BEAR_BABY_AMBIENT:
 			break;
 		case ENTITY_POLAR_BEAR_DEATH:
 			break;
@@ -699,29 +581,7 @@ public final class PokkitSound {
 			break;
 		case ENTITY_SLIME_SQUISH:
 			break;
-		case ENTITY_SMALL_MAGMACUBE_DEATH:
-			break;
-		case ENTITY_SMALL_MAGMACUBE_HURT:
-			break;
-		case ENTITY_SMALL_MAGMACUBE_SQUISH:
-			break;
-		case ENTITY_SMALL_SLIME_DEATH:
-			break;
-		case ENTITY_SMALL_SLIME_HURT:
-			break;
-		case ENTITY_SMALL_SLIME_JUMP:
-			break;
-		case ENTITY_SMALL_SLIME_SQUISH:
-			break;
 		case ENTITY_SNOWBALL_THROW:
-			break;
-		case ENTITY_SNOWMAN_AMBIENT:
-			break;
-		case ENTITY_SNOWMAN_DEATH:
-			break;
-		case ENTITY_SNOWMAN_HURT:
-			break;
-		case ENTITY_SNOWMAN_SHOOT:
 			break;
 		case ENTITY_SPIDER_AMBIENT:
 			break;
@@ -758,8 +618,6 @@ public final class PokkitSound {
 		case ENTITY_VILLAGER_HURT:
 			break;
 		case ENTITY_VILLAGER_NO:
-			break;
-		case ENTITY_VILLAGER_TRADING:
 			break;
 		case ENTITY_VILLAGER_YES:
 			break;
@@ -813,11 +671,11 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ZOMBIE_AMBIENT:
 			break;
-		case ENTITY_ZOMBIE_ATTACK_DOOR_WOOD:
-			return cn.nukkit.level.Sound.MOB_ZOMBIE_WOOD;
 		case ENTITY_ZOMBIE_ATTACK_IRON_DOOR:
 			break;
-		case ENTITY_ZOMBIE_BREAK_DOOR_WOOD:
+		case ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR:
+			return cn.nukkit.level.Sound.MOB_ZOMBIE_WOOD;
+		case ENTITY_ZOMBIE_BREAK_WOODEN_DOOR:
 			return cn.nukkit.level.Sound.MOB_ZOMBIE_WOODBREAK;
 		case ENTITY_ZOMBIE_DEATH:
 			break;
@@ -829,24 +687,12 @@ public final class PokkitSound {
 			break;
 		case ENTITY_ZOMBIE_HURT:
 			break;
-		// case ENTITY_ZOMBIE_INFECT:
-		// 	return new ZombieInfectSound(vector, pitch);
-		case ENTITY_ZOMBIE_PIG_AMBIENT:
-			break;
-		case ENTITY_ZOMBIE_PIG_ANGRY:
-			break;
-		case ENTITY_ZOMBIE_PIG_DEATH:
-			break;
-		case ENTITY_ZOMBIE_PIG_HURT:
-			break;
 		case ENTITY_ZOMBIE_STEP:
 			break;
 		case ENTITY_ZOMBIE_VILLAGER_AMBIENT:
 			break;
 		case ENTITY_ZOMBIE_VILLAGER_CONVERTED:
 			break;
-		// case ENTITY_ZOMBIE_VILLAGER_CURE:
-		// 	return new ZombieInfectSound(vector, pitch);
 		case ENTITY_ZOMBIE_VILLAGER_DEATH:
 			break;
 		case ENTITY_ZOMBIE_VILLAGER_HURT:
@@ -907,29 +753,29 @@ public final class PokkitSound {
 			break;
 		case MUSIC_NETHER:
 			break;
-		case RECORD_11:
+		case MUSIC_DISC_11:
 			break;
-		case RECORD_13:
+		case MUSIC_DISC_13:
 			break;
-		case RECORD_BLOCKS:
+		case MUSIC_DISC_BLOCKS:
 			break;
-		case RECORD_CAT:
+		case MUSIC_DISC_CAT:
 			break;
-		case RECORD_CHIRP:
+		case MUSIC_DISC_CHIRP:
 			break;
-		case RECORD_FAR:
+		case MUSIC_DISC_FAR:
 			break;
-		case RECORD_MALL:
+		case MUSIC_DISC_MALL:
 			break;
-		case RECORD_MELLOHI:
+		case MUSIC_DISC_MELLOHI:
 			break;
-		case RECORD_STAL:
+		case MUSIC_DISC_STAL:
 			break;
-		case RECORD_STRAD:
+		case MUSIC_DISC_STRAD:
 			break;
-		case RECORD_WAIT:
+		case MUSIC_DISC_WAIT:
 			break;
-		case RECORD_WARD:
+		case MUSIC_DISC_WARD:
 			break;
 		case UI_BUTTON_CLICK:
 			return cn.nukkit.level.Sound.RANDOM_CLICK;
@@ -943,22 +789,6 @@ public final class PokkitSound {
 		case BLOCK_SHULKER_BOX_OPEN:
 			break;
 		case ENTITY_ELDER_GUARDIAN_FLOP:
-			break;
-		case ENTITY_EVOCATION_FANGS_ATTACK:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_AMBIENT:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_CAST_SPELL:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_DEATH:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_HURT:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_PREPARE_ATTACK:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_PREPARE_SUMMON:
-			break;
-		case ENTITY_EVOCATION_ILLAGER_PREPARE_WOLOLO:
 			break;
 		case ENTITY_LLAMA_AMBIENT:
 			break;
@@ -988,17 +818,525 @@ public final class PokkitSound {
 			break;
 		case ENTITY_VEX_HURT:
 			break;
-		case ENTITY_VINDICATION_ILLAGER_AMBIENT:
-			break;
-		case ENTITY_VINDICATION_ILLAGER_DEATH:
-			break;
-		case ENTITY_VINDICATION_ILLAGER_HURT:
-			break;
 		case ITEM_ARMOR_EQUIP_ELYTRA:
 			break;
 		case ITEM_BOTTLE_EMPTY:
 			break;
 		case ITEM_TOTEM_USE:
+			break;
+		case AMBIENT_UNDERWATER_ENTER:
+			break;
+		case AMBIENT_UNDERWATER_EXIT:
+			break;
+		case AMBIENT_UNDERWATER_LOOP:
+			break;
+		case AMBIENT_UNDERWATER_LOOP_ADDITIONS:
+			break;
+		case AMBIENT_UNDERWATER_LOOP_ADDITIONS_RARE:
+			break;
+		case AMBIENT_UNDERWATER_LOOP_ADDITIONS_ULTRA_RARE:
+			break;
+		case BLOCK_BEACON_ACTIVATE:
+			break;
+		case BLOCK_BEACON_AMBIENT:
+			break;
+		case BLOCK_BEACON_DEACTIVATE:
+			break;
+		case BLOCK_BEACON_POWER_SELECT:
+			break;
+		case BLOCK_BUBBLE_COLUMN_BUBBLE_POP:
+			break;
+		case BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT:
+			break;
+		case BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE:
+			break;
+		case BLOCK_BUBBLE_COLUMN_WHIRLPOOL_AMBIENT:
+			break;
+		case BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE:
+			break;
+		case BLOCK_CONDUIT_ACTIVATE:
+			break;
+		case BLOCK_CONDUIT_AMBIENT:
+			break;
+		case BLOCK_CONDUIT_AMBIENT_SHORT:
+			break;
+		case BLOCK_CONDUIT_ATTACK_TARGET:
+			break;
+		case BLOCK_CONDUIT_DEACTIVATE:
+			break;
+		case BLOCK_CORAL_BLOCK_BREAK:
+			break;
+		case BLOCK_CORAL_BLOCK_FALL:
+			break;
+		case BLOCK_CORAL_BLOCK_HIT:
+			break;
+		case BLOCK_CORAL_BLOCK_PLACE:
+			break;
+		case BLOCK_CORAL_BLOCK_STEP:
+			break;
+		case BLOCK_ENDER_CHEST_CLOSE:
+			break;
+		case BLOCK_ENDER_CHEST_OPEN:
+			break;
+		case BLOCK_END_PORTAL_FRAME_FILL:
+			break;
+		case BLOCK_END_PORTAL_SPAWN:
+			break;
+		case BLOCK_LILY_PAD_PLACE:
+			break;
+		case BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF:
+			break;
+		case BLOCK_METAL_PRESSURE_PLATE_CLICK_ON:
+			break;
+		case BLOCK_NOTE_BLOCK_BELL:
+			break;
+		case BLOCK_NOTE_BLOCK_CHIME:
+			break;
+		case BLOCK_NOTE_BLOCK_FLUTE:
+			break;
+		case BLOCK_NOTE_BLOCK_GUITAR:
+			break;
+		case BLOCK_NOTE_BLOCK_XYLOPHONE:
+			break;
+		case BLOCK_PUMPKIN_CARVE:
+			break;
+		case BLOCK_SLIME_BLOCK_BREAK:
+			break;
+		case BLOCK_SLIME_BLOCK_FALL:
+			break;
+		case BLOCK_SLIME_BLOCK_HIT:
+			break;
+		case BLOCK_SLIME_BLOCK_PLACE:
+			break;
+		case BLOCK_SLIME_BLOCK_STEP:
+			break;
+		case BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF:
+			break;
+		case BLOCK_STONE_PRESSURE_PLATE_CLICK_ON:
+			break;
+		case BLOCK_WET_GRASS_BREAK:
+			break;
+		case BLOCK_WET_GRASS_FALL:
+			break;
+		case BLOCK_WET_GRASS_HIT:
+			break;
+		case BLOCK_WET_GRASS_PLACE:
+			break;
+		case BLOCK_WET_GRASS_STEP:
+			break;
+		case BLOCK_WOODEN_BUTTON_CLICK_OFF:
+			break;
+		case BLOCK_WOODEN_BUTTON_CLICK_ON:
+			break;
+		case BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF:
+			break;
+		case BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON:
+			break;
+		case BLOCK_WOOL_BREAK:
+			break;
+		case BLOCK_WOOL_FALL:
+			break;
+		case BLOCK_WOOL_HIT:
+			break;
+		case BLOCK_WOOL_PLACE:
+			break;
+		case BLOCK_WOOL_STEP:
+			break;
+		case ENTITY_ARMOR_STAND_BREAK:
+			break;
+		case ENTITY_ARMOR_STAND_FALL:
+			break;
+		case ENTITY_ARMOR_STAND_HIT:
+			break;
+		case ENTITY_ARMOR_STAND_PLACE:
+			break;
+		case ENTITY_BAT_TAKEOFF:
+			break;
+		case ENTITY_BOAT_PADDLE_LAND:
+			break;
+		case ENTITY_BOAT_PADDLE_WATER:
+			break;
+		case ENTITY_COD_AMBIENT:
+			break;
+		case ENTITY_COD_DEATH:
+			break;
+		case ENTITY_COD_FLOP:
+			break;
+		case ENTITY_COD_HURT:
+			break;
+		case ENTITY_DOLPHIN_AMBIENT:
+			break;
+		case ENTITY_DOLPHIN_AMBIENT_WATER:
+			break;
+		case ENTITY_DOLPHIN_ATTACK:
+			break;
+		case ENTITY_DOLPHIN_DEATH:
+			break;
+		case ENTITY_DOLPHIN_EAT:
+			break;
+		case ENTITY_DOLPHIN_HURT:
+			break;
+		case ENTITY_DOLPHIN_JUMP:
+			break;
+		case ENTITY_DOLPHIN_PLAY:
+			break;
+		case ENTITY_DOLPHIN_SPLASH:
+			break;
+		case ENTITY_DOLPHIN_SWIM:
+			break;
+		case ENTITY_DRAGON_FIREBALL_EXPLODE:
+			break;
+		case ENTITY_DROWNED_AMBIENT:
+			break;
+		case ENTITY_DROWNED_AMBIENT_WATER:
+			break;
+		case ENTITY_DROWNED_DEATH:
+			break;
+		case ENTITY_DROWNED_DEATH_WATER:
+			break;
+		case ENTITY_DROWNED_HURT:
+			break;
+		case ENTITY_DROWNED_HURT_WATER:
+			break;
+		case ENTITY_DROWNED_SHOOT:
+			break;
+		case ENTITY_DROWNED_STEP:
+			break;
+		case ENTITY_DROWNED_SWIM:
+			break;
+		case ENTITY_ENDER_DRAGON_AMBIENT:
+			break;
+		case ENTITY_ENDER_DRAGON_DEATH:
+			break;
+		case ENTITY_ENDER_DRAGON_FLAP:
+			break;
+		case ENTITY_ENDER_DRAGON_GROWL:
+			break;
+		case ENTITY_ENDER_DRAGON_HURT:
+			break;
+		case ENTITY_ENDER_DRAGON_SHOOT:
+			break;
+		case ENTITY_ENDER_EYE_DEATH:
+			break;
+		case ENTITY_ENDER_EYE_LAUNCH:
+			break;
+		case ENTITY_ENDER_PEARL_THROW:
+			break;
+		case ENTITY_EVOKER_AMBIENT:
+			break;
+		case ENTITY_EVOKER_CAST_SPELL:
+			break;
+		case ENTITY_EVOKER_DEATH:
+			break;
+		case ENTITY_EVOKER_FANGS_ATTACK:
+			break;
+		case ENTITY_EVOKER_HURT:
+			break;
+		case ENTITY_EVOKER_PREPARE_ATTACK:
+			break;
+		case ENTITY_EVOKER_PREPARE_SUMMON:
+			break;
+		case ENTITY_EVOKER_PREPARE_WOLOLO:
+			break;
+		case ENTITY_FIREWORK_ROCKET_BLAST:
+			break;
+		case ENTITY_FIREWORK_ROCKET_BLAST_FAR:
+			break;
+		case ENTITY_FIREWORK_ROCKET_LARGE_BLAST:
+			break;
+		case ENTITY_FIREWORK_ROCKET_LARGE_BLAST_FAR:
+			break;
+		case ENTITY_FIREWORK_ROCKET_LAUNCH:
+			break;
+		case ENTITY_FIREWORK_ROCKET_SHOOT:
+			break;
+		case ENTITY_FIREWORK_ROCKET_TWINKLE:
+			break;
+		case ENTITY_FIREWORK_ROCKET_TWINKLE_FAR:
+			break;
+		case ENTITY_FISHING_BOBBER_RETRIEVE:
+			break;
+		case ENTITY_FISHING_BOBBER_SPLASH:
+			break;
+		case ENTITY_FISHING_BOBBER_THROW:
+			break;
+		case ENTITY_FISH_SWIM:
+			break;
+		case ENTITY_HUSK_CONVERTED_TO_ZOMBIE:
+			break;
+		case ENTITY_ILLUSIONER_AMBIENT:
+			break;
+		case ENTITY_ILLUSIONER_CAST_SPELL:
+			break;
+		case ENTITY_ILLUSIONER_DEATH:
+			break;
+		case ENTITY_ILLUSIONER_HURT:
+			break;
+		case ENTITY_ILLUSIONER_MIRROR_MOVE:
+			break;
+		case ENTITY_ILLUSIONER_PREPARE_BLINDNESS:
+			break;
+		case ENTITY_ILLUSIONER_PREPARE_MIRROR:
+			break;
+		case ENTITY_IRON_GOLEM_ATTACK:
+			break;
+		case ENTITY_IRON_GOLEM_DEATH:
+			break;
+		case ENTITY_IRON_GOLEM_HURT:
+			break;
+		case ENTITY_IRON_GOLEM_STEP:
+			break;
+		case ENTITY_LEASH_KNOT_BREAK:
+			break;
+		case ENTITY_LEASH_KNOT_PLACE:
+			break;
+		case ENTITY_LIGHTNING_BOLT_IMPACT:
+			break;
+		case ENTITY_LIGHTNING_BOLT_THUNDER:
+			break;
+		case ENTITY_LINGERING_POTION_THROW:
+			break;
+		case ENTITY_MAGMA_CUBE_DEATH:
+			break;
+		case ENTITY_MAGMA_CUBE_DEATH_SMALL:
+			break;
+		case ENTITY_MAGMA_CUBE_HURT:
+			break;
+		case ENTITY_MAGMA_CUBE_HURT_SMALL:
+			break;
+		case ENTITY_MAGMA_CUBE_JUMP:
+			break;
+		case ENTITY_MAGMA_CUBE_SQUISH:
+			break;
+		case ENTITY_MAGMA_CUBE_SQUISH_SMALL:
+			break;
+		case ENTITY_PARROT_AMBIENT:
+			break;
+		case ENTITY_PARROT_DEATH:
+			break;
+		case ENTITY_PARROT_EAT:
+			break;
+		case ENTITY_PARROT_FLY:
+			break;
+		case ENTITY_PARROT_HURT:
+			break;
+		case ENTITY_PARROT_IMITATE_BLAZE:
+			break;
+		case ENTITY_PARROT_IMITATE_CREEPER:
+			break;
+		case ENTITY_PARROT_IMITATE_DROWNED:
+			break;
+		case ENTITY_PARROT_IMITATE_ELDER_GUARDIAN:
+			break;
+		case ENTITY_PARROT_IMITATE_ENDERMAN:
+			break;
+		case ENTITY_PARROT_IMITATE_ENDERMITE:
+			break;
+		case ENTITY_PARROT_IMITATE_ENDER_DRAGON:
+			break;
+		case ENTITY_PARROT_IMITATE_EVOKER:
+			break;
+		case ENTITY_PARROT_IMITATE_GHAST:
+			break;
+		case ENTITY_PARROT_IMITATE_HUSK:
+			break;
+		case ENTITY_PARROT_IMITATE_ILLUSIONER:
+			break;
+		case ENTITY_PARROT_IMITATE_MAGMA_CUBE:
+			break;
+		case ENTITY_PARROT_IMITATE_PHANTOM:
+			break;
+		case ENTITY_PARROT_IMITATE_POLAR_BEAR:
+			break;
+		case ENTITY_PARROT_IMITATE_SHULKER:
+			break;
+		case ENTITY_PARROT_IMITATE_SILVERFISH:
+			break;
+		case ENTITY_PARROT_IMITATE_SKELETON:
+			break;
+		case ENTITY_PARROT_IMITATE_SLIME:
+			break;
+		case ENTITY_PARROT_IMITATE_SPIDER:
+			break;
+		case ENTITY_PARROT_IMITATE_STRAY:
+			break;
+		case ENTITY_PARROT_IMITATE_VEX:
+			break;
+		case ENTITY_PARROT_IMITATE_VINDICATOR:
+			break;
+		case ENTITY_PARROT_IMITATE_WITCH:
+			break;
+		case ENTITY_PARROT_IMITATE_WITHER:
+			break;
+		case ENTITY_PARROT_IMITATE_WITHER_SKELETON:
+			break;
+		case ENTITY_PARROT_IMITATE_WOLF:
+			break;
+		case ENTITY_PARROT_IMITATE_ZOMBIE:
+			break;
+		case ENTITY_PARROT_IMITATE_ZOMBIE_PIGMAN:
+			break;
+		case ENTITY_PARROT_IMITATE_ZOMBIE_VILLAGER:
+			break;
+		case ENTITY_PARROT_STEP:
+			break;
+		case ENTITY_PHANTOM_AMBIENT:
+			break;
+		case ENTITY_PHANTOM_BITE:
+			break;
+		case ENTITY_PHANTOM_DEATH:
+			break;
+		case ENTITY_PHANTOM_FLAP:
+			break;
+		case ENTITY_PHANTOM_HURT:
+			break;
+		case ENTITY_PHANTOM_SWOOP:
+			break;
+		case ENTITY_PLAYER_HURT_DROWN:
+			break;
+		case ENTITY_PLAYER_HURT_ON_FIRE:
+			break;
+		case ENTITY_PLAYER_SPLASH_HIGH_SPEED:
+			break;
+		case ENTITY_POLAR_BEAR_AMBIENT_BABY:
+			break;
+		case ENTITY_PUFFER_FISH_AMBIENT:
+			break;
+		case ENTITY_PUFFER_FISH_BLOW_OUT:
+			break;
+		case ENTITY_PUFFER_FISH_BLOW_UP:
+			break;
+		case ENTITY_PUFFER_FISH_DEATH:
+			break;
+		case ENTITY_PUFFER_FISH_FLOP:
+			break;
+		case ENTITY_PUFFER_FISH_HURT:
+			break;
+		case ENTITY_PUFFER_FISH_STING:
+			break;
+		case ENTITY_SALMON_AMBIENT:
+			break;
+		case ENTITY_SALMON_DEATH:
+			break;
+		case ENTITY_SALMON_FLOP:
+			break;
+		case ENTITY_SALMON_HURT:
+			break;
+		case ENTITY_SKELETON_HORSE_AMBIENT_WATER:
+			break;
+		case ENTITY_SKELETON_HORSE_GALLOP_WATER:
+			break;
+		case ENTITY_SKELETON_HORSE_JUMP_WATER:
+			break;
+		case ENTITY_SKELETON_HORSE_STEP_WATER:
+			break;
+		case ENTITY_SKELETON_HORSE_SWIM:
+			break;
+		case ENTITY_SLIME_DEATH_SMALL:
+			break;
+		case ENTITY_SLIME_HURT_SMALL:
+			break;
+		case ENTITY_SLIME_JUMP_SMALL:
+			break;
+		case ENTITY_SLIME_SQUISH_SMALL:
+			break;
+		case ENTITY_SNOW_GOLEM_AMBIENT:
+			break;
+		case ENTITY_SNOW_GOLEM_DEATH:
+			break;
+		case ENTITY_SNOW_GOLEM_HURT:
+			break;
+		case ENTITY_SNOW_GOLEM_SHOOT:
+			break;
+		case ENTITY_SQUID_SQUIRT:
+			break;
+		case ENTITY_TROPICAL_FISH_AMBIENT:
+			break;
+		case ENTITY_TROPICAL_FISH_DEATH:
+			break;
+		case ENTITY_TROPICAL_FISH_FLOP:
+			break;
+		case ENTITY_TROPICAL_FISH_HURT:
+			break;
+		case ENTITY_TURTLE_AMBIENT_LAND:
+			break;
+		case ENTITY_TURTLE_DEATH:
+			break;
+		case ENTITY_TURTLE_DEATH_BABY:
+			break;
+		case ENTITY_TURTLE_EGG_BREAK:
+			break;
+		case ENTITY_TURTLE_EGG_CRACK:
+			break;
+		case ENTITY_TURTLE_EGG_HATCH:
+			break;
+		case ENTITY_TURTLE_HURT:
+			break;
+		case ENTITY_TURTLE_HURT_BABY:
+			break;
+		case ENTITY_TURTLE_LAY_EGG:
+			break;
+		case ENTITY_TURTLE_SHAMBLE:
+			break;
+		case ENTITY_TURTLE_SHAMBLE_BABY:
+			break;
+		case ENTITY_TURTLE_SWIM:
+			break;
+		case ENTITY_VILLAGER_TRADE:
+			break;
+		case ENTITY_VINDICATOR_AMBIENT:
+			break;
+		case ENTITY_VINDICATOR_DEATH:
+			break;
+		case ENTITY_VINDICATOR_HURT:
+			break;
+		case ENTITY_ZOMBIE_CONVERTED_TO_DROWNED:
+			break;
+		case ENTITY_ZOMBIE_DESTROY_EGG:
+			break;
+		case ENTITY_ZOMBIE_INFECT:
+			break;
+		case ENTITY_ZOMBIE_PIGMAN_AMBIENT:
+			break;
+		case ENTITY_ZOMBIE_PIGMAN_ANGRY:
+			break;
+		case ENTITY_ZOMBIE_PIGMAN_DEATH:
+			break;
+		case ENTITY_ZOMBIE_PIGMAN_HURT:
+			break;
+		case ENTITY_ZOMBIE_VILLAGER_CURE:
+			break;
+		case ITEM_ARMOR_EQUIP_TURTLE:
+			break;
+		case ITEM_AXE_STRIP:
+			break;
+		case ITEM_BUCKET_EMPTY_FISH:
+			break;
+		case ITEM_BUCKET_FILL_FISH:
+			break;
+		case ITEM_TRIDENT_HIT:
+			break;
+		case ITEM_TRIDENT_HIT_GROUND:
+			break;
+		case ITEM_TRIDENT_RETURN:
+			break;
+		case ITEM_TRIDENT_RIPTIDE_1:
+			break;
+		case ITEM_TRIDENT_RIPTIDE_2:
+			break;
+		case ITEM_TRIDENT_RIPTIDE_3:
+			break;
+		case ITEM_TRIDENT_THROW:
+			break;
+		case ITEM_TRIDENT_THUNDER:
+			break;
+		case MUSIC_UNDER_WATER:
+			break;
+		case UI_TOAST_CHALLENGE_COMPLETE:
+			break;
+		case UI_TOAST_IN:
+			break;
+		case UI_TOAST_OUT:
 			break;
 		default:
 			break;

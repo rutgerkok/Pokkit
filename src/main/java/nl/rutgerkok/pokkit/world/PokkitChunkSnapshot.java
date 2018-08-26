@@ -1,12 +1,14 @@
 package nl.rutgerkok.pokkit.world;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.block.data.BlockData;
 
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+
+import cn.nukkit.block.Block;
 import cn.nukkit.level.format.generic.BaseFullChunk;
 
 public class PokkitChunkSnapshot implements ChunkSnapshot {
@@ -14,8 +16,7 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
     private final int z;
     private final String worldname;
     // X, Y, Z
-	private Material[][][] blocksIds = new Material[16][256][16];
-    private int[][][] blocksData = new int[16][256][16];
+	private PokkitBlockData[][][] blocksIds = new PokkitBlockData[16][256][16];
 
 	BaseFullChunk nukkit;
 
@@ -30,10 +31,10 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 		for (int blockX = 0; blockX < 16; blockX++) {
 			for (int blockY = 0; blockY < 255; blockY++) {
 				for (int blockZ = 0; blockZ < 16; blockZ++) {
-					@SuppressWarnings("deprecation")
-					PokkitMaterialData data = PokkitMaterialData.fromNukkit(baseFullChunk.getBlockId(blockX, blockY, blockZ), baseFullChunk.getBlockData(blockX, blockY, blockZ));
-					blocksIds[blockX][blockY][blockZ] = data.getBukkitMaterial();
-					blocksData[blockX][blockY][blockZ] = data.getBukkitDamage();
+					PokkitBlockData data = PokkitBlockData
+							.toBukkit(Block.get(baseFullChunk.getBlockId(blockX, blockY, blockZ),
+									baseFullChunk.getBlockData(blockX, blockY, blockZ)));
+					blocksIds[blockX][blockY][blockZ] = data;
 				}
 			}
 		}
@@ -45,8 +46,8 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 	}
 
 	@Override
-	public int getBlockData(int x, int y, int z) {
-		return blocksData[x][y][z];
+	public BlockData getBlockData(int x, int y, int z) {
+		return blocksIds[x][y][z];
 	}
 
 	@Override
@@ -61,13 +62,7 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 
 	@Override
 	public Material getBlockType(int x, int y, int z) {
-		return blocksIds[x][y][z];
-	}
-
-	@Override
-	@Deprecated
-	public int getBlockTypeId(int x, int y, int z) {
-		return blocksIds[x][y][z].getId();
+		return blocksIds[x][y][z].getMaterial();
 	}
 
 	@Override
@@ -77,14 +72,13 @@ public class PokkitChunkSnapshot implements ChunkSnapshot {
 	}
 
 	@Override
-	public int getHighestBlockYAt(int x, int z) {
-		return nukkit.getHighestBlockAt(x, z);
+	public int getData(int x, int y, int z) {
+		return blocksIds[x][y][z].getNukkitData();
 	}
 
 	@Override
-	public double getRawBiomeRainfall(int x, int z) {
-		throw Pokkit.unsupported();
-
+	public int getHighestBlockYAt(int x, int z) {
+		return nukkit.getHighestBlockAt(x, z);
 	}
 
 	@Override

@@ -1,12 +1,17 @@
 package nl.rutgerkok.pokkit.entity;
 
-import cn.nukkit.math.SimpleAxisAlignedBB;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.PokkitLocation;
-import nl.rutgerkok.pokkit.world.PokkitWorld;
-import org.bukkit.*;
+
+import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
+import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -17,6 +22,12 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.world.PokkitWorld;
+
+import cn.nukkit.math.SimpleAxisAlignedBB;
 
 abstract class PokkitFakeEntity implements Entity {
 
@@ -276,6 +287,11 @@ abstract class PokkitFakeEntity implements Entity {
 	}
 
 	@Override
+	public boolean isPersistent() {
+		return false;
+	}
+
+	@Override
 	public boolean isSilent() {
 		return false;
 	}
@@ -409,6 +425,11 @@ abstract class PokkitFakeEntity implements Entity {
 	public boolean setPassenger(Entity passenger) {
 		throw Pokkit.unsupported();
 
+	}
+
+	@Override
+	public void setPersistent(boolean persistent) {
+		throw Pokkit.unsupported();
 	}
 
 	@Override

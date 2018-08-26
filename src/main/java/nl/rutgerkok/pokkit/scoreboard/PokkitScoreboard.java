@@ -19,7 +19,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-final class PokkitScoreboard implements Scoreboard {
+public final class PokkitScoreboard implements Scoreboard {
 
 	/**
 	 * Map of player names to player score maps.
@@ -154,6 +154,14 @@ final class PokkitScoreboard implements Scoreboard {
 		Validate.notNull(criteria, "criteria");
 		Objective objective = new PokkitObjective(name, criteria, this);
 		this.objectivesByName.put(objective.getName().toLowerCase(), objective);
+		return objective;
+	}
+
+	@Override
+	public Objective registerNewObjective(String name, String criteria, String displayName)
+			throws IllegalArgumentException {
+		Objective objective = registerNewObjective(name, criteria);
+		objective.setDisplayName(displayName);
 		return objective;
 	}
 

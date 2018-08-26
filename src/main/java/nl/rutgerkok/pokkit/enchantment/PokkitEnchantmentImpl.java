@@ -2,18 +2,19 @@ package nl.rutgerkok.pokkit.enchantment;
 
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 
 final class PokkitEnchantmentImpl extends Enchantment {
 
 	private final cn.nukkit.item.enchantment.Enchantment nukkit;
 
-	public PokkitEnchantmentImpl(cn.nukkit.item.enchantment.Enchantment nukkit, int bukkitId) {
+	public PokkitEnchantmentImpl(cn.nukkit.item.enchantment.Enchantment nukkit, NamespacedKey bukkitId) {
 		super(bukkitId);
 		this.nukkit = Objects.requireNonNull(nukkit, "nukkit");
 	}

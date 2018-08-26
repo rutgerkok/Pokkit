@@ -3,8 +3,6 @@ package nl.rutgerkok.pokkit.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.rutgerkok.pokkit.Pokkit;
-
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -13,12 +11,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
+import nl.rutgerkok.pokkit.Pokkit;
+
 import cn.nukkit.nbt.tag.CompoundTag;
 
 final class PokkitPotionMeta extends PokkitItemMeta implements PotionMeta {
 
-	PokkitPotionMeta(CompoundTag tag) {
-		super(tag);
+	PokkitPotionMeta(CompoundTag tag, int damage) {
+		super(tag, damage);
 	}
 
 	@Override

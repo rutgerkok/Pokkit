@@ -2,11 +2,11 @@ package nl.rutgerkok.pokkit.item;
 
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
-
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.meta.BlockStateMeta;
+
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 
@@ -14,8 +14,8 @@ final class PokkitBlockStateMeta extends PokkitItemMeta implements BlockStateMet
 
 	private final Material material;
 
-	PokkitBlockStateMeta(CompoundTag tag, Material material) {
-		super(tag);
+	PokkitBlockStateMeta(CompoundTag tag, Material material, int damage) {
+		super(tag, damage);
 		this.material = Objects.requireNonNull(material, "material");
 	}
 

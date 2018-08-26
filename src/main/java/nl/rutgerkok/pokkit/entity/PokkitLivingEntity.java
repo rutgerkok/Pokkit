@@ -5,13 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
-import nl.rutgerkok.pokkit.potion.PokkitPotionEffectType;
-import nl.rutgerkok.pokkit.world.PokkitBlock;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -25,6 +18,13 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
+import nl.rutgerkok.pokkit.potion.PokkitPotionEffectType;
+import nl.rutgerkok.pokkit.world.PokkitBlock;
 
 import cn.nukkit.potion.Effect;
 
@@ -238,6 +238,16 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 	}
 
 	@Override
+	public boolean isRiptiding() {
+		return false;
+	}
+
+	@Override
+	public boolean isSwimming() {
+		return nukkit.isSwimming();
+	}
+
+	@Override
 	public <T extends Projectile> T launchProjectile(Class<? extends T> projectile) {
 		throw Pokkit.unsupported();
 	}
@@ -330,12 +340,17 @@ public class PokkitLivingEntity extends PokkitEntity implements LivingEntity {
 		throw Pokkit.unsupported();
 	}
 
+	@Override
+	public void setSwimming(boolean swimming) {
+		nukkit.setSwimming(swimming);
+	}
+
 	private Integer[] toNukkitBlockIds(Set<Material> bukkitMaterials) {
 		if (bukkitMaterials == null) {
 			return new Integer[cn.nukkit.block.Block.AIR];
 		}
 		return bukkitMaterials.stream()
-				.map(material -> Integer.valueOf(PokkitMaterialData.fromBukkit(material, 0).getNukkitId()))
+				.map(material -> PokkitBlockData.createBlockData(material, 0).getNukkitId())
 				.toArray(Integer[]::new);
 	}
 

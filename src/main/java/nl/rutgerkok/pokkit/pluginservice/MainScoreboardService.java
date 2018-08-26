@@ -7,8 +7,10 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import cn.nukkit.plugin.PluginBase;
+import nl.rutgerkok.pokkit.scoreboard.PokkitScoreboard;
 import nl.rutgerkok.pokkit.scoreboard.ScoreboardPersister;
+
+import cn.nukkit.plugin.PluginBase;
 
 /**
  * Saves and loads the main scoreboard.
@@ -37,7 +39,8 @@ public final class MainScoreboardService implements PokkitService {
 	@Override
 	public void onLoad(PluginBase pokkit) {
 		YamlConfiguration scoreboardConfig = YamlConfiguration.loadConfiguration(getScoreboardFile(pokkit));
-		persister.loadScoreboard(scoreboardConfig, Bukkit.getScoreboardManager().getMainScoreboard());
+		persister.loadScoreboard(scoreboardConfig,
+				(PokkitScoreboard) Bukkit.getScoreboardManager().getMainScoreboard());
 	}
 
 }

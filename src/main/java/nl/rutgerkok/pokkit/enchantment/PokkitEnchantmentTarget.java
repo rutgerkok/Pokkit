@@ -26,8 +26,9 @@ public class PokkitEnchantmentTarget {
 		twoWay(EnchantmentType.FISHING_ROD, EnchantmentTarget.FISHING_ROD);
 		twoWay(EnchantmentType.SWORD, EnchantmentTarget.WEAPON);
 
-		// For WEARABLE, no suitable Nukkit target exists yet
+		// For WEARABLE and TRIDENT, no suitable Nukkit target exists yet
 		bukkitToNukkit.put(EnchantmentTarget.WEARABLE, EnchantmentType.BREAKABLE);
+		bukkitToNukkit.put(EnchantmentTarget.TRIDENT, EnchantmentType.BREAKABLE);
 	}
 
 	/**
