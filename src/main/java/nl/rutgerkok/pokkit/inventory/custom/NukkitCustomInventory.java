@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.GlobalBlockPalette;
 import cn.nukkit.inventory.BaseInventory;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
