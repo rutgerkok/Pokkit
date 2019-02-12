@@ -27,9 +27,6 @@ public class PokkitEnchantmentTarget {
 		twoWay(EnchantmentType.SWORD, EnchantmentTarget.WEAPON);
 		twoWay(EnchantmentType.WEARABLE, EnchantmentTarget.WEARABLE);
 		twoWay(EnchantmentType.TRIDENT, EnchantmentTarget.TRIDENT);
-
-		bukkitToNukkit.put(EnchantmentTarget.WEARABLE, EnchantmentType.BREAKABLE);
-		bukkitToNukkit.put(EnchantmentTarget.TRIDENT, EnchantmentType.BREAKABLE);
 	}
 
 	/**
