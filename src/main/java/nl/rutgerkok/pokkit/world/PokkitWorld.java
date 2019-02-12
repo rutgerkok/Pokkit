@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.world;
 
+import org.bukkit.StructureType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1086,4 +1087,13 @@ public final class PokkitWorld implements World {
 
 	}
 
+	@Override
+	public Location locateNearestStructure(Location location, StructureType type, int i, boolean b) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean isChunkGenerated(int x, int z) {
+		return nukkit.isChunkLoaded(x, z);
+	}
 }

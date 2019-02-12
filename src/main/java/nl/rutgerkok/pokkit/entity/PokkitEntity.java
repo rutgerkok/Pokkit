@@ -14,6 +14,7 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -563,4 +564,9 @@ public class PokkitEntity implements Entity {
     public boolean teleport(Location location, TeleportCause cause) {
         return nukkit.teleport(PokkitLocation.toNukkit(location), PokkitTeleportCause.toNukkit(cause));
     }
+
+    @Override
+	public BlockFace getFacing() {
+		throw Pokkit.unsupported();
+	}
 }

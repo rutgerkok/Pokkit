@@ -8,7 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 
 public class PokkitEnchantment {
 
-	private static Enchantment[] nukkitToBukkit = new Enchantment[25];
+	private static Enchantment[] nukkitToBukkit = new Enchantment[33];
 	private static Map<NamespacedKey, Integer> bukkitToNukkit = new HashMap<>();
 
 	static {

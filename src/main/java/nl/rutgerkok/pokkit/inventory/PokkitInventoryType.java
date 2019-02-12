@@ -27,6 +27,7 @@ public final class PokkitInventoryType {
 		twoWay(cn.nukkit.inventory.InventoryType.WORKBENCH, InventoryType.WORKBENCH);
 		twoWay(cn.nukkit.inventory.InventoryType.ENDER_CHEST, InventoryType.ENDER_CHEST);
 		twoWay(cn.nukkit.inventory.InventoryType.SHULKER_BOX, InventoryType.SHULKER_BOX);
+		twoWay(cn.nukkit.inventory.InventoryType.BEACON, InventoryType.BEACON);
 
 		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
 		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);

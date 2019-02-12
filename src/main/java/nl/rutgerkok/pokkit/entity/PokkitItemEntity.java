@@ -2,6 +2,7 @@ package nl.rutgerkok.pokkit.entity;
 
 import java.util.Objects;
 
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
@@ -56,4 +57,8 @@ public class PokkitItemEntity extends PokkitFakeEntity implements Item {
 		throw Pokkit.unsupported();
 	}
 
+	@Override
+	public BlockFace getFacing() {
+		throw Pokkit.unsupported();
+	}
 }

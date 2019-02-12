@@ -79,4 +79,13 @@ public final class SignBlockState extends PokkitBlockState implements Sign {
 		lines[index] = line;
 	}
 
+	@Override
+	public boolean isEditable() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setEditable(boolean editable) {
+		throw Pokkit.unsupported();
+	}
 }

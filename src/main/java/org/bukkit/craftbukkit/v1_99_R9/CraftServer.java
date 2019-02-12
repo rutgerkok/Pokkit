@@ -23,10 +23,12 @@ import org.bukkit.BanList;
 import org.bukkit.BanList.Type;
 import org.bukkit.GameMode;
 import org.bukkit.Keyed;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.StructureType;
 import org.bukkit.Tag;
 import org.bukkit.UnsafeValues;
 import org.bukkit.Warning.WarningState;
@@ -837,4 +839,13 @@ public final class CraftServer extends Server.Spigot implements Server {
 		return nukkit.unloadLevel(level, true);
 	}
 
+	@Override
+	public ItemStack createExplorerMap(World w, Location l, StructureType t) {
+		return createExplorerMap(w, l, t);
+	}
+
+	@Override
+	public ItemStack createExplorerMap(World w, Location l, StructureType t, int i, boolean b) {
+		throw Pokkit.unsupported();
+	}
 }
