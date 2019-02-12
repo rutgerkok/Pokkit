@@ -30,7 +30,6 @@ public final class PokkitInventoryType {
 		twoWay(cn.nukkit.inventory.InventoryType.BEACON, InventoryType.BEACON);
 
 		bukkitToNukkit.put(InventoryType.MERCHANT, cn.nukkit.inventory.InventoryType.ANVIL);
-		bukkitToNukkit.put(InventoryType.BEACON, cn.nukkit.inventory.InventoryType.ENCHANT_TABLE);
 		bukkitToNukkit.put(InventoryType.CREATIVE, cn.nukkit.inventory.InventoryType.PLAYER);
 
 		nukkitToBukkit.put(cn.nukkit.inventory.InventoryType.CURSOR, InventoryType.PLAYER); // TODO wrong
