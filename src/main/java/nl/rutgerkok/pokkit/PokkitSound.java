@@ -34,15 +34,15 @@ public final class PokkitSound {
 		case BLOCK_BREWING_STAND_BREW:
 			break;
 		case BLOCK_CHEST_CLOSE:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_CHESTCLOSED;
 		case BLOCK_CHEST_LOCKED:
 			break;
 		case BLOCK_CHEST_OPEN:
-			break;
+			return cn.nukkit.level.Sound.RANDOM_CHESTOPEN;
 		case BLOCK_CHORUS_FLOWER_DEATH:
-			break;
+			return cn.nukkit.level.Sound.BLOCK_CHORUSFLOWER_DEATH;
 		case BLOCK_CHORUS_FLOWER_GROW:
-			break;
+			return cn.nukkit.level.Sound.BLOCK_CHORUSFLOWER_GROW;
 		case BLOCK_COMPARATOR_CLICK:
 			break;
 		case BLOCK_DISPENSER_DISPENSE:
@@ -740,19 +740,19 @@ public final class PokkitSound {
 		case ITEM_SHOVEL_FLATTEN:
 			break;
 		case MUSIC_CREATIVE:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME_CREATIVE;
 		case MUSIC_CREDITS:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME_CREDITS;
 		case MUSIC_DRAGON:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME_ENDBOSS;
 		case MUSIC_END:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME_END;
 		case MUSIC_GAME:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME;
 		case MUSIC_MENU:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_MENU;
 		case MUSIC_NETHER:
-			break;
+			return cn.nukkit.level.Sound.MUSIC_GAME_NETHER;
 		case MUSIC_DISC_11:
 			break;
 		case MUSIC_DISC_13:

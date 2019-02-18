@@ -72,8 +72,8 @@ import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 import nl.rutgerkok.pokkit.potion.PokkitPotionEffect;
 
 import cn.nukkit.AdventureSettings;
-import cn.nukkit.block.GlobalBlockPalette;
 import cn.nukkit.event.player.PlayerChatEvent;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.level.particle.GenericParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.UpdateBlockPacket;

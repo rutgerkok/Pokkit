@@ -1,5 +1,6 @@
 package nl.rutgerkok.pokkit.world;
 
+import org.bukkit.StructureType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -286,8 +287,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public long getFullTime() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getTime();
 	}
 
 	@Override
@@ -483,8 +483,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public int getThunderDuration() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getThunderTime();
 	}
 
 	@Override
@@ -517,8 +516,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public int getWeatherDuration() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getRainTime();
 	}
 
 	@Override
@@ -549,14 +547,13 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean hasStorm() {
-		throw Pokkit.unsupported();
+		return nukkit.isThundering();
 
 	}
 
 	@Override
 	public boolean isAutoSave() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getAutoSave();
 	}
 
 	@Override
@@ -718,8 +715,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setFullTime(long time) {
-		throw Pokkit.unsupported();
-
+		nukkit.setTime((int) time);
 	}
 
 	@Override
@@ -799,14 +795,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setStorm(boolean hasStorm) {
-		// Silently unsupported!
-	    // Nukkit doesn't have storms yet, so we just ignore that.
+		nukkit.setThundering(hasStorm);
 	}
 
 	@Override
 	public void setThunderDuration(int duration) {
-        // Silently unsupported!
-        // Nukkit doesn't have storms yet, so we just ignore that.
+		nukkit.setThunderTime(duration);
 	}
 
 	@Override
@@ -1086,4 +1080,13 @@ public final class PokkitWorld implements World {
 
 	}
 
+	@Override
+	public Location locateNearestStructure(Location location, StructureType type, int i, boolean b) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean isChunkGenerated(int x, int z) {
+		return nukkit.isChunkGenerated(x, z);
+	}
 }

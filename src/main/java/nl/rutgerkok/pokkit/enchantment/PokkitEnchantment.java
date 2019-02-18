@@ -8,7 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 
 public class PokkitEnchantment {
 
-	private static Enchantment[] nukkitToBukkit = new Enchantment[25];
+	private static Enchantment[] nukkitToBukkit = new Enchantment[33];
 	private static Map<NamespacedKey, Integer> bukkitToNukkit = new HashMap<>();
 
 	static {
@@ -37,6 +37,14 @@ public class PokkitEnchantment {
 		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_BOW_INFINITY, Enchantment.ARROW_INFINITE);
 		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_FORTUNE_FISHING, Enchantment.LUCK);
 		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_LURE, Enchantment.LURE);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_FROST_WALKER, Enchantment.FROST_WALKER);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_MENDING, Enchantment.MENDING);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_BINDING_CURSE, Enchantment.BINDING_CURSE);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_VANISHING_CURSE, Enchantment.VANISHING_CURSE);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_TRIDENT_IMPALING, Enchantment.IMPALING);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_TRIDENT_LOYALTY, Enchantment.LOYALTY);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_TRIDENT_RIPTIDE, Enchantment.RIPTIDE);
+		twoWay(cn.nukkit.item.enchantment.Enchantment.ID_TRIDENT_CHANNELING, Enchantment.CHANNELING);
 	}
 
 	/**

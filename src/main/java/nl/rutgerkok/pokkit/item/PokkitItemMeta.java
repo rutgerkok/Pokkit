@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -10,9 +11,13 @@ import java.util.Set;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Multimap;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -412,4 +417,49 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta, Damagea
 		return this;
 	}
 
+	@Override
+	@SuppressWarnings("rawtypes")
+	public void setAttributeModifiers(Multimap modifiers) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean hasAttributeModifiers() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean addAttributeModifier(Attribute a, AttributeModifier m) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute a) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute a, AttributeModifier m) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(EquipmentSlot slot) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+		throw Pokkit.unsupported();
+	}
 }

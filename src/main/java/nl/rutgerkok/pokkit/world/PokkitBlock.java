@@ -293,6 +293,11 @@ public final class PokkitBlock implements Block {
 	}
 
 	@Override
+	public boolean isPassable() {
+		return nukkit.canPassThrough();
+	}
+
+	@Override
 	public void removeMetadata(String metadataKey, Plugin owningPlugin) {
 		getBlockMetadata().removeMetadata(this, metadataKey, owningPlugin);
 	}
