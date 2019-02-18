@@ -43,7 +43,10 @@ Contributions are very much welcomed. If you have any questions, feel free to se
 
 Before you start, please read the [contribution guidelines](./CONTRIBUTING.md). I hope to be able to add your name to the list below soon!
 
-### Contributed code since 2018
+### Contributed code in 2019
+* [PetteriM1](https://github.com/PetteriM1)
+
+### Contributed code in 2018
 * [Jesse Boyd](https://github.com/boy0001)
 * [Rutger Kok](https://github.com/rutgerkok)
 
