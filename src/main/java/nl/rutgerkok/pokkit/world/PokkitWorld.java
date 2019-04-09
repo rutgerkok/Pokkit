@@ -1,7 +1,68 @@
 package nl.rutgerkok.pokkit.world;
 
+import org.bukkit.StructureType;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.SplittableRandom;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.ChunkSnapshot;
+import org.bukkit.Difficulty;
+import org.bukkit.Effect;
+import org.bukkit.GameRule;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.TreeType;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
+import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Consumer;
+import org.bukkit.util.Vector;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.PokkitLocation;
+import nl.rutgerkok.pokkit.PokkitSound;
+import nl.rutgerkok.pokkit.PokkitVector;
+import nl.rutgerkok.pokkit.UniqueIdConversion;
+import nl.rutgerkok.pokkit.entity.PokkitEntity;
+import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
+import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
+import nl.rutgerkok.pokkit.particle.PokkitParticle;
+import nl.rutgerkok.pokkit.player.PokkitPlayer;
+
 import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.level.Explosion;
+import cn.nukkit.level.GameRules;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
@@ -12,30 +73,6 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
-import java.io.File;
-import java.util.*;
-import java.util.stream.Collectors;
-import nl.rutgerkok.pokkit.*;
-import nl.rutgerkok.pokkit.entity.PokkitEntity;
-import nl.rutgerkok.pokkit.entity.PokkitEntityLightningStrike;
-import nl.rutgerkok.pokkit.entity.PokkitEntityTranslator;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-import nl.rutgerkok.pokkit.metadata.WorldMetadataStore;
-import nl.rutgerkok.pokkit.particle.PokkitParticle;
-import nl.rutgerkok.pokkit.player.PokkitPlayer;
-import org.bukkit.*;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
-import org.bukkit.entity.*;
-import org.bukkit.generator.BlockPopulator;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Consumer;
-import org.bukkit.util.Vector;
 
 public final class PokkitWorld implements World {
 
@@ -80,6 +117,21 @@ public final class PokkitWorld implements World {
 		return false;
 	}
 
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power) {
+		return this.createExplosion(null, x, y, z, power, false, true);
+	}
+
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
+		return this.createExplosion(null, x, y, z, power, setFire, true);
+	}
+
+	@Override
+	public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
+		return this.createExplosion(null, x, y, z, power, setFire, breakBlocks);
+	}
+
 	private boolean createExplosion(Level level, double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
 		// Base function called by all other createExplosion functions
 		// Nukkit does not yet support setFire
@@ -98,21 +150,6 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public boolean createExplosion(double x, double y, double z, float power) {
-		return this.createExplosion(null, x, y, z, power, false, true);
-	}
-
-	@Override
-	public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
-		return this.createExplosion(null, x, y, z, power, setFire, true);
-	}
-
-	@Override
-	public boolean createExplosion(double x, double y, double z, float power, boolean setFire, boolean breakBlocks) {
-		return this.createExplosion(null, x, y, z, power, setFire, breakBlocks);
-	}
-
-	@Override
 	public boolean createExplosion(Location loc, float power) {
 		cn.nukkit.level.Location l = PokkitLocation.toNukkit(loc);
 		return this.createExplosion(l.level, l.x, l.y, l.z, power, false, true);
@@ -127,13 +164,13 @@ public final class PokkitWorld implements World {
 	@Override
 	public Item dropItem(Location location, ItemStack item) {
 		nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item), new Vector3(0, 0, 0));
-		return null; // TODO add entity support
+		return null; // Add entity support
 	}
 
 	@Override
 	public Item dropItemNaturally(Location location, ItemStack item) {
 		nukkit.dropItem(PokkitLocation.toNukkit(location), PokkitItemStack.toNukkitCopy(item));
-		return null; // TODO add entity support
+		return null; // Add entity support
 	}
 
 	@Override
@@ -143,7 +180,8 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public boolean generateTree(Location loc, TreeType type, BlockChangeDelegate delegate) {
+	@Deprecated
+	public boolean generateTree(Location loc, TreeType type, org.bukkit.BlockChangeDelegate delegate) {
 		throw Pokkit.unsupported();
 
 	}
@@ -184,22 +222,6 @@ public final class PokkitWorld implements World {
 	@Override
 	public Block getBlockAt(Location location) {
 		return getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-	}
-
-	@Override
-	@Deprecated
-	public int getBlockTypeIdAt(int x, int y, int z) {
-		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(new Vector3(x, y, z));
-		return Material.getMaterial(nukkitBlock.getId()).getId();
-	}
-
-	@Override
-	@Deprecated
-	public int getBlockTypeIdAt(Location location) {
-		cn.nukkit.block.Block nukkitBlock = nukkit.getBlock(
-				new Vector3(location.getBlockX(), location.getBlockY(), location.getBlockZ())
-		);
-		return Material.getMaterial(nukkitBlock.getId()).getId();
 	}
 
 	@Override
@@ -265,18 +287,62 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public long getFullTime() {
-		throw Pokkit.unsupported();
+		return nukkit.getTime();
+	}
 
+	@Override
+	public <T> T getGameRuleDefault(GameRule<T> rule) {
+		return getGameRuleValue0(rule, GameRules.getDefault());
 	}
 
 	@Override
 	public String[] getGameRules() {
-		return new String[0];
+		cn.nukkit.level.GameRule[] rules = this.nukkit.getGameRules().getRules();
+		String[] ruleStrings = new String[rules.length];
+		for (int i = 0; i < ruleStrings.length; i++) {
+			ruleStrings[i] = rules[i].getName();
+		}
+		return ruleStrings;
 	}
 
 	@Override
-	public String getGameRuleValue(String rule) {
-		return null;
+	public <T> T getGameRuleValue(GameRule<T> rule) {
+		return getGameRuleValue0(rule, this.nukkit.getGameRules());
+	}
+
+	@Override
+	public String getGameRuleValue(String stringRule) {
+		if (stringRule == null) {
+			return null;
+		}
+		GameRule<?> rule = GameRule.getByName(stringRule);
+		if (rule == null) {
+			return null;
+		}
+		return Objects.toString(getGameRuleValue(rule));
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T getGameRuleValue0(GameRule<T> rule, GameRules source) {
+		cn.nukkit.level.GameRule nukkitRule = PokkitGameRule.toNukkit(rule);
+		if (nukkitRule == null) {
+			if (rule.getType().equals(Integer.class)) {
+				return (T) Integer.valueOf(0);
+			}
+			if (rule.getType().equals(Boolean.class)) {
+				return (T) Boolean.FALSE;
+			}
+			throw new IllegalArgumentException("Unknown GameRule with unknown type: " + rule);
+		}
+
+		Class<?> type = rule.getType();
+		if (type.equals(Boolean.class)) {
+			return (T) Boolean.valueOf(source.getBoolean(nukkitRule));
+		}
+		if (type.equals(Integer.class)) {
+			return (T) Integer.valueOf(source.getInteger(nukkitRule));
+		}
+		throw new IllegalArgumentException("GameRule with unknown type: " + rule + " of type " + type);
 	}
 
 	@Override
@@ -326,13 +392,13 @@ public final class PokkitWorld implements World {
 	@Override
 	public List<LivingEntity> getLivingEntities() {
 		List<LivingEntity> livingEntities = new ArrayList<>();
-		
+
 		for (cn.nukkit.entity.Entity entity : nukkit.getEntities()) {
 			if (entity instanceof cn.nukkit.entity.EntityLiving) {
 		 		livingEntities.add((LivingEntity) PokkitEntity.toBukkit(entity));
 			}
 		}
-		
+
 		return livingEntities;
 	}
 
@@ -417,8 +483,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public int getThunderDuration() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getThunderTime();
 	}
 
 	@Override
@@ -451,8 +516,7 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public int getWeatherDuration() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getRainTime();
 	}
 
 	@Override
@@ -483,14 +547,13 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean hasStorm() {
-		throw Pokkit.unsupported();
+		return nukkit.isThundering();
 
 	}
 
 	@Override
 	public boolean isAutoSave() {
-		throw Pokkit.unsupported();
-
+		return nukkit.getAutoSave();
 	}
 
 	@Override
@@ -535,22 +598,22 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public void playEffect(Location location, Effect effect, int data, int radius) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 	}
 
 	@Override
 	public <T> void playEffect(Location location, Effect effect, T data, int radius) {
-		return; // TODO: Implement particles
+		return; // Implement particles
 
 	}
 
@@ -570,8 +633,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
-		// TODO Auto-generated method stub
-
+		// Ignore the category
+		playSound(location, sound, volume, pitch);
 	}
 
 	@Override
@@ -589,8 +652,8 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
-		// TODO Auto-generated method stub
-
+		// Ignore the category
+		playSound(location, sound, volume, pitch);
 	}
 
 	@Override
@@ -652,13 +715,38 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void setFullTime(long time) {
-		throw Pokkit.unsupported();
+		nukkit.setTime((int) time);
+	}
 
+	@Override
+	public <T> boolean setGameRule(GameRule<T> rule, T newValue) {
+		cn.nukkit.level.GameRule nukkitRule = PokkitGameRule.toNukkit(rule);
+		if (nukkitRule == null) {
+			return false;
+		}
+		if (newValue instanceof Boolean) {
+			nukkit.getGameRules().setGameRule(nukkitRule, ((Boolean)newValue).booleanValue());
+			return true;
+		}
+		if (newValue instanceof Integer) {
+			nukkit.getGameRules().setGameRule(nukkitRule, ((Integer)newValue).intValue());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public boolean setGameRuleValue(String rule, String value) {
-		return false;
+		cn.nukkit.level.GameRule gameRule = cn.nukkit.level.GameRule.parseString(rule).orElse(null);
+		if (gameRule == null) {
+			return false;
+		}
+		try {
+			nukkit.getGameRules().setGameRules(gameRule, value);
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -697,15 +785,22 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
+	public boolean setSpawnLocation(Location location) {
+		if (!location.getWorld().equals(this)) {
+			return false;
+		}
+		nukkit.setSpawnLocation(PokkitLocation.toNukkit(location));
+		return true;
+	}
+
+	@Override
 	public void setStorm(boolean hasStorm) {
-		// Silently unsupported!
-	    // Nukkit doesn't have storms yet, so we just ignore that.
+		nukkit.setThundering(hasStorm);
 	}
 
 	@Override
 	public void setThunderDuration(int duration) {
-        // Silently unsupported!
-        // Nukkit doesn't have storms yet, so we just ignore that.
+		nukkit.setThunderTime(duration);
 	}
 
 	@Override
@@ -787,10 +882,8 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public FallingBlock spawnFallingBlock(Location location, int blockId, byte blockData)
-			throws IllegalArgumentException {
+	public FallingBlock spawnFallingBlock(Location location, BlockData data) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
-
 	}
 
 	@Override
@@ -800,30 +893,38 @@ public final class PokkitWorld implements World {
 	}
 
 	@Override
-	public FallingBlock spawnFallingBlock(Location location, MaterialData materialData) throws IllegalArgumentException {
+	public FallingBlock spawnFallingBlock(Location location,
+			@SuppressWarnings("deprecation") org.bukkit.material.MaterialData materialData)
+			throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
-		spawnParticle(particle, x, y, z, count);
+		spawnParticle(particle, x, y, z, count, 0, 0, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ) {
-		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ);
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ, double extra) {
-		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra);
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra, null);
 	}
 
 	@Override
 	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
 			double offsetY, double offsetZ, double extra, T data) {
+		spawnParticle(particle, x, y, z, count, offsetX, offsetY, offsetZ, extra, data, false);
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
+			double offsetY, double offsetZ, double extra, T data, boolean force) {
 		int id = 0;
 
 		id = PokkitParticle.toNukkit(particle);
@@ -868,25 +969,33 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, 0, 0, 0);
+		spawnParticle(particle, location, count, 0, 0, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, 0);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, 0);
 	}
 
 	@Override
 	public void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ, double extra) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra, null);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, extra, null);
 	}
 
 	@Override
 	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
 			double offsetZ, double extra, T data) {
-		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ, extra, data);
+		spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, extra, data, false);
+
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
+			double offsetZ, double extra, T data, boolean force) {
+		spawnParticle(particle, location.getX(), location.getY(), location.getZ(), count, offsetX, offsetY, offsetZ,
+				extra, data, force);
 
 	}
 
@@ -951,12 +1060,12 @@ public final class PokkitWorld implements World {
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save) {
-		return nukkit.unloadChunk(x, z); // TODO: Save
+		return nukkit.unloadChunk(x, z, true, save);
 	}
 
 	@Override
 	public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
-		return nukkit.unloadChunk(x, z, safe); // TODO: Save
+		return nukkit.unloadChunk(x, z, safe, save);
 	}
 
 	@Override
@@ -971,4 +1080,13 @@ public final class PokkitWorld implements World {
 
 	}
 
+	@Override
+	public Location locateNearestStructure(Location location, StructureType type, int i, boolean b) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean isChunkGenerated(int x, int z) {
+		return nukkit.isChunkGenerated(x, z);
+	}
 }

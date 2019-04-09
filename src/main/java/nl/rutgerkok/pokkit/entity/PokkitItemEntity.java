@@ -2,12 +2,13 @@ package nl.rutgerkok.pokkit.entity;
 
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
 
 import cn.nukkit.level.Location;
 
@@ -56,4 +57,8 @@ public class PokkitItemEntity extends PokkitFakeEntity implements Item {
 		throw Pokkit.unsupported();
 	}
 
+	@Override
+	public BlockFace getFacing() {
+		throw Pokkit.unsupported();
+	}
 }

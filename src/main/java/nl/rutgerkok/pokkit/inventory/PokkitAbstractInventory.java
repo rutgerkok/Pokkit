@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ListIterator;
 
+import com.google.common.base.Preconditions;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,8 +15,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Abstract class for inventories, implements all methods that can be
@@ -64,48 +64,8 @@ public abstract class PokkitAbstractInventory implements Inventory {
 	protected abstract int addSingleStack(ItemStack item);
 
 	@Override
-	@Deprecated
-	public HashMap<Integer, ? extends ItemStack> all(int materialId) {
-		Material material = Material.getMaterial(materialId);
-		if (material == null) {
-			return new HashMap<>();
-		}
-		return all(material);
-	}
-
-	@Override
-	@Deprecated
-	public boolean contains(int materialId) {
-		Material material = Material.getMaterial(materialId);
-		if (material == null) {
-			return false;
-		}
-		return contains(material);
-	}
-
-	@Override
-	@Deprecated
-	public boolean contains(int materialId, int amount) {
-		Material material = Material.getMaterial(materialId);
-		if (material == null) {
-			return false;
-		}
-		return contains(material, amount);
-	}
-
-	@Override
 	public boolean contains(Material material) throws IllegalArgumentException {
 		return first(material) != -1;
-	}
-
-	@Override
-	@Deprecated
-	public int first(int materialId) {
-		Material material = Material.getMaterial(materialId);
-		if (material == null) {
-			return -1;
-		}
-		return first(material);
 	}
 
 	@Override
@@ -137,15 +97,6 @@ public abstract class PokkitAbstractInventory implements Inventory {
 	@Override
 	public ListIterator<ItemStack> iterator(int index) {
 		return Arrays.asList(getContents()).listIterator(index);
-	}
-
-	@Override
-	public void remove(int materialId) {
-		@SuppressWarnings("deprecation")
-		Material material = Material.getMaterial(materialId);
-		if (material != null) {
-			remove(material);
-		}
 	}
 
 	@Override

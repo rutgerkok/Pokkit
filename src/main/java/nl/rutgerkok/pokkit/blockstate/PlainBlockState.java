@@ -1,13 +1,14 @@
 package nl.rutgerkok.pokkit.blockstate;
 
 import org.bukkit.Location;
-import org.bukkit.material.MaterialData;
+
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 
 final class PlainBlockState extends PokkitBlockState {
 
-	PlainBlockState(Location locationOrNull, MaterialData materialData) {
+	PlainBlockState(Location locationOrNull, PokkitBlockData materialData) {
 		super(locationOrNull, materialData);
 	}
 

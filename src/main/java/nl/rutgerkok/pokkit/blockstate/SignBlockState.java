@@ -2,13 +2,13 @@ package nl.rutgerkok.pokkit.blockstate;
 
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
+import com.google.common.base.Preconditions;
 
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
-import org.bukkit.material.MaterialData;
 
-import com.google.common.base.Preconditions;
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 
@@ -17,7 +17,7 @@ public final class SignBlockState extends PokkitBlockState implements Sign {
 	private final String[] lines;
 	private String hiddenData;
 
-	protected SignBlockState(Location locationOrNull, MaterialData materialData, String[] lines, String hiddenData) {
+	protected SignBlockState(Location locationOrNull, PokkitBlockData materialData, String[] lines, String hiddenData) {
 		super(locationOrNull, materialData);
 		this.lines = Objects.requireNonNull(lines, "lines");
 		this.hiddenData = Objects.requireNonNull(hiddenData, "hiddenData");
@@ -79,4 +79,13 @@ public final class SignBlockState extends PokkitBlockState implements Sign {
 		lines[index] = line;
 	}
 
+	@Override
+	public boolean isEditable() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public void setEditable(boolean editable) {
+		throw Pokkit.unsupported();
+	}
 }

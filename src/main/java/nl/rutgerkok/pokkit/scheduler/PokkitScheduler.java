@@ -6,14 +6,14 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
-
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitWorker;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.plugin.PokkitPlugin;
 
 import cn.nukkit.scheduler.ServerScheduler;
 
@@ -45,11 +45,6 @@ public final class PokkitScheduler implements BukkitScheduler {
 			}
 		}, false);
 		return future;
-	}
-
-	@Override
-	public void cancelAllTasks() {
-		nukkit.cancelAllTasks();
 	}
 
 	@Override

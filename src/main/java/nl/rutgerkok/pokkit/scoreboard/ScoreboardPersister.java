@@ -38,7 +38,7 @@ public final class ScoreboardPersister {
 	 * @param scoreboard
 	 *            The scoreboard.
 	 */
-	public void loadScoreboard(Configuration config, Scoreboard scoreboard) {
+	public void loadScoreboard(Configuration config, PokkitScoreboard scoreboard) {
 		// Load teams
 		ConfigurationSection teamsSection = config.getConfigurationSection("teams");
 		if (teamsSection == null) {

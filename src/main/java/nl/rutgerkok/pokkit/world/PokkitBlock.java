@@ -5,12 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
-import nl.rutgerkok.pokkit.item.PokkitItemStack;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -20,15 +14,22 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.PistonMoveReaction;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.v1_99_R9.CraftServer;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.blockstate.PokkitBlockState;
+import nl.rutgerkok.pokkit.item.PokkitItemStack;
+import nl.rutgerkok.pokkit.metadata.BlockMetadataStore;
 
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
+import cn.nukkit.level.biome.EnumBiome;
 
 /**
  * Converts between Nukkit and Bukkit blocks.
@@ -77,6 +78,11 @@ public final class PokkitBlock implements Block {
 
 	}
 
+	@Override
+	public BlockData getBlockData() {
+		return PokkitBlockData.toBukkit(nukkit);
+	}
+
 	private BlockMetadataStore getBlockMetadata() {
 		return ((CraftServer) Bukkit.getServer()).getMetadata().getBlockMetadata();
 	}
@@ -100,8 +106,8 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public byte getData() {
-		PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(nukkit.toItem());
-		return (byte) materialData.getBukkitDamage();
+		PokkitBlockData materialData = PokkitBlockData.toBukkit(nukkit);
+		return materialData.getNukkitData();
 	}
 
 	@Override
@@ -126,8 +132,7 @@ public final class PokkitBlock implements Block {
 		Item[] drops = nukkit.getDrops(item);
 		List<ItemStack> result = new ArrayList<>();
 		for (Item drop : drops) {
-			PokkitMaterialData materialData = PokkitMaterialData.fromNukkit(drop);
-			ItemStack stack = new ItemStack(materialData.getBukkitMaterial(), drop.getCount(), materialData.getBukkitDamage());
+			ItemStack stack = PokkitItemStack.toBukkitCopy(drop);
 			result.add(stack);
 		}
 		this.drops = result;
@@ -147,19 +152,19 @@ public final class PokkitBlock implements Block {
 
 	@Override
 	public double getHumidity() {
-		int biomeId = nukkit.getLevel().getBiomeId((int) nukkit.x, (int) nukkit.z);
-		cn.nukkit.level.generator.biome.Biome biome = cn.nukkit.level.generator.biome.Biome.getBiome(biomeId);
-		return biome.getRainfall();
+		return 0.15; // Seems to be removed from Nukkit
 	}
 
 	@Override
 	public byte getLightFromBlocks() {
-		return (byte) nukkit.getLightLevel(); // TODO: I think this is wrong, but there isn't any way to get the light emitted from blocks
+		return (byte) nukkit.getLightLevel(); // I think this is wrong, but
+												// there isn't any way to get
+												// the light emitted from blocks
 	}
 
 	@Override
 	public byte getLightFromSky() {
-		return (byte) nukkit.getLightLevel(); // TODO: Same thing as above
+		return (byte) nukkit.getLightLevel(); // Same thing as above
 	}
 
 	@Override
@@ -217,29 +222,17 @@ public final class PokkitBlock implements Block {
 	@Override
 	public double getTemperature() {
 		int biomeId = nukkit.getLevel().getBiomeId((int) nukkit.x, (int) nukkit.z);
-		cn.nukkit.level.generator.biome.Biome biome = cn.nukkit.level.generator.biome.Biome.getBiome(biomeId);
-		return biome.getTemperature();
+		@SuppressWarnings("deprecation")
+		cn.nukkit.level.biome.Biome biome = EnumBiome.getBiome(biomeId);
+		if (biome != null && biome.isFreezing()) {
+			return 0.1;
+		}
+		return 0.6;
 	}
 
 	@Override
 	public Material getType() {
-		return PokkitMaterialData.fromNukkit(nukkit.toItem()).getBukkitMaterial();
-	}
-
-	/**
-	 * Gets the material data in one call.
-	 *
-	 * @return The material data.
-	 */
-	public MaterialData getTypeData() {
-		return PokkitMaterialData.fromNukkit(nukkit.toItem()).toBukkit();
-	}
-
-	@Override
-	public int getTypeId() {
-		@SuppressWarnings("deprecation")
-		int typeId = getType().getId();
-		return typeId;
+		return PokkitBlockData.toBukkit(nukkit).getMaterial();
 	}
 
 	@Override
@@ -300,6 +293,11 @@ public final class PokkitBlock implements Block {
 	}
 
 	@Override
+	public boolean isPassable() {
+		return nukkit.canPassThrough();
+	}
+
+	@Override
 	public void removeMetadata(String metadataKey, Plugin owningPlugin) {
 		getBlockMetadata().removeMetadata(this, metadataKey, owningPlugin);
 	}
@@ -311,18 +309,13 @@ public final class PokkitBlock implements Block {
 	}
 
 	@Override
-	public void setData(byte data) {
-		setData(data, true);
+	public void setBlockData(BlockData data) {
+		setBlockData(data, true);
 	}
 
 	@Override
-	public void setData(byte data, boolean applyPhysics) {
-		if (data == getData()) {
-			return;
-		}
-
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(getType(), data);
-		setType0(materialData, applyPhysics);
+	public void setBlockData(BlockData data, boolean applyPhysics) {
+		this.setType0((PokkitBlockData) data, applyPhysics);
 	}
 
 	@Override
@@ -344,59 +337,18 @@ public final class PokkitBlock implements Block {
 			type = Material.AIR;
 		}
 
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(type, getData());
+		PokkitBlockData materialData = PokkitBlockData.createBlockData(type, getData());
 		setType0(materialData, applyPhysics);
 	}
 
-	private void setType0(PokkitMaterialData materialData, boolean applyPhysics) {
+	private void setType0(PokkitBlockData materialData, boolean applyPhysics) {
 		int nukkitId = materialData.getNukkitId();
-		int nukkitData = materialData.getNukkitDamage();
+		int nukkitData = materialData.getNukkitData();
 		nukkit.level.setBlock(nukkit, cn.nukkit.block.Block.get(nukkitId, nukkitData), false, applyPhysics);
 
 		// Update block reference
 		nukkit = nukkit.level.getBlock(nukkit);
 	}
 
-	/**
-	 * Sets a material and data at the same time.
-	 *
-	 * @param materialData
-	 *            The material and data.
-	 * @param applyPhysics
-	 *            Whether a physics update must be performed.
-	 */
-	public void setTypeAndData(MaterialData materialData, boolean applyPhysics) {
-		setType0(PokkitMaterialData.fromBukkit(materialData), applyPhysics);
-	}
-
-	@Override
-	@Deprecated
-	public boolean setTypeId(int typeId) {
-		return setTypeId(typeId, true);
-	}
-
-	@Override
-	@Deprecated
-	public boolean setTypeId(int typeId, boolean applyPhysics) {
-		Material material = Material.getMaterial(typeId);
-		if (material == null) {
-			return false;
-		}
-		setType(material, applyPhysics);
-		return true;
-	}
-
-	@Override
-	@Deprecated
-	public boolean setTypeIdAndData(int typeId, byte data, boolean applyPhysics) {
-		Material type = Material.getMaterial(typeId);
-		if (type == null) {
-			return false;
-		}
-
-		PokkitMaterialData materialData = PokkitMaterialData.fromBukkit(type, data);
-		setType0(materialData, applyPhysics);
-		return true;
-	}
 
 }

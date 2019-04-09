@@ -1,51 +1,48 @@
 package nl.rutgerkok.pokkit;
 
-import java.util.List;
-
-import nl.rutgerkok.pokkit.item.PokkitItemMeta;
-import nl.rutgerkok.pokkit.material.PokkitMaterialData;
-
-import org.bukkit.Achievement;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Statistic;
 import org.bukkit.UnsafeValues;
 import org.bukkit.advancement.Advancement;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+import org.bukkit.plugin.PluginDescriptionFile;
 
-import cn.nukkit.item.Item;
+import nl.rutgerkok.pokkit.blockdata.PokkitBlockData;
+import nl.rutgerkok.pokkit.item.PokkitItemMeta;
 
 @SuppressWarnings("deprecation")
 public class PokkitUnsafe implements UnsafeValues {
 
 	@Override
-	public Achievement getAchievementFromInternalName(String name) {
-		try {
-			return Achievement.valueOf(name.toUpperCase().replace("MINECRAFT:", ""));
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
+	public void checkSupported(PluginDescriptionFile pdf) {
+		// Empty!
 	}
 
 	@Override
-	public Material getMaterialFromInternalName(String name) {
-		Item item = Item.fromString(name);
-
-		if (item.getId() == Item.AIR && !name.toLowerCase().endsWith("air")) {
-			// Nukkit returns air in case of failure, correct that
-			return null;
-		}
-
-		return PokkitMaterialData.fromNukkit(item.getId(), item.getDamage()).getBukkitMaterial();
+	public Material fromLegacy(Material material) {
+		return material;
 	}
 
 	@Override
-	public Statistic getStatisticFromInternalName(String name) {
-		try {
-			return Statistic.valueOf(name.toUpperCase().replace("MINECRAFT:", ""));
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
+	public BlockData fromLegacy(Material material, byte data) {
+		return PokkitBlockData.createBlockData(material, data);
+	}
+
+	@Override
+	public Material fromLegacy(MaterialData material) {
+		return material.getItemType();
+	}
+
+	@Override
+	public Material fromLegacy(MaterialData material, boolean itemPriority) {
+		return material.getItemType();
+	}
+
+	@Override
+	public int getDataVersion() {
+		return 1;
 	}
 
 	@Override
@@ -63,18 +60,18 @@ public class PokkitUnsafe implements UnsafeValues {
 	}
 
 	@Override
+	public byte[] processClass(PluginDescriptionFile pdf, String path, byte[] clazz) {
+		return clazz; // Not implemented yet
+	}
+
+	@Override
 	public boolean removeAdvancement(NamespacedKey key) {
 		throw Pokkit.unsupported();
 	}
 
 	@Override
-	public List<String> tabCompleteInternalMaterialName(String token, List<String> completions) {
-		return completions;
-	}
-
-	@Override
-	public List<String> tabCompleteInternalStatisticOrAchievementName(String token, List<String> completions) {
-		return completions;
+	public Material toLegacy(Material material) {
+		return material;
 	}
 
 }

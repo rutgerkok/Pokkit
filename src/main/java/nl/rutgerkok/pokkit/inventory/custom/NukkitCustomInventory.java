@@ -9,6 +9,7 @@ import cn.nukkit.Player;
 import cn.nukkit.inventory.BaseInventory;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -82,8 +83,7 @@ public class NukkitCustomInventory extends BaseInventory {
         updateBlockPacket.x = (int) v.x;
         updateBlockPacket.y = (int) v.y;
         updateBlockPacket.z = (int) v.z;
-        updateBlockPacket.blockId = Item.CHEST;
-        updateBlockPacket.blockData = 0;
+		updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(Item.CHEST, 0);
         updateBlockPacket.flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
         who.dataPacket(updateBlockPacket);
 

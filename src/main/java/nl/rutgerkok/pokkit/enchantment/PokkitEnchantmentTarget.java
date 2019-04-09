@@ -25,6 +25,8 @@ public class PokkitEnchantmentTarget {
 		twoWay(EnchantmentType.DIGGER, EnchantmentTarget.TOOL);
 		twoWay(EnchantmentType.FISHING_ROD, EnchantmentTarget.FISHING_ROD);
 		twoWay(EnchantmentType.SWORD, EnchantmentTarget.WEAPON);
+		twoWay(EnchantmentType.WEARABLE, EnchantmentTarget.WEARABLE);
+		twoWay(EnchantmentType.TRIDENT, EnchantmentTarget.TRIDENT);
 	}
 
 	/**

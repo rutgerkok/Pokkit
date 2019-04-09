@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.rutgerkok</groupId>
-	<artifactId>pokkit</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<artifactId>Pokkit</artifactId>
+	<version>0.7</version>
 	<name>Pokkit</name>
 	<description>Run Bukkit and Spigot plugins on Nukkit!</description>
 	<properties>
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.12-R0.1-SNAPSHOT</version>
+			<version>1.13.1-R0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -54,8 +54,8 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>potestas-repo</id>
-			<url>https://repo.potestas.xyz/main/</url>
+			<id>nukkitx</id>
+			<url>https://repo.nukkitx.com/main/</url>
 		</repository>
 		<repository>
 			<id>spigot-repo</id>

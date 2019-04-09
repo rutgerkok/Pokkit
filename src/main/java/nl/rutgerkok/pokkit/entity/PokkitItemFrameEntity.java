@@ -81,6 +81,11 @@ public class PokkitItemFrameEntity extends PokkitFakeEntity implements ItemFrame
 	}
 
 	@Override
+	public void setItem(ItemStack item, boolean b) {
+		nukkit.setItem(PokkitItemStack.toNukkitCopy(item));
+	}
+
+	@Override
 	public void setRotation(Rotation rotation) throws IllegalArgumentException {
 		throw Pokkit.unsupported();
 	}

@@ -1,6 +1,7 @@
 package nl.rutgerkok.pokkit.item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -8,28 +9,35 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import nl.rutgerkok.pokkit.Pokkit;
-import nl.rutgerkok.pokkit.enchantment.PokkitEnchantment;
-
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Multimap;
+
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import nl.rutgerkok.pokkit.Pokkit;
+import nl.rutgerkok.pokkit.enchantment.PokkitEnchantment;
 
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.nbt.tag.StringTag;
 import cn.nukkit.nbt.tag.Tag;
 
-public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
+public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta, Damageable {
 
 	protected CompoundTag tag;
+	private int damage;
 
-	PokkitItemMeta(CompoundTag tag) {
+	PokkitItemMeta(CompoundTag tag, int damage) {
 		this.tag = Objects.requireNonNull(tag, "tag");
+		this.damage = damage;
 	}
 
 	@Override
@@ -78,9 +86,10 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
-	public ItemMeta clone() {
+	public PokkitItemMeta clone() {
 		try {
 			PokkitItemMeta meta = (PokkitItemMeta) super.clone();
+			meta.damage = this.damage;
 			meta.tag = this.tag.copy();
 			return meta;
 		} catch (CloneNotSupportedException e) {
@@ -99,7 +108,15 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 		PokkitItemMeta other = (PokkitItemMeta) obj;
 		if (!tag.equals(other.tag))
 			return false;
+		if (damage != other.damage) {
+			return false;
+		}
 		return true;
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
 	}
 
 	@Override
@@ -195,6 +212,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean hasDamage() {
+		return this.damage != 0;
 	}
 
 	@Override
@@ -319,6 +341,11 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 	}
 
 	@Override
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	@Override
 	public void setDisplayName(String name) {
 		if (Strings.isNullOrEmpty(name)) {
 			if (!hasDisplayName()) {
@@ -390,4 +417,49 @@ public class PokkitItemMeta extends ItemMeta.Spigot implements ItemMeta {
 		return this;
 	}
 
+	@Override
+	@SuppressWarnings("rawtypes")
+	public void setAttributeModifiers(Multimap modifiers) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean hasAttributeModifiers() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean addAttributeModifier(Attribute a, AttributeModifier m) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute a) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute a, AttributeModifier m) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public boolean removeAttributeModifier(EquipmentSlot slot) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
+		throw Pokkit.unsupported();
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+		throw Pokkit.unsupported();
+	}
 }

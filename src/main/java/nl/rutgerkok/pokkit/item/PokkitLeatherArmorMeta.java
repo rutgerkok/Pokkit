@@ -7,11 +7,17 @@ import cn.nukkit.nbt.tag.CompoundTag;
 
 public class PokkitLeatherArmorMeta extends PokkitItemMeta implements LeatherArmorMeta {
 
-	PokkitLeatherArmorMeta(CompoundTag tag) {
-		super(tag);
+	PokkitLeatherArmorMeta(CompoundTag tag, int damage) {
+		super(tag, damage);
 	}
 
-	
+
+	@Override
+	public PokkitLeatherArmorMeta clone() {
+		return (PokkitLeatherArmorMeta) super.clone();
+	}
+
+
 	//If you find a better way to do this, PLEASE tell me.
 	@Override
 	public Color getColor() {
@@ -23,8 +29,8 @@ public class PokkitLeatherArmorMeta extends PokkitItemMeta implements LeatherArm
 		 int b = tag.getInt("blue");
 		 return Color.fromRGB(r, g, b);
 	}
-	
-	
+
+
 	@Override
 	public void setColor(Color color) {
 		int rgb = color.getRed() << 16 | color.getGreen() << 8 | color.getBlue();
@@ -33,13 +39,7 @@ public class PokkitLeatherArmorMeta extends PokkitItemMeta implements LeatherArm
         this.getTag().putInt("green", color.getGreen());//If you find a better way to do this, PLEASE tell me.
         this.getTag().putInt("blue", color.getBlue());//If you find a better way to do this, PLEASE tell me.
 	}
-	
-	
-	@Override
-	public LeatherArmorMeta clone() {
-		return (LeatherArmorMeta) super.clone();
-	}
 
-	
+
 
 }
