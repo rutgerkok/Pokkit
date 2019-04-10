@@ -102,7 +102,7 @@ public final class CraftServer extends Server.Spigot implements Server {
 		return ((CraftServer) server).nukkit;
 	}
 
-	private final cn.nukkit.Server nukkit;
+	public final cn.nukkit.Server nukkit;
 	private final PokkitScheduler scheduler;
 	private final PokkitPluginManager pluginManager;
 	private final PokkitCommandFetcher commandFetcher;
